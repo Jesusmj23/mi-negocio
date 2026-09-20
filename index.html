@@ -123,9 +123,9 @@
     background: var(--nav-bg); border-bottom: 2px solid var(--border);
   }
   nav button {
-    flex: 1; min-width: 85px; padding: 12px 6px;
+    flex: 1; min-width: 78px; padding: 12px 4px;
     border: none; background: transparent; cursor: pointer;
-    font-size: 0.75rem; font-weight: 600;
+    font-size: 0.7rem; font-weight: 600;
     color: var(--text-soft); transition: 0.2s;
     border-bottom: 3px solid transparent;
   }
@@ -164,6 +164,7 @@
   .btn.azul { background: #2980b9; } .btn.azul:hover { background: #21618c; }
   .btn.wsp { background: #25D366; } .btn.wsp:hover { background: #128C7E; }
   .btn.naranja { background: #e67e22; } .btn.naranja:hover { background: #ca6f1e; }
+  .btn.morado { background: #8e44ad; } .btn.morado:hover { background: #71368a; }
   .fila { display: flex; gap: 12px; flex-wrap: wrap; }
   .fila > .campo { flex: 1; min-width: 180px; }
   .card {
@@ -193,18 +194,14 @@
   .card .mini-btn.verde { background: #27ae60; }
   .card .mini-btn.naranja { background: #e67e22; }
   .card .mini-btn.gris { background: #95a5a6; }
+  .card .mini-btn.morado { background: #8e44ad; }
 
   .abono-info {
-    font-size: 0.8rem;
-    margin-top: 6px;
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
+    font-size: 0.8rem; margin-top: 6px;
+    display: flex; gap: 12px; flex-wrap: wrap;
   }
   .abono-info .tag {
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-weight: 700;
+    padding: 2px 8px; border-radius: 10px; font-weight: 700;
   }
   .abono-info .tag.original { background: #e3f2fd; color: #1565c0; }
   .abono-info .tag.abonado { background: #e8f5e9; color: #2e7d32; }
@@ -213,12 +210,9 @@
   body.dark .abono-info .tag.abonado { background: #1b4a1e; color: #81c784; }
   body.dark .abono-info .tag.saldo { background: #5c1a1a; color: #ef9a9a; }
   .barra-abono {
-    height: 8px;
-    background: #e0e0e0;
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 6px;
-    width: 100%;
+    height: 8px; background: #e0e0e0;
+    border-radius: 4px; overflow: hidden;
+    margin-top: 6px; width: 100%;
   }
   body.dark .barra-abono { background: #333; }
   .barra-abono-fill {
@@ -236,7 +230,7 @@
   .resumen-box .num { font-size: 1.8rem; font-weight: 700; margin-top: 4px; }
   .grid-resumen {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 12px; margin-bottom: 20px;
   }
   .mini-card {
@@ -293,24 +287,19 @@
   .recibo h2 { color: #000; border-bottom: 1px dashed #999; font-size: 1.1rem; }
   .abono-item {
     background: var(--card-item-bg);
-    padding: 10px 12px;
-    border-radius: 8px;
+    padding: 10px 12px; border-radius: 8px;
     margin-bottom: 6px;
     border-left: 3px solid #27ae60;
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    align-items: center;
+    display: flex; justify-content: space-between;
+    gap: 10px; align-items: center;
     font-size: 0.9rem;
   }
   .abono-item .fecha-abono { font-size: 0.75rem; color: var(--text-soft); }
   .abono-item .monto-abono { font-weight: 700; color: #27ae60; }
   .abono-item .comprobante-mini {
     width: 50px; height: 50px;
-    object-fit: cover;
-    border-radius: 6px;
-    cursor: pointer;
-    border: 2px solid var(--card-item-border);
+    object-fit: cover; border-radius: 6px;
+    cursor: pointer; border: 2px solid var(--card-item-border);
   }
   .nota-item {
     background: linear-gradient(135deg, #fff9c4, #ffe082);
@@ -326,7 +315,23 @@
     background: var(--card-item-bg); border-radius: 10px;
     padding: 14px; margin-bottom: 10px;
     border-left: 4px solid #667eea;
+    display: flex; gap: 12px; align-items: flex-start;
+    flex-wrap: wrap;
   }
+  .cliente-card .avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1.5rem;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .cliente-card .avatar img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .cliente-card .cuerpo { flex: 1; min-width: 200px;}
   .cliente-card .nombre { font-weight: 700; color: var(--text-strong); font-size: 1.05rem; }
   .cliente-card .stats { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-soft); margin-top: 6px;}
   .cliente-card .deuda-actual { color: #e74c3c; font-weight: 700; }
@@ -417,19 +422,33 @@
     background: var(--nav-hover);
   }
   .foto-preview {
-    max-width: 100%;
-    max-height: 200px;
-    border-radius: 8px;
-    margin-top: 10px;
+    max-width: 100%; max-height: 200px;
+    border-radius: 8px; margin-top: 10px;
     border: 2px solid var(--input-border);
   }
   .comprobante-grande {
-    max-width: 100%;
-    max-height: 70vh;
-    border-radius: 8px;
-    display: block;
-    margin: 0 auto;
+    max-width: 100%; max-height: 70vh;
+    border-radius: 8px; display: block; margin: 0 auto;
   }
+  .ranking-card {
+    background: var(--card-item-bg); border-radius: 10px;
+    padding: 12px 16px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 12px;
+    border-left: 4px solid #667eea;
+  }
+  .ranking-card.oro { border-left-color: #f39c12; }
+  .ranking-card.plata { border-left-color: #95a5a6; }
+  .ranking-card.bronce { border-left-color: #cd7f32; }
+  .ranking-card.malo { border-left-color: #e74c3c; }
+  .ranking-card .pos {
+    font-size: 1.5rem; font-weight: 800;
+    min-width: 40px; text-align: center;
+    color: var(--text-strong);
+  }
+  .ranking-card .info-r { flex: 1; }
+  .ranking-card .nombre-r { font-weight: 700; }
+  .ranking-card .detalle-r { font-size: 0.85rem; color: var(--text-soft); margin-top: 3px;}
+  .ranking-card .monto-r { font-weight: 700; color: #27ae60; }
   @media print {
     body { background: white; padding: 0; color: black; }
     body.dark { background: white; color: black; }
@@ -447,7 +466,7 @@
     header h1 { font-size: 1.3rem; }
     .top-actions { top: 8px; right: 8px; gap: 4px; max-width: 70%;}
     .icon-btn { padding: 6px 8px; font-size: 0.85rem;}
-    nav button { font-size: 0.68rem; padding: 10px 3px; min-width: 68px;}
+    nav button { font-size: 0.65rem; padding: 10px 3px; min-width: 62px;}
   }
 </style>
 </head>
@@ -477,6 +496,7 @@
       <button class="icon-btn" title="Modo oscuro" onclick="toggleDark()" id="dark-btn">🌙</button>
       <button class="icon-btn" title="Exportar respaldo" onclick="exportar()">⬇️</button>
       <button class="icon-btn" title="Importar respaldo" onclick="document.getElementById('file-import').click()">⬆️</button>
+      <button class="icon-btn" title="Reporte mensual" onclick="abrirReporteMensual()">📊</button>
       <button class="icon-btn" title="Cerrar sesión" onclick="cerrarSesion()">🚪</button>
       <input type="file" id="file-import" accept=".json" style="display:none" onchange="importar(event)">
     </div>
@@ -491,6 +511,7 @@
     <button data-tab="inventario">📦 Inventario</button>
     <button data-tab="clientes">👥 Clientes</button>
     <button data-tab="abonos">💵 Abonos</button>
+    <button data-tab="ranking">🏆 Ranking</button>
     <button data-tab="metas">🎯 Metas</button>
     <button data-tab="quincena">📅 Quincena</button>
     <button data-tab="calendario">🗓️ Calendario</button>
@@ -537,7 +558,7 @@
     <div class="seccion" id="deudas">
       <h2>Dinero que me deben (aparte)</h2>
       <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">
-        Registra dinero que NO tiene que ver con tu negocio (préstamos, favores, etc.). Puedes editar, abonar, marcar como incobrable o eliminar.
+        Dinero que NO tiene que ver con tu negocio (préstamos, favores, etc.). Edita, abona, marca incobrable o elimina.
       </p>
       <div class="fila">
         <div class="campo"><label>Nombre</label><input type="text" id="d-nombre" placeholder="Ej: Juan"></div>
@@ -630,6 +651,16 @@
       <div id="lista-abonos-todos"><div class="vacio">Sin abonos registrados</div></div>
     </div>
 
+    <div class="seccion" id="ranking">
+      <h2>🏆 Ranking de clientes</h2>
+      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Los que más cumplen y los que más deben.</p>
+      <h3 style="margin-bottom:12px;font-size:1.05rem;">⭐ Top 5 más cumplidos</h3>
+      <div id="ranking-buenos"><div class="vacio">Sin datos</div></div>
+      <h3 style="margin:20px 0 12px;font-size:1.05rem;">🚨 Top 5 más morosos</h3>
+      <div id="ranking-malos"><div class="vacio">Sin datos</div></div>
+    </section>
+  </div>
+
     <div class="seccion" id="metas">
       <h2>Metas de venta</h2>
       <div class="fila">
@@ -687,6 +718,7 @@
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Ventas: contado vs fiado</h3><canvas id="chart-tipos" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Ganancia vs Gastos (7 días)</h3><canvas id="chart-ganancia" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Abonos últimos 7 días</h3><canvas id="chart-abonos" height="200"></canvas></div>
+      <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">📈 Evolución de deudas (original vs abonado vs saldo)</h3><canvas id="chart-deudas" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Ventas por categoría</h3><canvas id="chart-categorias" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Gastos por categoría</h3><canvas id="chart-cat-gastos" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Historial de quincenas</h3><canvas id="chart-quincenas" height="200"></canvas></div>
@@ -725,12 +757,12 @@
     <div id="cliente-detalle"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn wsp" id="btn-wsp-cliente">📤 WhatsApp</button>
+      <button class="btn morado" id="btn-recordar-cliente">📱 Recordar deuda</button>
       <button class="btn gris" onclick="cerrarModal('modal-cliente')">Cerrar</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL ABONO -->
 <div class="modal" id="modal-abono">
   <div class="modal-contenido">
     <h3>💵 Registrar abono</h3>
@@ -758,7 +790,6 @@
   </div>
 </div>
 
-<!-- MODAL HISTORIAL DE ABONOS -->
 <div class="modal" id="modal-historial-abonos">
   <div class="modal-contenido">
     <h3>📜 Historial de abonos</h3>
@@ -769,7 +800,6 @@
   </div>
 </div>
 
-<!-- MODAL RECIBO ABONO -->
 <div class="modal" id="modal-recibo-abono">
   <div class="modal-contenido">
     <h3>🧾 Recibo de abono</h3>
@@ -782,7 +812,6 @@
   </div>
 </div>
 
-<!-- MODAL FOTO COMPLETA -->
 <div class="modal" id="modal-foto">
   <div class="modal-contenido" style="text-align:center;">
     <img id="foto-grande" class="comprobante-grande" alt="Comprobante">
@@ -792,7 +821,6 @@
   </div>
 </div>
 
-<!-- MODAL EDITAR DEUDA -->
 <div class="modal" id="modal-editar-deuda">
   <div class="modal-contenido">
     <h3>✏️ Editar deuda</h3>
@@ -806,7 +834,6 @@
   </div>
 </div>
 
-<!-- MODAL EDITAR VENTA -->
 <div class="modal" id="modal-editar-venta">
   <div class="modal-contenido">
     <h3>✏️ Editar venta fiada</h3>
@@ -825,6 +852,38 @@
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn verde" onclick="guardarEdicionVenta()">💾 Guardar cambios</button>
       <button class="btn gris" onclick="cerrarModal('modal-editar-venta')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FOTO CLIENTE -->
+<div class="modal" id="modal-foto-cliente">
+  <div class="modal-contenido">
+    <h3>👤 Foto del cliente</h3>
+    <div style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:14px;">
+      <div id="fc-nombre" style="font-weight:700;"></div>
+    </div>
+    <div class="foto-input-wrapper" onclick="document.getElementById('fc-foto').click()">
+      📸 Toca aquí para subir/tomar la foto
+    </div>
+    <input type="file" id="fc-foto" accept="image/*" capture="environment" style="display:none" onchange="procesarFotoCliente(event)">
+    <div id="fc-preview"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn verde" onclick="guardarFotoCliente()">💾 Guardar</button>
+      <button class="btn rojo" onclick="eliminarFotoCliente()">🗑️ Quitar foto</button>
+      <button class="btn gris" onclick="cerrarModal('modal-foto-cliente')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL REPORTE MENSUAL -->
+<div class="modal" id="modal-reporte">
+  <div class="modal-contenido" style="max-width:800px;">
+    <h3>📊 Reporte mensual</h3>
+    <div id="reporte-contenido"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn gris" onclick="cerrarModal('modal-reporte')">Cerrar</button>
     </div>
   </div>
 </div>
@@ -849,17 +908,20 @@ const auth = firebase.auth();
 
 let datos = {
   capital: 0, deudas: [], ventas: [], gastos: [], quincenas: [],
-  notas: [], inventario: [],
+  notas: [], inventario: [], fotosClientes: {},
   metas: { mensual: 0, quincenal: 0 },
   responsabilidades: { recibos:0, comida:0, arriendo:0, otros:0 }
 };
-let charts = { tipos:null, ganancia:null, abonos:null, categorias:null, catGastos:null, quincenas:null };
+let charts = { tipos:null, ganancia:null, abonos:null, deudas:null, categorias:null, catGastos:null, quincenas:null };
 let usuarioId = null;
 let sincronizando = false;
 let primeraCarga = true;
 let abonoActual = { tipo: null, indice: null };
 let fotoAbonoActual = null;
 let indiceEditando = null;
+let clienteFotoActual = null;
+let fotoClienteTemp = null;
+let ultimoBackup = null;
 
 // ---------- FORMATO PESOS COLOMBIANOS ----------
 function formato(n) {
@@ -867,7 +929,7 @@ function formato(n) {
   return "$" + num.toLocaleString("es-CO");
 }
 
-// ---------- HELPERS DE ABONOS ----------
+// ---------- HELPERS ABONOS ----------
 function calcularSaldo(item) {
   if (item.incobrable) return 0;
   const abonado = (item.abonos || []).reduce((s,a) => s + a.monto, 0);
@@ -996,6 +1058,26 @@ async function guardar() {
   }
 }
 
+// ---------- BACKUP AUTOMÁTICO ----------
+function backupAutomatico() {
+  try {
+    const hoy = new Date().toISOString().slice(0,10);
+    const clave = "backup_" + usuarioId + "_" + hoy;
+    if (localStorage.getItem(clave)) return;
+    localStorage.setItem(clave, JSON.stringify(datos));
+    // Limpiar backups viejos (más de 7 días)
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("backup_" + usuarioId + "_")) {
+        const fecha = k.split("_").pop();
+        const diff = (new Date(hoy) - new Date(fecha)) / (1000*60*60*24);
+        if (diff > 7) { localStorage.removeItem(k); i--; }
+      }
+    }
+    console.log("✅ Backup automático guardado:", clave);
+  } catch(e) { console.error("Error backup:", e); }
+}
+
 async function cargarDatos() {
   mostrarEstadoSync("cargando", "Cargando...");
   try {
@@ -1006,11 +1088,13 @@ async function cargarDatos() {
       if (!datos.notas) datos.notas = [];
       if (!datos.inventario) datos.inventario = [];
       if (!datos.gastos) datos.gastos = [];
+      if (!datos.fotosClientes) datos.fotosClientes = {};
       if (!datos.metas) datos.metas = { mensual: 0, quincenal: 0 };
       if (!datos.responsabilidades) datos.responsabilidades = { recibos:0, comida:0, arriendo:0, otros:0 };
       datos.deudas.forEach(d => { if (!d.abonos) d.abonos = []; });
       datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; });
       mostrarEstadoSync("ok", "Datos cargados");
+      backupAutomatico();
     } else {
       await guardar();
     }
@@ -1023,6 +1107,7 @@ async function cargarDatos() {
     const backup = localStorage.getItem("negocio_backup_" + usuarioId);
     if (backup) {
       datos = JSON.parse(backup);
+      if (!datos.fotosClientes) datos.fotosClientes = {};
       datos.deudas.forEach(d => { if (!d.abonos) d.abonos = []; });
       datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; });
       renderTodo();
@@ -1042,6 +1127,7 @@ function escucharCambios() {
       datos = nuevos;
       if (!datos.deudas) datos.deudas = [];
       if (!datos.ventas) datos.ventas = [];
+      if (!datos.fotosClientes) datos.fotosClientes = {};
       datos.deudas.forEach(d => { if (!d.abonos) d.abonos = []; });
       datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; });
       localStorage.setItem("negocio_backup_" + usuarioId, JSON.stringify(datos));
@@ -1076,6 +1162,7 @@ document.querySelectorAll("nav button").forEach(btn => {
     document.getElementById(btn.dataset.tab).classList.add("active");
     if (btn.dataset.tab === "estadisticas") renderCharts();
     if (btn.dataset.tab === "calendario") renderCalendario();
+    if (btn.dataset.tab === "ranking") renderRanking();
   });
 });
 
@@ -1088,6 +1175,7 @@ function mostrarAlerta(id, msg, tipo="ok") {
   el.textContent = msg; el.className = "alerta " + tipo;
   setTimeout(() => { el.className = "alerta"; }, 2500);
 }
+function cerrarModal(id) { document.getElementById(id).classList.remove("active"); }
 
 // ---------- CAPITAL ----------
 function guardarCapital() {
@@ -1120,13 +1208,9 @@ function marcarIncobrableDeuda(i) {
   const d = datos.deudas[i];
   if (!d) return;
   if (d.incobrable) {
-    if (confirm("¿Marcar como activa de nuevo?")) {
-      d.incobrable = false; guardar(); renderTodo();
-    }
+    if (confirm("¿Marcar como activa de nuevo?")) { d.incobrable = false; guardar(); renderTodo(); }
   } else {
-    if (confirm("¿Marcar como INCOBRABLE?\n\nSe quedará en la lista pero con saldo 0, sin perder el historial.")) {
-      d.incobrable = true; guardar(); renderTodo();
-    }
+    if (confirm("¿Marcar como INCOBRABLE?")) { d.incobrable = true; guardar(); renderTodo(); }
   }
 }
 function editarDeuda(i) {
@@ -1146,11 +1230,9 @@ function guardarEdicionDeuda() {
   if (!nombre || isNaN(monto) || monto <= 0) return alert("Completa nombre y monto válido");
   const abonado = calcularAbonado(d);
   if (monto < abonado) {
-    if (!confirm(`El monto total (${formato(monto)}) es menor que lo ya abonado (${formato(abonado)}).\n\n¿Continuar?`)) return;
+    if (!confirm(`El monto (${formato(monto)}) es menor que lo ya abonado (${formato(abonado)}).\n\n¿Continuar?`)) return;
   }
-  d.nombre = nombre;
-  d.monto = monto;
-  d.nota = nota;
+  d.nombre = nombre; d.monto = monto; d.nota = nota;
   guardar(); renderTodo();
   cerrarModal("modal-editar-deuda");
   alert("✅ Deuda actualizada");
@@ -1187,13 +1269,9 @@ function marcarIncobrableVenta(i) {
   const v = datos.ventas[i];
   if (!v || v.tipo !== "quincena") return;
   if (v.incobrable) {
-    if (confirm("¿Marcar como activa de nuevo?")) {
-      v.incobrable = false; guardar(); renderTodo();
-    }
+    if (confirm("¿Marcar como activa de nuevo?")) { v.incobrable = false; guardar(); renderTodo(); }
   } else {
-    if (confirm("¿Marcar como INCOBRABLE?\n\nSe quedará en la lista pero con saldo 0.")) {
-      v.incobrable = true; guardar(); renderTodo();
-    }
+    if (confirm("¿Marcar como INCOBRABLE?")) { v.incobrable = true; guardar(); renderTodo(); }
   }
 }
 function editarVenta(i) {
@@ -1222,12 +1300,8 @@ function guardarEdicionVenta() {
   if (precio < abonado) {
     if (!confirm(`El precio (${formato(precio)}) es menor que lo abonado (${formato(abonado)}).\n\n¿Continuar?`)) return;
   }
-  v.producto = producto;
-  v.categoria = categoria;
-  v.costo = costo;
-  v.precio = precio;
-  v.cliente = cliente;
-  v.quincena = quincena;
+  v.producto = producto; v.categoria = categoria; v.costo = costo;
+  v.precio = precio; v.cliente = cliente; v.quincena = quincena;
   guardar(); renderTodo();
   cerrarModal("modal-editar-venta");
   alert("✅ Venta actualizada");
@@ -1287,8 +1361,7 @@ function venderDelInventario(i) {
     producto: item.producto, categoria: item.categoria,
     costo: item.costo, precio: item.precio,
     tipo: tipo ? "contado" : "quincena",
-    cliente, quincena,
-    abonos: [], incobrable: false,
+    cliente, quincena, abonos: [], incobrable: false,
     fecha: new Date().toLocaleString("es-CO"),
     fechaISO: new Date().toISOString()
   });
@@ -1331,14 +1404,10 @@ function abrirModalAbono(tipo, indice) {
 function procesarFotoAbono(ev) {
   const file = ev.target.files[0];
   if (!file) return;
-  if (file.size > 3 * 1024 * 1024) {
-    alert("La imagen es muy grande (máx 3 MB). Se comprimirá automáticamente.");
-  }
   const reader = new FileReader();
   reader.onload = (e) => {
     const img = new Image();
     img.onload = () => {
-      // Comprimir imagen
       const canvas = document.createElement("canvas");
       const maxW = 600;
       const scale = Math.min(1, maxW / img.width);
@@ -1350,7 +1419,7 @@ function procesarFotoAbono(ev) {
       document.getElementById("abono-foto-preview").innerHTML = `
         <img src="${fotoAbonoActual}" class="foto-preview">
         <div style="font-size:0.8rem;color:var(--text-soft);margin-top:5px;text-align:center;">
-          📸 Comprobante cargado · <span style="color:#e74c3c;cursor:pointer;" onclick="quitarFotoAbono()">Quitar</span>
+          📸 Comprobante · <span style="color:#e74c3c;cursor:pointer;" onclick="quitarFotoAbono()">Quitar</span>
         </div>
       `;
     };
@@ -1358,7 +1427,6 @@ function procesarFotoAbono(ev) {
   };
   reader.readAsDataURL(file);
 }
-
 function quitarFotoAbono() {
   fotoAbonoActual = null;
   document.getElementById("abono-foto-preview").innerHTML = "";
@@ -1370,34 +1438,27 @@ function confirmarAbono() {
   if (!tipo || indice === null) return;
   const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
   if (!item) return;
-  const monto = parseFloat(document.getElementById("abono-monto").value);
+  let monto = parseFloat(document.getElementById("abono-monto").value);
   const nota = document.getElementById("abono-nota").value.trim();
   const saldoActual = calcularSaldo(item);
 
   if (isNaN(monto) || monto <= 0) return alert("Ingresa un monto válido");
   if (monto > saldoActual + 0.01) {
-    if (!confirm(`El abono (${formato(monto)}) es mayor que el saldo pendiente (${formato(saldoActual)}).\n\n¿Quieres abonar solo ${formato(saldoActual)}?`)) return;
+    if (!confirm(`El abono (${formato(monto)}) es mayor que el saldo (${formato(saldoActual)}).\n\n¿Abonar solo ${formato(saldoActual)}?`)) return;
     monto = saldoActual;
   }
-
   if (!item.abonos) item.abonos = [];
   const nuevoAbono = {
-    monto: monto,
-    nota: nota,
-    foto: fotoAbonoActual,
+    monto, nota, foto: fotoAbonoActual,
     fecha: new Date().toLocaleString("es-CO"),
     fechaISO: new Date().toISOString()
   };
   item.abonos.push(nuevoAbono);
-
-  guardar();
-  renderTodo();
+  guardar(); renderTodo();
   cerrarModal("modal-abono");
   mostrarEstadoSync("ok", "Abono registrado");
-
-  // Preguntar si quiere recibo
   setTimeout(() => {
-    if (confirm("¿Quieres generar el recibo del abono?")) {
+    if (confirm("¿Generar el recibo del abono?")) {
       mostrarReciboAbono(tipo, indice, nuevoAbono);
     }
   }, 400);
@@ -1433,9 +1494,9 @@ function verHistorialAbonos(tipo, indice) {
           <div class="fecha-abono">${a.fecha}</div>
           ${a.nota ? `<div style="font-size:0.8rem;color:var(--text-soft);margin-top:3px;">📝 ${a.nota}</div>` : ""}
         </div>
-        ${a.foto ? `<img src="${a.foto}" class="comprobante-mini" onclick="verFotoGrande('${a.foto}')" title="Ver comprobante">` : ""}
+        ${a.foto ? `<img src="${a.foto}" class="comprobante-mini" onclick="verFotoGrande('${a.foto}')">` : ""}
         <div style="display:flex;flex-direction:column;gap:4px;">
-          <button class="mini-btn azul" onclick="mostrarReciboAbono('${tipo}', ${indice}, ${JSON.stringify(a).replace(/"/g, '&quot;')})" title="Recibo">🧾</button>
+          <button class="mini-btn azul" onclick="reciboDesdeHistorial('${tipo}', ${indice}, ${realIdx})" title="Recibo">🧾</button>
           <button class="mini-btn" onclick="eliminarAbono('${tipo}', ${indice}, ${realIdx})" title="Eliminar">✕</button>
         </div>
       </div>
@@ -1443,6 +1504,19 @@ function verHistorialAbonos(tipo, indice) {
   }
   document.getElementById("historial-abonos-contenido").innerHTML = html;
   document.getElementById("modal-historial-abonos").classList.add("active");
+}
+
+function reciboDesdeHistorial(tipo, indice, abonoIdx) {
+  const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
+  if (!item || !item.abonos || !item.abonos[abonoIdx]) return;
+  const abono = item.abonos[abonoIdx];
+  // Calcular saldo justo después de ese abono
+  const abonosHasta = item.abonos.slice(0, abonoIdx + 1);
+  const abonadoHasta = abonosHasta.reduce((s,a) => s + a.monto, 0);
+  const total = item.monto || item.precio;
+  const saldoDespues = Math.max(0, total - abonadoHasta);
+  mostrarReciboAbonoCon(tipo, indice, abono, abonadoHasta, saldoDespues);
+  cerrarModal("modal-historial-abonos");
 }
 
 function verFotoGrande(src) {
@@ -1455,8 +1529,7 @@ function eliminarAbono(tipo, itemIdx, abonoIdx) {
   const item = tipo === "deuda" ? datos.deudas[itemIdx] : datos.ventas[itemIdx];
   if (!item || !item.abonos) return;
   item.abonos.splice(abonoIdx, 1);
-  guardar();
-  renderTodo();
+  guardar(); renderTodo();
   cerrarModal("modal-historial-abonos");
   mostrarEstadoSync("ok", "Abono eliminado");
 }
@@ -1468,6 +1541,13 @@ function mostrarReciboAbono(tipo, indice, abono) {
   const total = item.monto || item.precio;
   const abonado = calcularAbonado(item);
   const saldo = calcularSaldo(item);
+  mostrarReciboAbonoCon(tipo, indice, abono, abonado, saldo);
+}
+
+function mostrarReciboAbonoCon(tipo, indice, abono, abonadoTotal, saldo) {
+  const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
+  if (!item) return;
+  const total = item.monto || item.precio;
   const nombre = tipo === "deuda" ? item.nombre : item.cliente;
   const producto = tipo === "deuda" ? (item.nota || "Préstamo") : item.producto;
 
@@ -1484,7 +1564,7 @@ function mostrarReciboAbono(tipo, indice, abono) {
       </div>
       <div style="margin-top:12px;">
         <div>Total de la deuda: <b>${formato(total)}</b></div>
-        <div>Total abonado: <b style="color:#27ae60;">${formato(abonado)}</b></div>
+        <div>Total abonado: <b style="color:#27ae60;">${formato(abonadoTotal)}</b></div>
         <div style="background:#ffebee;padding:8px;border-radius:6px;margin-top:8px;">
           <b>SALDO PENDIENTE:</b> <span style="color:#c62828;font-size:1.2rem;font-weight:700;">${formato(saldo)}</span>
         </div>
@@ -1494,7 +1574,7 @@ function mostrarReciboAbono(tipo, indice, abono) {
       Recibí conforme · Firma: _______________________
     </div>
   `;
-  document.getElementById("btn-wsp-recibo-abono").onclick = () => compartirReciboAbonoWsp(nombre, producto, abono, total, abonado, saldo);
+  document.getElementById("btn-wsp-recibo-abono").onclick = () => compartirReciboAbonoWsp(nombre, producto, abono, total, abonadoTotal, saldo);
   document.getElementById("modal-recibo-abono").classList.add("active");
 }
 
@@ -1579,9 +1659,7 @@ RESPONSABILIDADES:
   Otros:            -${formato(r.otros)}
   Total:            -${formato(totalResp)}
 ━━━━━━━━━━━━━━━━━━━━━━━━━
-💰 RESTANTE:         ${formato(restante)}
-
-⚠️ Las ventas fiadas con saldo pendiente NO se eliminan.`;
+💰 RESTANTE:         ${formato(restante)}`;
   if (!confirm(resumen + "\n\n¿Cerrar esta quincena?")) return;
   datos.quincenas.push({
     fecha: new Date().toLocaleString("es-CO"),
@@ -1589,7 +1667,6 @@ RESPONSABILIDADES:
     cobradoFiado, gananciaFiado,
     responsabilidades: {...r}, totalResp, restante
   });
-  // Eliminar solo las ventas fiadas totalmente pagadas
   datos.ventas = datos.ventas.filter(v => !(v.tipo === "quincena" && v.quincena === q && estaPagada(v)));
   guardar();
   document.getElementById("q-sueldo").value = "";
@@ -1598,7 +1675,6 @@ RESPONSABILIDADES:
   document.getElementById("modal-contenido-texto").textContent = resumen;
   document.getElementById("modal-cierre").classList.add("active");
 }
-function cerrarModal(id) { document.getElementById(id).classList.remove("active"); }
 
 // ---------- RECIBO VENTA ----------
 function verRecibo(idx) {
@@ -1657,13 +1733,26 @@ function agruparClientes() {
   });
   return Object.values(mapa).sort((a,b) => (b.fiadoPendiente||0) - (a.fiadoPendiente||0));
 }
+
 function verCliente(nombre) {
   const ventasC = datos.ventas.map((v,i)=>({...v, idx:i})).filter(v => v.cliente === nombre);
   const deudasC = datos.deudas.map((d,i)=>({...d, idx:i})).filter(d => d.nombre === nombre);
   const totalFiado = ventasC.filter(v=>v.tipo==="quincena").reduce((s,v)=>s+calcularSaldo(v),0);
   const totalDeuda = deudasC.reduce((s,d)=>s+calcularSaldo(d),0);
+  const foto = datos.fotosClientes[nombre];
+
   document.getElementById("cliente-detalle").innerHTML = `
-    <h2 style="margin-bottom:10px;border-bottom:2px solid #667eea;padding-bottom:6px;">${nombre}</h2>
+    <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px;">
+      <div class="avatar" style="width:70px;height:70px;font-size:1.8rem;">
+        ${foto ? `<img src="${foto}">` : nombre.charAt(0).toUpperCase()}
+      </div>
+      <div style="flex:1;">
+        <h2 style="margin:0;border:none;padding:0;">${nombre}</h2>
+        <button class="btn morado" style="padding:6px 12px;font-size:0.8rem;margin-top:6px;" onclick="abrirFotoCliente('${nombre.replace(/'/g,"\\'")}')">
+          📸 ${foto ? "Cambiar foto" : "Agregar foto"}
+        </button>
+      </div>
+    </div>
     <div style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:12px;">
       <div><b>Saldo fiado:</b> <span style="color:#e74c3c;">${formato(totalFiado)}</span></div>
       <div><b>Saldo deuda aparte:</b> <span style="color:#e74c3c;">${formato(totalDeuda)}</span></div>
@@ -1698,14 +1787,133 @@ function verCliente(nombre) {
       }).join("")}
   `;
   document.getElementById("btn-wsp-cliente").onclick = () => compartirClienteWsp(nombre, totalFiado, totalDeuda);
+  document.getElementById("btn-recordar-cliente").onclick = () => recordarClienteWsp(nombre, totalFiado, totalDeuda, ventasC.filter(v=>v.tipo==="quincena"));
   document.getElementById("modal-cliente").classList.add("active");
 }
+
 function compartirClienteWsp(nombre, fiado, deuda) {
   const msg = `👤 *Estado de cuenta: ${nombre}*\n\n` +
               `📦 Saldo fiado: ${formato(fiado)}\n` +
               `💵 Saldo deuda aparte: ${formato(deuda)}\n` +
               `━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR: ${formato(fiado + deuda)}*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+function recordarClienteWsp(nombre, fiado, deuda, ventas) {
+  let msg = `¡Hola ${nombre}! 👋\n\n`;
+  msg += `Te recuerdo amablemente que tienes un saldo pendiente conmigo:\n\n`;
+  if (fiado > 0) msg += `📦 Productos fiados: *${formato(fiado)}*\n`;
+  if (deuda > 0) msg += `💵 Préstamo aparte: *${formato(deuda)}*\n`;
+  msg += `━━━━━━━━━━━━━━\n`;
+  msg += `💰 *TOTAL: ${formato(fiado + deuda)}*\n\n`;
+  msg += `Cuando puedas, te agradezco mucho el pago. ¡Gracias! 🙏`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+// ---------- FOTO CLIENTE ----------
+function abrirFotoCliente(nombre) {
+  clienteFotoActual = nombre;
+  fotoClienteTemp = datos.fotosClientes[nombre] || null;
+  document.getElementById("fc-nombre").textContent = nombre;
+  document.getElementById("fc-preview").innerHTML = fotoClienteTemp
+    ? `<img src="${fotoClienteTemp}" class="foto-preview">`
+    : '<div class="vacio">Sin foto</div>';
+  document.getElementById("modal-foto-cliente").classList.add("active");
+}
+
+function procesarFotoCliente(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const maxW = 300;
+      const scale = Math.min(1, maxW / img.width);
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      fotoClienteTemp = canvas.toDataURL("image/jpeg", 0.7);
+      document.getElementById("fc-preview").innerHTML = `<img src="${fotoClienteTemp}" class="foto-preview">`;
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function guardarFotoCliente() {
+  if (!clienteFotoActual || !fotoClienteTemp) return alert("Selecciona una foto primero");
+  datos.fotosClientes[clienteFotoActual] = fotoClienteTemp;
+  guardar(); renderTodo();
+  cerrarModal("modal-foto-cliente");
+  setTimeout(() => verCliente(clienteFotoActual), 300);
+  alert("✅ Foto guardada");
+}
+
+function eliminarFotoCliente() {
+  if (!clienteFotoActual) return;
+  if (!confirm("¿Quitar la foto de este cliente?")) return;
+  delete datos.fotosClientes[clienteFotoActual];
+  guardar(); renderTodo();
+  cerrarModal("modal-foto-cliente");
+  setTimeout(() => verCliente(clienteFotoActual), 300);
+}
+
+// ---------- RANKING ----------
+function renderRanking() {
+  const clientes = agruparClientes().filter(c => c.nombre && c.nombre !== "Contado" && c.nombre !== "Cliente");
+  // Calcular "cumplimiento": ratio abonado / vendido
+  const clientesConDatos = clientes.map(c => {
+    // Buscar todas las ventas de ese cliente
+    const ventasC = datos.ventas.filter(v => v.cliente === c.nombre && v.tipo === "quincena");
+    const deudasC = datos.deudas.filter(d => d.nombre === c.nombre);
+    const totalVendido = ventasC.reduce((s,v) => s + v.precio, 0) + deudasC.reduce((s,d) => s + d.monto, 0);
+    const totalAbonado = ventasC.reduce((s,v) => s + calcularAbonado(v), 0) + deudasC.reduce((s,d) => s + calcularAbonado(d), 0);
+    const saldoActual = c.fiadoPendiente + (c.deudaAparte || 0);
+    const cumplimiento = totalVendido > 0 ? (totalAbonado / totalVendido) * 100 : 0;
+    return {...c, totalVendido, totalAbonado, saldoActual, cumplimiento};
+  });
+
+  // Top 5 más cumplidos (mayor % y al menos algo de historia)
+  const buenos = clientesConDatos
+    .filter(c => c.totalVendido > 0)
+    .sort((a,b) => b.cumplimiento - a.cumplimiento)
+    .slice(0, 5);
+
+  // Top 5 más morosos (mayor saldo pendiente)
+  const malos = clientesConDatos
+    .filter(c => c.saldoActual > 0)
+    .sort((a,b) => b.saldoActual - a.saldoActual)
+    .slice(0, 5);
+
+  const medal = ["🥇","🥈","🥉","4️⃣","5️⃣"];
+  const rb = document.getElementById("ranking-buenos");
+  if (buenos.length === 0) rb.innerHTML = '<div class="vacio">Sin datos suficientes</div>';
+  else rb.innerHTML = buenos.map((c,i) => `
+    <div class="ranking-card ${i===0?'oro':i===1?'plata':i===2?'bronce':''}">
+      <div class="pos">${medal[i]}</div>
+      <div class="info-r">
+        <div class="nombre-r">${c.nombre}</div>
+        <div class="detalle-r">Ha abonado ${formato(c.totalAbonado)} de ${formato(c.totalVendido)}</div>
+      </div>
+      <div class="monto-r">${c.cumplimiento.toFixed(0)}%</div>
+    </div>
+  `).join("");
+
+  const rm = document.getElementById("ranking-malos");
+  if (malos.length === 0) rm.innerHTML = '<div class="vacio">¡Nadie debe! 🎉</div>';
+  else rm.innerHTML = malos.map((c,i) => `
+    <div class="ranking-card malo">
+      <div class="pos">${i+1}</div>
+      <div class="info-r">
+        <div class="nombre-r">${c.nombre}</div>
+        <div class="detalle-r">Saldo pendiente</div>
+      </div>
+      <div class="monto-r" style="color:#e74c3c;">${formato(c.saldoActual)}</div>
+    </div>
+  `).join("");
 }
 
 // ---------- AVISO QUINCENA ----------
@@ -1852,6 +2060,98 @@ function todosLosAbonos() {
   return lista.sort((a,b) => new Date(b.fechaISO||0) - new Date(a.fechaISO||0));
 }
 
+// ---------- REPORTE MENSUAL ----------
+function abrirReporteMensual() {
+  const hoy = new Date();
+  const mesActual = hoy.getMonth();
+  const anioActual = hoy.getFullYear();
+  const nombreMes = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"][mesActual];
+
+  const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === mesActual && new Date(v.fechaISO).getFullYear() === anioActual);
+  const gastosMes = datos.gastos.filter(g => g.fechaISO && new Date(g.fechaISO).getMonth() === mesActual && new Date(g.fechaISO).getFullYear() === anioActual);
+  const abonosMes = todosLosAbonos().filter(a => a.fechaISO && new Date(a.fechaISO).getMonth() === mesActual && new Date(a.fechaISO).getFullYear() === anioActual);
+  const quincenasMes = datos.quincenas.filter(h => new Date(h.fecha.split(",")[0].split("/").reverse().join("-")).getMonth() === mesActual);
+
+  const totalVentas = ventasMes.reduce((s,v) => s + v.precio, 0);
+  const totalContado = ventasMes.filter(v => v.tipo==="contado").reduce((s,v) => s + v.precio, 0);
+  const totalFiado = ventasMes.filter(v => v.tipo==="quincena").reduce((s,v) => s + v.precio, 0);
+  const gananciaTotal = ventasMes.reduce((s,v) => s + (v.precio - v.costo), 0);
+  const totalGastos = gastosMes.reduce((s,g) => s + g.monto, 0);
+  const totalAbonos = abonosMes.reduce((s,a) => s + a.monto, 0);
+  const balance = gananciaTotal - totalGastos;
+
+  // Top categorías
+  const catVentas = {};
+  ventasMes.forEach(v => { const c = v.categoria || "General"; catVentas[c] = (catVentas[c] || 0) + v.precio; });
+  const topCat = Object.entries(catVentas).sort((a,b) => b[1]-a[1]).slice(0,5);
+
+  const catGastos = {};
+  gastosMes.forEach(g => { const c = g.categoria || "Otros"; catGastos[c] = (catGastos[c] || 0) + g.monto; });
+  const topCatG = Object.entries(catGastos).sort((a,b) => b[1]-a[1]).slice(0,5);
+
+  document.getElementById("reporte-contenido").innerHTML = `
+    <div style="text-align:center;margin-bottom:20px;">
+      <h2 style="margin:0;border:none;font-size:1.5rem;">📊 Reporte de ${nombreMes} ${anioActual}</h2>
+      <div style="color:var(--text-soft);font-size:0.9rem;">Generado: ${new Date().toLocaleString("es-CO")}</div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:16px;border-radius:10px;margin-bottom:16px;text-align:center;">
+      <div style="font-size:0.9rem;opacity:0.9;">BALANCE DEL MES</div>
+      <div style="font-size:2rem;font-weight:800;">${formato(balance)}</div>
+      <div style="font-size:0.85rem;opacity:0.9;margin-top:4px;">${balance >= 0 ? "🎉 Positivo" : "⚠️ Negativo"}</div>
+    </div>
+
+    <h3 style="font-size:1rem;margin:16px 0 8px;">💰 Ventas</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+      <tr><td style="padding:6px 0;">Total ventas</td><td style="text-align:right;font-weight:700;">${formato(totalVentas)}</td></tr>
+      <tr><td style="padding:6px 0;">Contado</td><td style="text-align:right;color:#27ae60;font-weight:700;">${formato(totalContado)}</td></tr>
+      <tr><td style="padding:6px 0;">Fiado</td><td style="text-align:right;color:#e67e22;font-weight:700;">${formato(totalFiado)}</td></tr>
+      <tr><td style="padding:6px 0;">Número de ventas</td><td style="text-align:right;">${ventasMes.length}</td></tr>
+      <tr style="border-top:1px solid var(--border);"><td style="padding:8px 0;font-weight:700;">Ganancia</td><td style="text-align:right;color:#27ae60;font-weight:700;">${formato(gananciaTotal)}</td></tr>
+    </table>
+
+    <h3 style="font-size:1rem;margin:16px 0 8px;">💵 Abonos recibidos</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+      <tr><td style="padding:6px 0;">Total abonado</td><td style="text-align:right;color:#27ae60;font-weight:700;">${formato(totalAbonos)}</td></tr>
+      <tr><td style="padding:6px 0;">Número de abonos</td><td style="text-align:right;">${abonosMes.length}</td></tr>
+    </table>
+
+    <h3 style="font-size:1rem;margin:16px 0 8px;">💸 Gastos</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+      <tr><td style="padding:6px 0;">Total gastos</td><td style="text-align:right;color:#e74c3c;font-weight:700;">${formato(totalGastos)}</td></tr>
+      <tr><td style="padding:6px 0;">Número de gastos</td><td style="text-align:right;">${gastosMes.length}</td></tr>
+    </table>
+
+    ${topCat.length > 0 ? `
+      <h3 style="font-size:1rem;margin:16px 0 8px;">🏆 Top categorías vendidas</h3>
+      ${topCat.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;">
+        <span>${c}</span><span style="font-weight:700;">${formato(v)}</span>
+      </div>`).join("")}
+    ` : ""}
+
+    ${topCatG.length > 0 ? `
+      <h3 style="font-size:1rem;margin:16px 0 8px;">🏷️ Top categorías de gastos</h3>
+      ${topCatG.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;">
+        <span>${c}</span><span style="font-weight:700;color:#e74c3c;">${formato(v)}</span>
+      </div>`).join("")}
+    ` : ""}
+
+    <h3 style="font-size:1rem;margin:16px 0 8px;">📋 Situación actual</h3>
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+      <tr><td style="padding:6px 0;">Saldo por cobrar (deudas)</td><td style="text-align:right;color:#e74c3c;font-weight:700;">${formato(totalSaldoDeudas())}</td></tr>
+      <tr><td style="padding:6px 0;">Saldo fiado Q15</td><td style="text-align:right;color:#e74c3c;font-weight:700;">${formato(totalSaldoFiadoQ("15"))}</td></tr>
+      <tr><td style="padding:6px 0;">Saldo fiado Q30</td><td style="text-align:right;color:#e74c3c;font-weight:700;">${formato(totalSaldoFiadoQ("30"))}</td></tr>
+      <tr><td style="padding:6px 0;">Valor inventario</td><td style="text-align:right;font-weight:700;">${formato(datos.inventario.reduce((s,i)=>s+(i.costo*i.cantidad),0))}</td></tr>
+      <tr><td style="padding:6px 0;">Capital actual</td><td style="text-align:right;font-weight:700;">${formato(datos.capital)}</td></tr>
+    </table>
+
+    <div style="margin-top:24px;text-align:center;color:var(--text-soft);font-size:0.8rem;">
+      Mi Negocio · Reporte generado automáticamente
+    </div>
+  `;
+  document.getElementById("modal-reporte").classList.add("active");
+}
+
 // ---------- RENDER ----------
 function renderTodo() {
   document.getElementById("r-capital").textContent = formato(datos.capital);
@@ -1868,7 +2168,6 @@ function renderTodo() {
     .reduce((s,g) => s + g.monto, 0);
   document.getElementById("r-gastos").textContent = formato(gastosMes);
 
-  // Abonado este mes
   const abonos = todosLosAbonos();
   const abonadoMes = abonos
     .filter(a => a.fechaISO && new Date(a.fechaISO).getMonth() === hoy.getMonth() && new Date(a.fechaISO).getFullYear() === hoy.getFullYear())
@@ -1893,7 +2192,7 @@ function renderTodo() {
       <div class="monto">${formato(v.precio)}</div>
     </div>`).join("");
 
-  // LISTA DE DEUDAS
+  // DEUDAS
   const ld = document.getElementById("lista-deudas");
   if (datos.deudas.length === 0) ld.innerHTML = '<div class="vacio">Sin deudas</div>';
   else ld.innerHTML = datos.deudas.map((d,i)=>{
@@ -1919,13 +2218,13 @@ function renderTodo() {
         ${!pagada && !incobrable ? `<button class="mini-btn verde" onclick="abrirModalAbono('deuda', ${i})" title="Abonar">💵</button>` : ""}
         <button class="mini-btn azul" onclick="verHistorialAbonos('deuda', ${i})" title="Historial">📜</button>
         <button class="mini-btn naranja" onclick="editarDeuda(${i})" title="Editar">✏️</button>
-        <button class="mini-btn gris" onclick="marcarIncobrableDeuda(${i})" title="${incobrable?'Marcar activa':'Marcar incobrable'}">${incobrable?'♻️':'🚫'}</button>
+        <button class="mini-btn gris" onclick="marcarIncobrableDeuda(${i})" title="${incobrable?'Activa':'Incobrable'}">${incobrable?'♻️':'🚫'}</button>
         <button class="mini-btn" onclick="eliminarDeuda(${i})" title="Eliminar">✕</button>
       </div>
     </div>`;
   }).join("");
 
-  // LISTA DE VENTAS
+  // VENTAS
   const busq = (document.getElementById("buscar-venta")?.value || "").toLowerCase();
   const lv = document.getElementById("lista-ventas");
   const ventasFiltradas = datos.ventas.map((v,i)=>({...v, realIdx:i}))
@@ -1942,9 +2241,9 @@ function renderTodo() {
       ${!pagada && !incobrable ? `<button class="mini-btn verde" onclick="abrirModalAbono('venta', ${v.realIdx})" title="Abonar">💵</button>` : ""}
       <button class="mini-btn azul" onclick="verHistorialAbonos('venta', ${v.realIdx})" title="Historial">📜</button>
       <button class="mini-btn naranja" onclick="editarVenta(${v.realIdx})" title="Editar">✏️</button>
-      ${!pagada ? `<button class="mini-btn gris" onclick="marcarIncobrableVenta(${v.realIdx})" title="${incobrable?'Marcar activa':'Marcar incobrable'}">${incobrable?'♻️':'🚫'}</button>` : ""}
+      ${!pagada ? `<button class="mini-btn gris" onclick="marcarIncobrableVenta(${v.realIdx})" title="${incobrable?'Activa':'Incobrable'}">${incobrable?'♻️':'🚫'}</button>` : ""}
       <button class="mini-btn wsp" onclick="compartirReciboWsp(datos.ventas[${v.realIdx}])" title="WhatsApp">📤</button>
-      <button class="mini-btn azul" onclick="verRecibo(${v.realIdx})" title="Ver recibo">🧾</button>
+      <button class="mini-btn azul" onclick="verRecibo(${v.realIdx})" title="Recibo">🧾</button>
     ` : "";
     return `
     <div class="card ${v.tipo==="quincena"?"":"rojo-l"} ${pagada?'pagada':''} ${incobrable?'incobrable':''}">
@@ -1997,19 +2296,28 @@ function renderTodo() {
   const filtrados = clientes.filter(c => !busqC || c.nombre.toLowerCase().includes(busqC));
   const lc = document.getElementById("lista-clientes-view");
   if (filtrados.length === 0) lc.innerHTML = '<div class="vacio">Sin clientes</div>';
-  else lc.innerHTML = filtrados.map(c=>`
-    <div class="cliente-card"><div class="nombre">👤 ${c.nombre}</div>
-      <div class="stats">
-        <span>Saldo fiado: <b class="deuda-actual">${formato(c.fiadoPendiente||0)}</b></span>
-        ${c.deudaAparte ? `<span>Deuda aparte: <b class="deuda-actual">${formato(c.deudaAparte)}</b></span>` : ""}
-        <span>Compras: ${c.compras||0}</span>
+  else lc.innerHTML = filtrados.map(c=>{
+    const foto = datos.fotosClientes[c.nombre];
+    return `
+    <div class="cliente-card">
+      <div class="avatar">${foto ? `<img src="${foto}">` : c.nombre.charAt(0).toUpperCase()}</div>
+      <div class="cuerpo">
+        <div class="nombre">👤 ${c.nombre}</div>
+        <div class="stats">
+          <span>Saldo fiado: <b class="deuda-actual">${formato(c.fiadoPendiente||0)}</b></span>
+          ${c.deudaAparte ? `<span>Deuda aparte: <b class="deuda-actual">${formato(c.deudaAparte)}</b></span>` : ""}
+          <span>Compras: ${c.compras||0}</span>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="btn azul" style="padding:6px 12px;font-size:0.8rem;" onclick="verCliente('${c.nombre.replace(/'/g,"\\'")}')">Ver detalle</button>
+          <button class="btn wsp" style="padding:6px 12px;font-size:0.8rem;" onclick="compartirClienteWsp('${c.nombre.replace(/'/g,"\\'")}', ${c.fiadoPendiente||0}, ${c.deudaAparte||0})">📤 WhatsApp</button>
+          <button class="btn morado" style="padding:6px 12px;font-size:0.8rem;" onclick="recordarClienteWsp('${c.nombre.replace(/'/g,"\\'")}', ${c.fiadoPendiente||0}, ${c.deudaAparte||0}, [])">📱 Recordar</button>
+        </div>
       </div>
-      <div style="margin-top:8px;">
-        <button class="btn azul" style="padding:8px 14px;font-size:0.85rem;" onclick="verCliente('${c.nombre.replace(/'/g,"\\'")}')">Ver detalle</button>
-        <button class="btn wsp" style="padding:8px 14px;font-size:0.85rem;" onclick="compartirClienteWsp('${c.nombre.replace(/'/g,"\\'")}', ${c.fiadoPendiente||0}, ${c.deudaAparte||0})">📤 WhatsApp</button>
-      </div></div>`).join("");
+    </div>`;
+  }).join("");
 
-  // LISTA COMPLETA DE ABONOS
+  // ABONOS
   const busqA = (document.getElementById("buscar-abono")?.value || "").toLowerCase();
   const abonosFiltrados = abonos.filter(a => !busqA || a.nombre.toLowerCase().includes(busqA) || a.concepto.toLowerCase().includes(busqA));
   const abonadoAnio = abonos
@@ -2111,7 +2419,7 @@ function renderCharts() {
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
 
-  // Gráfico abonos últimos 7 días
+  // Abonos
   const diasAbonos = {};
   for (let i=6; i>=0; i--) { const d = new Date(); d.setDate(d.getDate()-i); diasAbonos[d.toLocaleDateString("es-CO")] = 0; }
   todosLosAbonos().forEach(a => {
@@ -2125,6 +2433,30 @@ function renderCharts() {
     data: { labels: Object.keys(diasAbonos), datasets: [{ label: "Abonos", data: Object.values(diasAbonos), backgroundColor: "#667eea" }] },
     options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
+  });
+
+  // Evolución de deudas
+  const totalOriginal = datos.deudas.reduce((s,d) => s + d.monto, 0) +
+                        datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + v.precio, 0);
+  const totalAbonado = datos.deudas.reduce((s,d) => s + calcularAbonado(d), 0) +
+                       datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + calcularAbonado(v), 0);
+  const totalSaldo = datos.deudas.reduce((s,d) => s + calcularSaldo(d), 0) +
+                     datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + calcularSaldo(v), 0);
+  if (charts.deudas) charts.deudas.destroy();
+  charts.deudas = new Chart(document.getElementById("chart-deudas"), {
+    type: "bar",
+    data: {
+      labels: ["Deuda original", "Abonado", "Saldo pendiente"],
+      datasets: [{
+        data: [totalOriginal, totalAbonado, totalSaldo],
+        backgroundColor: ["#667eea", "#27ae60", "#e74c3c"]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } }
+    }
   });
 
   const cats = {};
@@ -2178,6 +2510,7 @@ function importar(ev) {
       if (!datos.notas) datos.notas = [];
       if (!datos.inventario) datos.inventario = [];
       if (!datos.gastos) datos.gastos = [];
+      if (!datos.fotosClientes) datos.fotosClientes = {};
       if (!datos.metas) datos.metas = { mensual: 0, quincenal: 0 };
       datos.deudas.forEach(d => { if (!d.abonos) d.abonos = []; });
       datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; });
