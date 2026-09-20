@@ -28,7 +28,6 @@
     --orange: #e67e22;
     --blue: #2980b9;
     --purple: #8e44ad;
-
     --bg: #f8f9fb;
     --card-bg: #ffffff;
     --text: #2c2c2c;
@@ -60,37 +59,30 @@
     --shadow: 0 4px 20px rgba(0,0,0,0.4);
     --header-bg-solid: #0a0a0f;
   }
-
-  /* TEMAS DE COLORES */
   body.tema-rosa {
     --gold: #e91e63;
     --gold-soft: #f8bbd0;
     --gold-dark: #c2185b;
     --header-bg: linear-gradient(135deg, #2c2c2c 0%, #4a1f30 100%);
-    --header-bg-solid: #2c2c2c;
   }
   body.tema-verde {
     --gold: #27ae60;
     --gold-soft: #81c784;
     --gold-dark: #1e8449;
     --header-bg: linear-gradient(135deg, #1a2f1a 0%, #2c4a2c 100%);
-    --header-bg-solid: #1a2f1a;
   }
   body.tema-azul {
     --gold: #2980b9;
     --gold-soft: #85c1e9;
     --gold-dark: #1a5276;
     --header-bg: linear-gradient(135deg, #0a1a2c 0%, #1a2c4a 100%);
-    --header-bg-solid: #0a1a2c;
   }
   body.tema-morado {
     --gold: #8e44ad;
     --gold-soft: #d7bde2;
     --gold-dark: #6c3483;
     --header-bg: linear-gradient(135deg, #1a0a2c 0%, #2c1a4a 100%);
-    --header-bg-solid: #1a0a2c;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body {
     font-family: 'Segoe UI', -apple-system, Arial, sans-serif;
@@ -98,8 +90,6 @@
     min-height: 100vh; padding: 16px; color: var(--text);
     transition: background 0.3s, color 0.3s;
   }
-
-  /* ══════════════ LOGIN ══════════════ */
   .login-screen {
     position: fixed; inset: 0;
     background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 40%, #c9a227 150%);
@@ -196,8 +186,6 @@
     text-decoration: none; font-weight: 600;
   }
   .login-box .toggle:hover { text-decoration: underline; }
-
-  /* PIN SCREEN */
   .pin-screen {
     position: fixed; inset: 0;
     background: rgba(26,26,26,0.98);
@@ -231,11 +219,8 @@
     cursor: pointer; transition: 0.15s;
   }
   .pin-btn:hover { background: rgba(201,162,39,0.2); transform: scale(1.05);}
-  .pin-btn:active { transform: scale(0.95);}
   .pin-btn.vacio { background: transparent; border-color: transparent; cursor: default;}
   .pin-error { color: #e74c3c; font-size: 0.9rem; height: 20px;}
-
-  /* ══════════════ APP ══════════════ */
   .app {
     max-width: 1200px; margin: 0 auto;
     background: var(--card-bg); border-radius: 20px;
@@ -245,7 +230,6 @@
   }
   .app.visible { display: block; animation: fadeIn 0.4s; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to {opacity:1;} }
-
   header {
     background: var(--header-bg); color: white;
     padding: 22px 20px 20px; text-align: center; position: relative;
@@ -258,7 +242,6 @@
   header h1 {
     font-family: Georgia, serif;
     font-size: 1.5rem; letter-spacing: 2px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
   header h1 .brand-mini {
     background: linear-gradient(135deg, var(--gold-soft), var(--gold));
@@ -275,7 +258,6 @@
     background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
     color: white; padding: 8px 10px; border-radius: 10px;
     cursor: pointer; font-size: 1rem; transition: 0.2s;
-    backdrop-filter: blur(10px);
     position: relative;
   }
   .icon-btn:hover {
@@ -296,7 +278,6 @@
     min-width: 18px; text-align: center;
   }
   .icon-btn .badge-notif.zero { display: none; }
-
   nav {
     display: flex; flex-wrap: wrap;
     background: var(--nav-bg); border-bottom: 2px solid var(--border);
@@ -320,7 +301,6 @@
     content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 2px;
     background: var(--gold); border-radius: 2px;
   }
-
   .contenido { padding: 24px; }
   .seccion { display: none; }
   .seccion.active { display: block; animation: fade 0.3s; }
@@ -365,18 +345,16 @@
     box-shadow: 0 3px 10px rgba(201,162,39,0.25);
   }
   .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(201,162,39,0.35);}
-  .btn:active { transform: translateY(0); }
-  .btn.verde { background: linear-gradient(135deg, #2ecc71, var(--green)); box-shadow: 0 3px 10px rgba(39,174,96,0.3);}
-  .btn.rojo { background: linear-gradient(135deg, #ec7063, var(--red)); box-shadow: 0 3px 10px rgba(231,76,60,0.3);}
-  .btn.gris { background: linear-gradient(135deg, #b0b0b0, #95a5a6); box-shadow: 0 3px 10px rgba(149,165,166,0.3);}
-  .btn.azul { background: linear-gradient(135deg, #3498db, var(--blue)); box-shadow: 0 3px 10px rgba(41,128,185,0.3);}
-  .btn.wsp { background: linear-gradient(135deg, #2ecc71, #25D366); box-shadow: 0 3px 10px rgba(37,211,102,0.3);}
-  .btn.naranja { background: linear-gradient(135deg, #f39c12, var(--orange)); box-shadow: 0 3px 10px rgba(230,126,34,0.3);}
-  .btn.morado { background: linear-gradient(135deg, #9b59b6, var(--purple)); box-shadow: 0 3px 10px rgba(142,68,173,0.3);}
+  .btn.verde { background: linear-gradient(135deg, #2ecc71, var(--green)); }
+  .btn.rojo { background: linear-gradient(135deg, #ec7063, var(--red)); }
+  .btn.gris { background: linear-gradient(135deg, #b0b0b0, #95a5a6); }
+  .btn.azul { background: linear-gradient(135deg, #3498db, var(--blue)); }
+  .btn.wsp { background: linear-gradient(135deg, #2ecc71, #25D366); }
+  .btn.naranja { background: linear-gradient(135deg, #f39c12, var(--orange)); }
+  .btn.morado { background: linear-gradient(135deg, #9b59b6, var(--purple)); }
   .btn.pequeno { padding: 8px 14px; font-size: 0.85rem; }
   .fila { display: flex; gap: 12px; flex-wrap: wrap; }
   .fila > .campo { flex: 1; min-width: 180px; }
-
   .card {
     background: var(--card-item-bg); border-left: 4px solid var(--gold);
     padding: 14px 16px; border-radius: 12px;
@@ -410,7 +388,6 @@
   .card .mini-btn.naranja { background: var(--orange); }
   .card .mini-btn.gris { background: #95a5a6; }
   .card .mini-btn.morado { background: var(--purple); }
-
   .abono-info {
     font-size: 0.78rem; margin-top: 6px;
     display: flex; gap: 8px; flex-wrap: wrap;
@@ -435,7 +412,6 @@
     background: linear-gradient(90deg, var(--gold), var(--gold-dark));
     transition: width 0.5s;
   }
-
   .resumen-box {
     background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
     color: white; padding: 20px;
@@ -454,7 +430,6 @@
   .resumen-box .sub-box { position: relative;}
   .resumen-box .sub-box .lbl-mini { font-size: 0.75rem; opacity: 0.85; color: var(--gold-soft); text-transform: uppercase; letter-spacing: 1px;}
   .resumen-box .sub-box .num-mini { font-size: 1.4rem; font-weight: 800; margin-top: 4px;}
-
   .grid-resumen {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -477,7 +452,6 @@
   .alerta { padding: 12px; border-radius: 10px; margin-bottom: 12px; font-weight: 700; display: none; }
   .alerta.ok { background: #d4edda; color: #155724; display: block; }
   .alerta.err { background: #f8d7da; color: #721c24; display: block; }
-
   .aviso-quincena {
     background: linear-gradient(135deg, var(--orange), #d35400);
     color: white; padding: 16px 20px; border-radius: 14px;
@@ -487,19 +461,16 @@
     box-shadow: 0 6px 20px rgba(230,126,34,0.3);
   }
   .aviso-quincena .dias { font-size: 1.5rem; font-weight: 900; }
-
   .chart-container {
     background: var(--card-item-bg); border-radius: 14px;
     padding: 18px; margin-bottom: 20px;
     border: 2px solid var(--card-item-border);
   }
-
   .modal {
     display: none; position: fixed; inset: 0;
     background: rgba(0,0,0,0.7); z-index: 4000;
     justify-content: center; align-items: center;
     padding: 20px; overflow-y: auto;
-    backdrop-filter: blur(4px);
   }
   .modal.active { display: flex; animation: fadeIn 0.2s;}
   .modal-contenido {
@@ -524,8 +495,6 @@
     font-family: 'Courier New', monospace;
     line-height: 1.5;
   }
-
-  /* RECIBO */
   .recibo {
     background: white;
     padding: 24px;
@@ -587,25 +556,6 @@
     text-align: center; margin-top: 20px; padding-top: 14px;
     border-top: 1px dashed #ddd; font-size: 0.8rem; color: #999;
   }
-
-  /* RECIBO TÉRMICO 58mm */
-  .recibo-termico {
-    width: 58mm;
-    background: white;
-    color: #000;
-    padding: 6mm 3mm;
-    font-family: 'Courier New', monospace;
-    font-size: 11px;
-    line-height: 1.3;
-    margin: 0 auto;
-    border: 1px dashed #ccc;
-  }
-  .recibo-termico .centro { text-align: center; }
-  .recibo-termico .linea { border-top: 1px dashed #000; margin: 4px 0;}
-  .recibo-termico .fila-r { display: flex; justify-content: space-between;}
-  .recibo-termico .grande { font-size: 14px; font-weight: bold;}
-
-  /* OTROS */
   .abono-item {
     background: var(--card-item-bg);
     padding: 12px 14px; border-radius: 10px;
@@ -622,7 +572,6 @@
     object-fit: cover; border-radius: 8px;
     cursor: pointer; border: 2px solid var(--card-item-border);
   }
-
   .nota-item {
     background: linear-gradient(135deg, #fff9c4, #ffe082);
     color: #333; padding: 14px; border-radius: 10px;
@@ -634,7 +583,6 @@
   body.dark .nota-item { background: linear-gradient(135deg, #4a4000, #6b5d1f); color: #f0e68c; }
   .nota-item .texto { flex: 1; font-size: 0.95rem; }
   .nota-item .fecha { font-size: 0.72rem; opacity: 0.7; margin-top: 6px; }
-
   .cliente-card {
     background: var(--card-item-bg); border-radius: 12px;
     padding: 14px; margin-bottom: 10px;
@@ -659,8 +607,6 @@
   .cliente-card .nombre { font-weight: 800; color: var(--text-strong); font-size: 1.05rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;}
   .cliente-card .stats { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.83rem; color: var(--text-soft); margin-top: 6px;}
   .cliente-card .deuda-actual { color: var(--red); font-weight: 800; }
-
-  /* ETIQUETAS DE CLIENTES */
   .etiqueta-cliente {
     display: inline-block; padding: 3px 10px;
     border-radius: 12px; font-size: 0.68rem;
@@ -670,8 +616,7 @@
   .etiqueta-cliente.vip { background: linear-gradient(135deg, #f1c40f, #d4ac0d); color: #1a1a1a;}
   .etiqueta-cliente.moroso { background: var(--red); color: white;}
   .etiqueta-cliente.confiable { background: var(--green); color: white;}
-  .etiqueta-cliente.nuevo { background: var(--blue); color: white;}
-
+  .etiqueta-cliente.nuevo { background: var(--blue); color: white; }
   .calendario { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .mes-card {
     background: var(--card-item-bg); border-radius: 10px;
@@ -686,14 +631,9 @@
     position: relative;
   }
   .mes-card .dia.pasado { opacity: 0.4; }
-  .mes-card .dia.hoy { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: white; font-weight: 800; box-shadow: 0 3px 10px rgba(201,162,39,0.4);}
+  .mes-card .dia.hoy { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: white; font-weight: 800;}
   .mes-card .dia.q15 { background: linear-gradient(135deg, #2ecc71, var(--green)); color: white; }
   .mes-card .dia.q30 { background: linear-gradient(135deg, #f39c12, var(--orange)); color: white; }
-  .mes-card .dia.evento::after {
-    content: '★'; position: absolute; top: -4px; right: -4px;
-    font-size: 0.9rem; color: var(--pink);
-  }
-
   .categoria-tag {
     display: inline-block; padding: 3px 10px;
     border-radius: 12px; font-size: 0.68rem;
@@ -720,7 +660,7 @@
     margin-bottom: 14px; font-size: 0.95rem;
     transition: 0.2s;
   }
-  .buscador:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(201,162,39,0.1); outline: none;}
+  .buscador:focus { border-color: var(--gold); outline: none;}
   .meta-container {
     background: var(--card-item-bg); border-radius: 12px;
     padding: 18px; margin-bottom: 16px;
@@ -743,7 +683,6 @@
     display: flex; align-items: center;
     justify-content: flex-end; padding-right: 12px;
     color: white; font-weight: 800; font-size: 0.8rem;
-    box-shadow: inset 0 -3px 8px rgba(0,0,0,0.15);
   }
   .barra-fill.completa { background: linear-gradient(90deg, #2ecc71, #16a085); }
   .barra-fill.aviso { background: linear-gradient(90deg, #f39c12, var(--orange)); }
@@ -796,8 +735,6 @@
   .ranking-card .nombre-r { font-weight: 800; }
   .ranking-card .detalle-r { font-size: 0.83rem; color: var(--text-soft); margin-top: 3px;}
   .ranking-card .monto-r { font-weight: 800; color: var(--green); font-size: 1.05rem;}
-
-  /* ALERTAS INTELIGENTES */
   .alertas-section {
     background: linear-gradient(135deg, #fff9e6, #fff);
     border: 2px solid var(--gold);
@@ -808,8 +745,7 @@
   body.dark .alertas-section { background: linear-gradient(135deg, #2a2410, #1a1a1f); }
   .alertas-section h3 {
     font-size: 0.95rem; color: var(--gold-dark);
-    margin-bottom: 10px; display: flex;
-    align-items: center; gap: 6px;
+    margin-bottom: 10px;
   }
   body.dark .alertas-section h3 { color: var(--gold-soft);}
   .alerta-item {
@@ -828,8 +764,6 @@
   .alerta-item.critico { border-left-color: var(--red);}
   .alerta-item.info { border-left-color: var(--blue);}
   .alerta-item.exito { border-left-color: var(--green);}
-
-  /* MOVIMIENTOS / EXTRACTO */
   .movimiento {
     background: var(--card-item-bg); border-radius: 10px;
     padding: 12px 14px; margin-bottom: 8px;
@@ -844,8 +778,6 @@
   .movimiento .fecha-mov { font-size: 0.72rem; color: var(--text-soft); margin-top: 3px;}
   .movimiento .monto-mov { font-weight: 800; font-size: 1.05rem; color: var(--green); }
   .movimiento.egreso .monto-mov { color: var(--red); }
-
-  /* TARJETAS DE DASHBOARD */
   .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -859,6 +791,7 @@
     position: relative;
     overflow: hidden;
     transition: 0.3s;
+    cursor: pointer;
   }
   body.dark .dash-card { background: linear-gradient(135deg, var(--card-item-bg), #1a1a1f);}
   .dash-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1);}
@@ -882,8 +815,6 @@
   .dash-card.dorado { border-left: 4px solid var(--gold);}
   .dash-card.azul { border-left: 4px solid var(--blue);}
   .dash-card.morado { border-left: 4px solid var(--purple);}
-
-  /* MEDIOS DE PAGO */
   .medios-pago {
     display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;
   }
@@ -899,10 +830,7 @@
   .medio-pago.selected {
     background: linear-gradient(135deg, var(--gold), var(--gold-dark));
     color: white; border-color: var(--gold);
-    box-shadow: 0 4px 12px rgba(201,162,39,0.3);
   }
-
-  /* GRID DE RECORDATORIOS */
   .cliente-checkbox {
     display: flex; align-items: center; gap: 10px;
     padding: 10px 14px; border-radius: 10px;
@@ -910,22 +838,20 @@
     border-left: 3px solid var(--gold);
     cursor: pointer; transition: 0.2s;
   }
-  .cliente-checkbox:hover { background: var(--nav-hover); }
+  .cliente-checkbox:hover { background: var(--nav-hover, rgba(0,0,0,0.03)); }
   .cliente-checkbox input[type="checkbox"] {
     width: auto; transform: scale(1.3);
     accent-color: var(--gold); cursor: pointer;
   }
   .cliente-checkbox .cc-nombre { flex: 1; font-weight: 700; }
   .cliente-checkbox .cc-monto { font-weight: 800; color: var(--red);}
-
-  /* TEMAS DE COLORES SELECTOR */
   .tema-selector {
     display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;
   }
   .tema-btn {
     width: 44px; height: 44px; border-radius: 50%;
     border: 3px solid transparent; cursor: pointer;
-    transition: 0.2s; position: relative;
+    transition: 0.2s;
   }
   .tema-btn:hover { transform: scale(1.1); }
   .tema-btn.active { border-color: var(--text-strong); box-shadow: 0 0 0 3px var(--gold);}
@@ -934,7 +860,6 @@
   .tema-btn.verde { background: linear-gradient(135deg, #27ae60, #1e8449);}
   .tema-btn.azul { background: linear-gradient(135deg, #2980b9, #1a5276);}
   .tema-btn.morado { background: linear-gradient(135deg, #8e44ad, #6c3483);}
-
   @media print {
     body { background: white; padding: 0; color: black; }
     body.dark { background: white; color: black; }
@@ -961,7 +886,7 @@
 </style>
 </head>
 <body>
-<!-- ══════════════ LOGIN ══════════════ -->
+
 <div class="login-screen" id="login-screen">
   <div class="login-box">
     <div class="logo">
@@ -981,7 +906,6 @@
   </div>
 </div>
 
-<!-- ══════════════ PIN ══════════════ -->
 <div class="pin-screen" id="pin-screen">
   <div class="titulo-pin">🔐 EMMA STUDIO</div>
   <div class="sub-pin">Ingresa tu PIN de 4 dígitos</div>
@@ -1008,27 +932,22 @@
   </div>
 </div>
 
-<!-- ══════════════ APP ══════════════ -->
 <div class="app" id="app">
   <header>
-    <h1>
-      <span class="brand-mini">EMMA STUDIO</span>
-    </h1>
+    <h1><span class="brand-mini">EMMA STUDIO</span></h1>
     <p id="bienvenida">Panel de administración</p>
     <div class="top-actions">
-      <button class="icon-btn" title="Notificaciones" onclick="verNotificaciones()">
-        🔔<span class="badge-notif zero" id="badge-notif">0</span>
-      </button>
+      <button class="icon-btn" title="Notificaciones" onclick="verNotificaciones()">🔔<span class="badge-notif zero" id="badge-notif">0</span></button>
       <button class="icon-btn" title="Instalar app" onclick="instalarPWA()" id="install-btn" style="display:none;">📲</button>
       <button class="icon-btn" title="Modo oscuro" onclick="toggleDark()" id="dark-btn">🌙</button>
       <button class="icon-btn" title="Cambiar tema" onclick="abrirTemas()">🎨</button>
-      <button class="icon-btn" title="Buscar en todo" onclick="abrirBusquedaGlobal()">🔍</button>
-      <button class="icon-btn" title="Recordatorios masivos" onclick="abrirRecordatorios()">📱</button>
-      <button class="icon-btn" title="Exportar respaldo" onclick="exportar()">⬇️</button>
-      <button class="icon-btn" title="Importar respaldo" onclick="document.getElementById('file-import').click()">⬆️</button>
-      <button class="icon-btn" title="Reporte mensual" onclick="abrirReporteMensual()">📊</button>
-      <button class="icon-btn" title="Cierre del día" onclick="abrirCierreDia()">🖨️</button>
-      <button class="icon-btn" title="Cerrar sesión" onclick="cerrarSesion()">🚪</button>
+      <button class="icon-btn" title="Buscar" onclick="abrirBusquedaGlobal()">🔍</button>
+      <button class="icon-btn" title="Recordatorios" onclick="abrirRecordatorios()">📱</button>
+      <button class="icon-btn" title="Exportar" onclick="exportar()">⬇️</button>
+      <button class="icon-btn" title="Importar" onclick="document.getElementById('file-import').click()">⬆️</button>
+      <button class="icon-btn" title="Reporte" onclick="abrirReporteMensual()">📊</button>
+      <button class="icon-btn" title="Cierre día" onclick="abrirCierreDia()">🖨️</button>
+      <button class="icon-btn" title="Salir" onclick="cerrarSesion()">🚪</button>
       <input type="file" id="file-import" accept=".json" style="display:none" onchange="importar(event)">
     </div>
   </header>
@@ -1054,23 +973,14 @@
 
   <div class="contenido">
 
-    <!-- INICIO / DASHBOARD -->
     <div class="seccion active" id="inicio">
       <div id="aviso-quincena"></div>
       <div id="alertas-inteligentes"></div>
-
       <h2>📊 Dashboard general</h2>
       <div class="resumen-box doble">
-        <div class="sub-box">
-          <div class="lbl-mini">💰 Caja disponible</div>
-          <div class="num-mini" id="r-caja">$0</div>
-        </div>
-        <div class="sub-box">
-          <div class="lbl-mini">📋 Por cobrar (cartera)</div>
-          <div class="num-mini" id="r-cartera">$0</div>
-        </div>
+        <div class="sub-box"><div class="lbl-mini">💰 Caja disponible</div><div class="num-mini" id="r-caja">$0</div></div>
+        <div class="sub-box"><div class="lbl-mini">📋 Por cobrar</div><div class="num-mini" id="r-cartera">$0</div></div>
       </div>
-
       <div class="dashboard-grid">
         <div class="dash-card verde" onclick="document.querySelector('nav button[data-tab=ventas]').click()">
           <span class="dc-icono">🛒</span>
@@ -1104,12 +1014,11 @@
         </div>
         <div class="dash-card dorado" onclick="document.querySelector('nav button[data-tab=clientes]').click()">
           <span class="dc-icono">👥</span>
-          <div class="dc-lbl">Clientes activos</div>
+          <div class="dc-lbl">Clientes con deuda</div>
           <div class="dc-val" id="dc-clientes">0</div>
-          <div class="dc-extra">Con compras fiadas</div>
+          <div class="dc-extra">Saldo pendiente</div>
         </div>
       </div>
-
       <h2>💼 Resumen general</h2>
       <div class="resumen-box">
         <h3>Capital del negocio</h3>
@@ -1117,26 +1026,22 @@
       </div>
       <div class="grid-resumen">
         <div class="mini-card"><div class="lbl">Saldo me deben</div><div class="val rojo" id="r-deudas">$0</div></div>
-        <div class="mini-card"><div class="lbl">Fiado Q15 (saldo)</div><div class="val" id="r-q15">$0</div></div>
-        <div class="mini-card"><div class="lbl">Fiado Q30 (saldo)</div><div class="val" id="r-q30">$0</div></div>
+        <div class="mini-card"><div class="lbl">Fiado Q15</div><div class="val" id="r-q15">$0</div></div>
+        <div class="mini-card"><div class="lbl">Fiado Q30</div><div class="val" id="r-q30">$0</div></div>
         <div class="mini-card"><div class="lbl">Ganancia pendiente</div><div class="val verde" id="r-gan">$0</div></div>
         <div class="mini-card"><div class="lbl">Gastos del mes</div><div class="val rojo" id="r-gastos">$0</div></div>
         <div class="mini-card"><div class="lbl">Abonado este mes</div><div class="val verde" id="r-abonado">$0</div></div>
         <div class="mini-card"><div class="lbl">Valor inventario</div><div class="val" id="r-inv">$0</div></div>
         <div class="mini-card"><div class="lbl">Balance del mes</div><div class="val" id="r-balance">$0</div></div>
       </div>
-
       <h2>📈 Proyecciones</h2>
       <div id="proyecciones-box"></div>
-
       <h2>🎯 Meta del mes</h2>
       <div id="meta-inicio"></div>
-
       <h2>🛒 Últimas ventas</h2>
       <div id="ultimas-ventas"><div class="vacio">Aún no hay ventas</div></div>
     </div>
 
-    <!-- CAJA -->
     <div class="seccion" id="caja">
       <h2>💵 Caja del negocio
         <div class="acciones-h2">
@@ -1153,29 +1058,20 @@
         <div class="mini-card"><div class="lbl">Egresos hoy</div><div class="val rojo" id="caja-egr-hoy">$0</div></div>
         <div class="mini-card"><div class="lbl">Ingresos del mes</div><div class="val verde" id="caja-ing-mes">$0</div></div>
         <div class="mini-card"><div class="lbl">Egresos del mes</div><div class="val rojo" id="caja-egr-mes">$0</div></div>
-        <div class="mini-card"><div class="lbl">Apertura inicial</div><div class="val" id="caja-apertura">$0</div></div>
+        <div class="mini-card" id="card-apertura"><div class="lbl">Apertura inicial</div><div class="val" id="caja-apertura">$0</div></div>
         <div class="mini-card"><div class="lbl">Movimientos totales</div><div class="val" id="caja-mov-num">0</div></div>
       </div>
-
       <h3 style="margin:20px 0 10px;font-size:1rem;">🔄 Movimientos recientes</h3>
       <input type="text" class="buscador" id="buscar-caja" placeholder="🔍 Buscar movimiento..." oninput="renderTodo()">
       <div id="lista-caja"></div>
     </div>
 
-    <!-- CARTERA (deudas y fiados) -->
     <div class="seccion" id="cartera">
       <h2>📋 Cartera (dinero que te deben)</h2>
       <div class="resumen-box doble">
-        <div class="sub-box">
-          <div class="lbl-mini">Deudas aparte</div>
-          <div class="num-mini" id="cartera-deudas">$0</div>
-        </div>
-        <div class="sub-box">
-          <div class="lbl-mini">Fiado en quincenas</div>
-          <div class="num-mini" id="cartera-fiado">$0</div>
-        </div>
+        <div class="sub-box"><div class="lbl-mini">Deudas aparte</div><div class="num-mini" id="cartera-deudas">$0</div></div>
+        <div class="sub-box"><div class="lbl-mini">Fiado en quincenas</div><div class="num-mini" id="cartera-fiado">$0</div></div>
       </div>
-
       <h3 style="margin:20px 0 12px;font-size:1.05rem;">📋 Dinero que me deben (aparte del negocio)</h3>
       <div class="fila">
         <div class="campo"><label>Nombre</label><input type="text" id="d-nombre" placeholder="Ej: Juan"></div>
@@ -1187,7 +1083,6 @@
       <div id="lista-deudas"><div class="vacio">Sin deudas registradas</div></div>
     </div>
 
-    <!-- VENTAS -->
     <div class="seccion" id="ventas">
       <h2>🛒 Registrar venta</h2>
       <div class="fila">
@@ -1197,7 +1092,7 @@
       <div class="fila">
         <div class="campo"><label>Costo ($)</label><input type="number" id="v-costo" step="1000" placeholder="0"></div>
         <div class="campo"><label>Precio de venta ($)</label><input type="number" id="v-precio" step="1000" placeholder="0"></div>
-        <div class="campo"><label>Código (opcional)</label><input type="text" id="v-codigo" placeholder="Cod. barras/SKU"></div>
+        <div class="campo"><label>Código (opcional)</label><input type="text" id="v-codigo" placeholder="Cod/SKU"></div>
       </div>
       <div class="fila">
         <div class="campo"><label>Tipo</label>
@@ -1223,15 +1118,12 @@
       </div>
       <button class="btn verde" onclick="registrarVenta()">➕ Registrar venta</button>
       <h2 style="margin-top:24px;">📜 Historial
-        <div class="acciones-h2">
-          <button class="sec" onclick="exportarCSVVentas()">⬇️ CSV</button>
-        </div>
+        <div class="acciones-h2"><button class="sec" onclick="exportarCSVVentas()">⬇️ CSV</button></div>
       </h2>
       <input type="text" class="buscador" id="buscar-venta" placeholder="🔍 Buscar..." oninput="renderTodo()">
       <div id="lista-ventas"><div class="vacio">Sin ventas</div></div>
     </div>
 
-    <!-- GASTOS -->
     <div class="seccion" id="gastos">
       <h2>💸 Registrar gasto</h2>
       <div class="fila">
@@ -1246,15 +1138,12 @@
       </div>
       <button class="btn rojo" onclick="agregarGasto()">💸 Registrar gasto</button>
       <h2 style="margin-top:24px;">📜 Gastos
-        <div class="acciones-h2">
-          <button class="sec" onclick="exportarCSVGastos()">⬇️ CSV</button>
-        </div>
+        <div class="acciones-h2"><button class="sec" onclick="exportarCSVGastos()">⬇️ CSV</button></div>
       </h2>
       <input type="text" class="buscador" id="buscar-gasto" placeholder="🔍 Buscar..." oninput="renderTodo()">
       <div id="lista-gastos"><div class="vacio">Sin gastos</div></div>
     </div>
 
-    <!-- INVENTARIO -->
     <div class="seccion" id="inventario">
       <h2>📦 Inventario</h2>
       <div class="fila">
@@ -1265,7 +1154,7 @@
         <div class="campo"><label>Costo ($)</label><input type="number" id="i-costo" step="1000" placeholder="0"></div>
         <div class="campo"><label>Precio ($)</label><input type="number" id="i-precio" step="1000" placeholder="0"></div>
         <div class="campo"><label>Cantidad</label><input type="number" id="i-cantidad" step="1" min="1" placeholder="1" value="1"></div>
-        <div class="campo"><label>Código (opcional)</label><input type="text" id="i-codigo" placeholder="SKU/código"></div>
+        <div class="campo"><label>Código</label><input type="text" id="i-codigo" placeholder="SKU"></div>
       </div>
       <button class="btn verde" onclick="agregarInventario()">➕ Agregar al inventario</button>
       <h2 style="margin-top:24px;">📦 Stock</h2>
@@ -1273,17 +1162,14 @@
       <div id="lista-inventario"><div class="vacio">Sin productos</div></div>
     </div>
 
-    <!-- CLIENTES -->
     <div class="seccion" id="clientes">
       <h2>👥 Clientes</h2>
       <input type="text" class="buscador" id="buscar-cliente" placeholder="🔍 Buscar cliente..." oninput="renderTodo()">
       <div id="lista-clientes-view"><div class="vacio">Sin clientes</div></div>
     </div>
 
-    <!-- ABONOS -->
     <div class="seccion" id="abonos">
       <h2>💵 Historial de abonos</h2>
-      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Todos los abonos que has recibido, ordenados por fecha.</p>
       <div class="grid-resumen">
         <div class="mini-card"><div class="lbl">Total este mes</div><div class="val verde" id="a-mes">$0</div></div>
         <div class="mini-card"><div class="lbl">Total este año</div><div class="val" id="a-anio">$0</div></div>
@@ -1293,16 +1179,11 @@
       <div id="lista-abonos-todos"><div class="vacio">Sin abonos registrados</div></div>
     </div>
 
-    <!-- MOVIMIENTOS (libro tipo banco) -->
     <div class="seccion" id="movimientos">
       <h2>🏦 Libro de movimientos
-        <div class="acciones-h2">
-          <button class="sec" onclick="exportarCSVMovimientos()">⬇️ CSV</button>
-        </div>
+        <div class="acciones-h2"><button class="sec" onclick="exportarCSVMovimientos()">⬇️ CSV</button></div>
       </h2>
-      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">
-        Aquí queda registrado TODO lo que entra y sale: ventas, abonos, gastos, movimientos manuales, etc.
-      </p>
+      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Todo lo que entra y sale: ventas, abonos, gastos, movimientos manuales.</p>
       <div class="fila" style="margin-bottom:14px;">
         <button class="btn gris pequeno" onclick="filtrarMovimientos('todos')">Todos</button>
         <button class="btn verde pequeno" onclick="filtrarMovimientos('ingreso')">Ingresos</button>
@@ -1312,17 +1193,14 @@
       <div id="lista-movimientos"><div class="vacio">Sin movimientos</div></div>
     </div>
 
-    <!-- RANKING -->
     <div class="seccion" id="ranking">
       <h2>🏆 Ranking de clientes</h2>
-      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Los que más cumplen y los que más deben.</p>
       <h3 style="margin-bottom:12px;font-size:1.05rem;">⭐ Top 5 más cumplidos</h3>
       <div id="ranking-buenos"><div class="vacio">Sin datos</div></div>
       <h3 style="margin:20px 0 12px;font-size:1.05rem;">🚨 Top 5 más morosos</h3>
       <div id="ranking-malos"><div class="vacio">Sin datos</div></div>
     </div>
 
-    <!-- METAS -->
     <div class="seccion" id="metas">
       <h2>🎯 Metas de venta</h2>
       <div class="fila">
@@ -1330,7 +1208,6 @@
         <div class="campo"><label>Meta quincenal ($)</label><input type="number" id="m-quincenal" step="1000" placeholder="0"></div>
       </div>
       <button class="btn verde" onclick="guardarMetas()">💾 Guardar metas</button>
-
       <h3 style="margin:24px 0 12px;font-size:1.05rem;">🎯 Metas por categoría</h3>
       <div id="lista-metas-categoria"></div>
       <div class="fila" style="margin-top:10px;">
@@ -1338,12 +1215,10 @@
         <div class="campo"><input type="number" id="meta-cat-monto" step="1000" placeholder="Meta mensual $"></div>
         <button class="btn verde" onclick="agregarMetaCategoria()">➕ Agregar</button>
       </div>
-
       <h2 style="margin-top:24px;">📈 Progreso</h2>
       <div id="metas-view"></div>
     </div>
 
-    <!-- QUINCENA -->
     <div class="seccion" id="quincena">
       <h2>📅 Cerrar quincena</h2>
       <div class="fila">
@@ -1358,10 +1233,9 @@
       <div id="lista-quincenas"><div class="vacio">Sin quincenas cerradas</div></div>
     </div>
 
-    <!-- CALENDARIO -->
     <div class="seccion" id="calendario">
       <h2>🗓️ Calendario <span id="anio-cal" style="font-size:1rem;color:var(--text-soft);"></span></h2>
-      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">🟢 Día 15 · 🟠 Día 30 · 🔵 Hoy · ★ Con evento</p>
+      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">🟢 Día 15 · 🟠 Día 30 · 🔵 Hoy</p>
       <div class="fila" style="margin-bottom:14px;">
         <button class="btn pequeno" onclick="agregarEventoCalendario()">📌 Agregar evento</button>
       </div>
@@ -1370,7 +1244,6 @@
       <div id="lista-eventos"></div>
     </div>
 
-    <!-- RESPONSABILIDADES -->
     <div class="seccion" id="resp">
       <h2>🏠 Responsabilidades mensuales</h2>
       <div class="fila">
@@ -1384,7 +1257,6 @@
       <button class="btn verde" onclick="guardarResp()">💾 Guardar</button>
     </div>
 
-    <!-- NOTAS -->
     <div class="seccion" id="notas">
       <h2>📝 Notas y recordatorios</h2>
       <div class="campo"><textarea id="n-texto" placeholder="Ej: comprar mercancía el lunes..."></textarea></div>
@@ -1393,12 +1265,11 @@
       <div id="lista-notas"><div class="vacio">Sin notas</div></div>
     </div>
 
-    <!-- ESTADÍSTICAS -->
     <div class="seccion" id="estadisticas">
       <h2>📊 Estadísticas</h2>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Ventas: contado vs fiado</h3><canvas id="chart-tipos" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Ganancia vs Gastos (7 días)</h3><canvas id="chart-ganancia" height="200"></canvas></div>
-      <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">📈 Tendencia de ganancias (últimos 6 meses)</h3><canvas id="chart-tendencia" height="200"></canvas></div>
+      <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">📈 Tendencia (6 meses)</h3><canvas id="chart-tendencia" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Abonos últimos 7 días</h3><canvas id="chart-abonos" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">📈 Evolución de deudas</h3><canvas id="chart-deudas" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Ventas por categoría</h3><canvas id="chart-categorias" height="200"></canvas></div>
@@ -1408,8 +1279,6 @@
 
   </div>
 </div>
-
-<!-- ══════════════ MODALES ══════════════ -->
 
 <div class="modal" id="modal-cierre">
   <div class="modal-contenido">
@@ -1429,7 +1298,7 @@
     <div class="recibo" id="recibo-contenido"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
-      <button class="btn morado" onclick="descargarReciboImagen('recibo')">🖼️ Descargar imagen</button>
+      <button class="btn morado" onclick="descargarReciboImagen('recibo')">🖼️ Imagen</button>
       <button class="btn wsp" id="btn-wsp-recibo">📤 WhatsApp</button>
       <button class="btn gris" onclick="cerrarModal('modal-recibo')">Cerrar</button>
     </div>
@@ -1442,7 +1311,7 @@
     <div id="cliente-detalle"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn wsp" id="btn-wsp-cliente">📤 WhatsApp</button>
-      <button class="btn morado" id="btn-recordar-cliente">📱 Recordar deuda</button>
+      <button class="btn morado" id="btn-recordar-cliente">📱 Recordar</button>
       <button class="btn gris" onclick="cerrarModal('modal-cliente')">Cerrar</button>
     </div>
   </div>
@@ -1452,14 +1321,8 @@
   <div class="modal-contenido">
     <h3>💵 Registrar abono</h3>
     <div id="abono-info-original" style="background:var(--card-item-bg);padding:12px;border-radius:10px;margin-bottom:14px;font-size:0.9rem;"></div>
-    <div class="campo">
-      <label>Monto del abono ($)</label>
-      <input type="number" id="abono-monto" step="1000" placeholder="0">
-    </div>
-    <div class="campo">
-      <label>Nota (opcional)</label>
-      <input type="text" id="abono-nota" placeholder="Ej: pago parcial en efectivo">
-    </div>
+    <div class="campo"><label>Monto ($)</label><input type="number" id="abono-monto" step="1000" placeholder="0"></div>
+    <div class="campo"><label>Nota (opcional)</label><input type="text" id="abono-nota" placeholder="Ej: pago parcial"></div>
     <div class="campo">
       <label>Método de pago</label>
       <div class="medios-pago" id="medios-pago-abono">
@@ -1471,9 +1334,7 @@
     </div>
     <div class="campo">
       <label>Comprobante (opcional)</label>
-      <div class="foto-input-wrapper" onclick="document.getElementById('abono-foto').click()">
-        📸 Toca aquí para agregar una foto
-      </div>
+      <div class="foto-input-wrapper" onclick="document.getElementById('abono-foto').click()">📸 Agregar foto</div>
       <input type="file" id="abono-foto" accept="image/*" capture="environment" style="display:none" onchange="procesarFotoAbono(event)">
       <div id="abono-foto-preview"></div>
     </div>
@@ -1488,9 +1349,7 @@
   <div class="modal-contenido">
     <h3>📜 Historial de abonos</h3>
     <div id="historial-abonos-contenido"></div>
-    <div style="margin-top:16px;">
-      <button class="btn gris" onclick="cerrarModal('modal-historial-abonos')">Cerrar</button>
-    </div>
+    <div style="margin-top:16px;"><button class="btn gris" onclick="cerrarModal('modal-historial-abonos')">Cerrar</button></div>
   </div>
 </div>
 
@@ -1500,7 +1359,7 @@
     <div class="recibo" id="recibo-abono-contenido"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
-      <button class="btn morado" onclick="descargarReciboImagen('recibo-abono')">🖼️ Descargar imagen</button>
+      <button class="btn morado" onclick="descargarReciboImagen('recibo-abono')">🖼️ Imagen</button>
       <button class="btn wsp" id="btn-wsp-recibo-abono">📤 WhatsApp</button>
       <button class="btn gris" onclick="cerrarModal('modal-recibo-abono')">Cerrar</button>
     </div>
@@ -1510,9 +1369,7 @@
 <div class="modal" id="modal-foto">
   <div class="modal-contenido" style="text-align:center;">
     <img id="foto-grande" class="comprobante-grande" alt="Comprobante">
-    <div style="margin-top:16px;">
-      <button class="btn gris" onclick="cerrarModal('modal-foto')">Cerrar</button>
-    </div>
+    <div style="margin-top:16px;"><button class="btn gris" onclick="cerrarModal('modal-foto')">Cerrar</button></div>
   </div>
 </div>
 
@@ -1523,7 +1380,7 @@
     <div class="campo"><label>Monto total ($)</label><input type="number" id="ed-monto" step="1000"></div>
     <div class="campo"><label>Nota</label><input type="text" id="ed-nota"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn verde" onclick="guardarEdicionDeuda()">💾 Guardar cambios</button>
+      <button class="btn verde" onclick="guardarEdicionDeuda()">💾 Guardar</button>
       <button class="btn gris" onclick="cerrarModal('modal-editar-deuda')">Cancelar</button>
     </div>
   </div>
@@ -1545,7 +1402,7 @@
       </div>
     </div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
-      <button class="btn verde" onclick="guardarEdicionVenta()">💾 Guardar cambios</button>
+      <button class="btn verde" onclick="guardarEdicionVenta()">💾 Guardar</button>
       <button class="btn gris" onclick="cerrarModal('modal-editar-venta')">Cancelar</button>
     </div>
   </div>
@@ -1557,14 +1414,12 @@
     <div style="background:var(--card-item-bg);padding:12px;border-radius:10px;margin-bottom:14px;">
       <div id="fc-nombre" style="font-weight:700;"></div>
     </div>
-    <div class="foto-input-wrapper" onclick="document.getElementById('fc-foto').click()">
-      📸 Toca aquí para subir/tomar la foto
-    </div>
+    <div class="foto-input-wrapper" onclick="document.getElementById('fc-foto').click()">📸 Subir foto</div>
     <input type="file" id="fc-foto" accept="image/*" capture="environment" style="display:none" onchange="procesarFotoCliente(event)">
     <div id="fc-preview"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn verde" onclick="guardarFotoCliente()">💾 Guardar</button>
-      <button class="btn rojo" onclick="eliminarFotoCliente()">🗑️ Quitar foto</button>
+      <button class="btn rojo" onclick="eliminarFotoCliente()">🗑️ Quitar</button>
       <button class="btn gris" onclick="cerrarModal('modal-foto-cliente')">Cerrar</button>
     </div>
   </div>
@@ -1596,29 +1451,19 @@
     <div class="recibo" id="cierre-dia-contenido"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
-      <button class="btn morado" onclick="descargarReciboImagen('cierre-dia')">🖼️ Descargar imagen</button>
+      <button class="btn morado" onclick="descargarReciboImagen('cierre-dia')">🖼️ Imagen</button>
       <button class="btn wsp" onclick="compartirCierreDiaWsp()">📤 WhatsApp</button>
       <button class="btn gris" onclick="cerrarModal('modal-cierre-dia')">Cerrar</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL MOVIMIENTO DE CAJA -->
 <div class="modal" id="modal-movimiento">
   <div class="modal-contenido">
     <h3 id="mov-titulo">💵 Nuevo movimiento</h3>
-    <div class="campo">
-      <label>Concepto</label>
-      <input type="text" id="mov-concepto" placeholder="Ej: Ingreso por venta, pago de arriendo...">
-    </div>
-    <div class="campo">
-      <label>Monto ($)</label>
-      <input type="number" id="mov-monto" step="1000" placeholder="0">
-    </div>
-    <div class="campo">
-      <label>Categoría (opcional)</label>
-      <input type="text" id="mov-categoria" placeholder="Ej: Arriendo, Ventas...">
-    </div>
+    <div class="campo"><label>Concepto</label><input type="text" id="mov-concepto" placeholder="Ej: Ingreso por venta"></div>
+    <div class="campo"><label>Monto ($)</label><input type="number" id="mov-monto" step="1000" placeholder="0"></div>
+    <div class="campo"><label>Categoría (opcional)</label><input type="text" id="mov-categoria" placeholder="Ej: Ventas"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn verde" onclick="guardarMovimientoCaja()">💾 Guardar</button>
       <button class="btn gris" onclick="cerrarModal('modal-movimiento')">Cancelar</button>
@@ -1626,64 +1471,48 @@
   </div>
 </div>
 
-<!-- MODAL TEMAS -->
 <div class="modal" id="modal-temas">
   <div class="modal-contenido">
     <h3>🎨 Elige tu tema</h3>
-    <p style="color:var(--text-soft);font-size:0.9rem;margin-bottom:14px;">Personaliza los colores de tu panel</p>
+    <p style="color:var(--text-soft);font-size:0.9rem;margin-bottom:14px;">Personaliza los colores</p>
     <div class="tema-selector" id="tema-selector">
-      <div class="tema-btn dorado active" onclick="cambiarTema('dorado')" title="Dorado"></div>
+      <div class="tema-btn dorado" onclick="cambiarTema('dorado')" title="Dorado"></div>
       <div class="tema-btn rosa" onclick="cambiarTema('rosa')" title="Rosa"></div>
       <div class="tema-btn verde" onclick="cambiarTema('verde')" title="Verde"></div>
       <div class="tema-btn azul" onclick="cambiarTema('azul')" title="Azul"></div>
       <div class="tema-btn morado" onclick="cambiarTema('morado')" title="Morado"></div>
     </div>
-    <div style="margin-top:20px;">
-      <button class="btn gris" onclick="cerrarModal('modal-temas')">Cerrar</button>
-    </div>
+    <div style="margin-top:20px;"><button class="btn gris" onclick="cerrarModal('modal-temas')">Cerrar</button></div>
   </div>
 </div>
 
-<!-- MODAL RECORDATORIOS MASIVOS -->
 <div class="modal" id="modal-recordatorios">
   <div class="modal-contenido grande">
     <h3>📱 Recordatorios masivos</h3>
-    <p style="color:var(--text-soft);font-size:0.9rem;margin-bottom:14px;">
-      Selecciona los clientes que quieres recordar. Se abrirá WhatsApp con el mensaje listo (con imagen del recibo si quieres).
-    </p>
+    <p style="color:var(--text-soft);font-size:0.9rem;margin-bottom:14px;">Selecciona los clientes para recordarles su saldo.</p>
     <div class="fila" style="margin-bottom:14px;">
       <button class="btn gris pequeno" onclick="seleccionarTodosRecordatorios(true)">✅ Todos</button>
       <button class="btn gris pequeno" onclick="seleccionarTodosRecordatorios(false)">❌ Ninguno</button>
     </div>
     <div id="lista-recordatorios"></div>
     <div style="margin-top:16px;padding:14px;background:var(--card-item-bg);border-radius:10px;">
-      <div style="font-weight:700;margin-bottom:8px;">Clientes seleccionados: <span id="rec-contador">0</span></div>
+      <div style="font-weight:700;margin-bottom:8px;">Seleccionados: <span id="rec-contador">0</span></div>
       <div style="font-weight:700;color:var(--red);">Total a cobrar: <span id="rec-total">$0</span></div>
     </div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn wsp" onclick="enviarRecordatorios()">📤 Enviar por WhatsApp</button>
-      <button class="btn morado" onclick="descargarRecordatoriosImagen()">🖼️ Descargar como imagen</button>
+      <button class="btn morado" onclick="descargarRecordatoriosImagen()">🖼️ Descargar imagen</button>
       <button class="btn gris" onclick="cerrarModal('modal-recordatorios')">Cerrar</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL EVENTO CALENDARIO -->
 <div class="modal" id="modal-evento">
   <div class="modal-contenido">
     <h3>📌 Nuevo evento</h3>
-    <div class="campo">
-      <label>Título del evento</label>
-      <input type="text" id="evento-titulo" placeholder="Ej: Feria, Promoción especial...">
-    </div>
-    <div class="campo">
-      <label>Fecha</label>
-      <input type="date" id="evento-fecha">
-    </div>
-    <div class="campo">
-      <label>Nota (opcional)</label>
-      <textarea id="evento-nota" placeholder="Detalles del evento"></textarea>
-    </div>
+    <div class="campo"><label>Título</label><input type="text" id="evento-titulo" placeholder="Ej: Feria, promoción"></div>
+    <div class="campo"><label>Fecha</label><input type="date" id="evento-fecha"></div>
+    <div class="campo"><label>Nota (opcional)</label><textarea id="evento-nota" placeholder="Detalles"></textarea></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn verde" onclick="guardarEvento()">💾 Guardar</button>
       <button class="btn gris" onclick="cerrarModal('modal-evento')">Cancelar</button>
@@ -1691,14 +1520,11 @@
   </div>
 </div>
 
-<!-- MODAL IMAGEN GENERADA -->
 <div class="modal" id="modal-imagen">
   <div class="modal-contenido" style="text-align:center;">
     <h3>🖼️ Imagen lista</h3>
-    <p style="color:var(--text-soft);font-size:0.85rem;margin-bottom:10px;">
-      Mantén presionada la imagen para guardarla o compartirla
-    </p>
-    <img id="imagen-generada" class="comprobante-grande" alt="Imagen generada">
+    <p style="color:var(--text-soft);font-size:0.85rem;margin-bottom:10px;">Mantén presionada para guardar o compartir</p>
+    <img id="imagen-generada" class="comprobante-grande" alt="Imagen">
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
       <button class="btn verde" onclick="descargarImagenGenerada()">⬇️ Descargar</button>
       <button class="btn gris" onclick="cerrarModal('modal-imagen')">Cerrar</button>
@@ -1706,22 +1532,15 @@
   </div>
 </div>
 
-<!-- MODAL NOTIFICACIONES -->
 <div class="modal" id="modal-notif">
   <div class="modal-contenido">
     <h3>🔔 Notificaciones</h3>
     <div id="notif-contenido"></div>
-    <div style="margin-top:16px;">
-      <button class="btn gris" onclick="cerrarModal('modal-notif')">Cerrar</button>
-    </div>
+    <div style="margin-top:16px;"><button class="btn gris" onclick="cerrarModal('modal-notif')">Cerrar</button></div>
   </div>
 </div>
 
-<!-- ══════════════ SCRIPT - PARTE 1: CONFIG Y DATOS ══════════════ -->
 <script>
-// ═══════════════════════════════════════════════════════════════
-// ⚠️ TUS CLAVES DE FIREBASE
-// ═══════════════════════════════════════════════════════════════
 const firebaseConfig = {
   apiKey: "AIzaSyD4io_lQNJCMR_u-xtFWxlXbWsqyHyD24w",
   authDomain: "mi-negocio-304b8.firebaseapp.com",
@@ -1730,13 +1549,11 @@ const firebaseConfig = {
   messagingSenderId: "228838179016",
   appId: "1:228838179016:web:b6477d103919613f1e65fd"
 };
-// ═══════════════════════════════════════════════════════════════
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// ---------- ESTADO GLOBAL ----------
 let datos = {
   capital: 0,
   caja: { apertura: 0, movimientos: [] },
@@ -1747,12 +1564,7 @@ let datos = {
   responsabilidades: { recibos:0, comida:0, arriendo:0, otros:0 },
   eventos: []
 };
-
-let charts = {
-  tipos:null, ganancia:null, tendencia:null, abonos:null,
-  deudas:null, categorias:null, catGastos:null, quincenas:null
-};
-
+let charts = { tipos:null, ganancia:null, tendencia:null, abonos:null, deudas:null, categorias:null, catGastos:null, quincenas:null };
 let usuarioId = null;
 let sincronizando = false;
 let abonoActual = { tipo: null, indice: null };
@@ -1765,20 +1577,16 @@ let ultimoCierreQuincena = null;
 let filtroMovActual = "todos";
 let pinIngresado = "";
 let pinCorrecto = null;
-let modoPin = "verificar"; // "verificar" | "crear" | "confirmar"
+let modoPin = "verificar";
 let pinNuevo = "";
 let imagenGeneradaActual = null;
 let movimientoTipoActual = "ingreso";
-let imagenEsperada = null;
-let ventaActualSeleccionada = null;
 
-// ---------- FORMATO ----------
 function formato(n) {
   const num = Math.round(Number(n) || 0);
   return "$" + num.toLocaleString("es-CO");
 }
 
-// ---------- HELPERS ----------
 function calcularSaldo(item) {
   if (item.incobrable) return 0;
   const abonado = (item.abonos || []).reduce((s,a) => s + a.monto, 0);
@@ -1791,18 +1599,11 @@ function estaPagada(item) {
   if (item.incobrable) return false;
   return calcularSaldo(item) <= 0.01;
 }
-function totalSaldoDeudas() {
-  return datos.deudas.reduce((s,d) => s + calcularSaldo(d), 0);
-}
+function totalSaldoDeudas() { return datos.deudas.reduce((s,d) => s + calcularSaldo(d), 0); }
 function totalSaldoFiadoQ(q) {
-  return datos.ventas
-    .filter(v => v.tipo === "quincena" && v.quincena === q)
-    .reduce((s,v) => s + calcularSaldo(v), 0);
+  return datos.ventas.filter(v => v.tipo === "quincena" && v.quincena === q).reduce((s,v) => s + calcularSaldo(v), 0);
 }
-function cerrarModal(id) {
-  document.getElementById(id).classList.remove("active");
-}
-
+function cerrarModal(id) { document.getElementById(id).classList.remove("active"); }
 function mostrarEstadoSync(estado, msg) {
   let el = document.getElementById("sync-indicator");
   if (!el) { el = document.createElement("div"); el.id = "sync-indicator"; document.body.appendChild(el); }
@@ -1814,7 +1615,6 @@ function mostrarEstadoSync(estado, msg) {
   if (estado === "ok") setTimeout(() => el.style.opacity = "0.3", 2000);
 }
 
-// ---------- CAJA / MOVIMIENTOS ----------
 function calcularCaja() {
   const movs = datos.caja.movimientos || [];
   const ingresos = movs.filter(m => m.tipo === "ingreso").reduce((s,m) => s + m.monto, 0);
@@ -1844,7 +1644,6 @@ function movimientosMes() {
   });
 }
 
-// ---------- LOGIN ----------
 function mostrarErrorLogin(msg) {
   const el = document.getElementById("login-error");
   el.textContent = msg; el.classList.add("show");
@@ -1868,12 +1667,7 @@ async function hacerLogin() {
   try { await auth.signInWithEmailAndPassword(c.email, c.pass); }
   catch (e) {
     mostrarCargando(false);
-    const errs = {
-      "auth/user-not-found": "No existe la cuenta",
-      "auth/wrong-password": "Contraseña incorrecta",
-      "auth/invalid-credential": "Credenciales incorrectas",
-      "auth/invalid-email": "Correo inválido"
-    };
+    const errs = { "auth/user-not-found": "No existe la cuenta", "auth/wrong-password": "Contraseña incorrecta", "auth/invalid-credential": "Credenciales incorrectas", "auth/invalid-email": "Correo inválido" };
     mostrarErrorLogin(errs[e.code] || e.message);
   }
 }
@@ -1903,29 +1697,22 @@ async function recuperarClave() {
 }
 function cerrarSesion() { if (confirm("¿Cerrar sesión?")) auth.signOut(); }
 
-// ---------- PIN ----------
 function pedirPin(modo) {
   modoPin = modo;
   pinIngresado = "";
   document.getElementById("pin-error").textContent = "";
+  document.querySelector(".sub-pin").textContent = modo === "verificar" ? "Ingresa tu PIN de 4 dígitos" : "Crea tu PIN de 4 dígitos";
   actualizarPinDots();
   document.getElementById("pin-screen").classList.add("active");
 }
 function pinPress(num) {
-  if (num === "del") {
-    pinIngresado = pinIngresado.slice(0, -1);
-  } else if (pinIngresado.length < 4) {
-    pinIngresado += num;
-  }
+  if (num === "del") pinIngresado = pinIngresado.slice(0, -1);
+  else if (pinIngresado.length < 4) pinIngresado += num;
   actualizarPinDots();
-  if (pinIngresado.length === 4) {
-    setTimeout(validarPin, 200);
-  }
+  if (pinIngresado.length === 4) setTimeout(validarPin, 200);
 }
 function actualizarPinDots() {
-  document.querySelectorAll(".pin-dot").forEach((d, i) => {
-    d.classList.toggle("lleno", i < pinIngresado.length);
-  });
+  document.querySelectorAll(".pin-dot").forEach((d, i) => d.classList.toggle("lleno", i < pinIngresado.length));
 }
 function validarPin() {
   if (modoPin === "verificar") {
@@ -1944,16 +1731,15 @@ function validarPin() {
     pinIngresado = "";
     document.querySelector(".sub-pin").textContent = "Confirma tu PIN";
     actualizarPinDots();
-    document.getElementById("pin-error").textContent = "";
   } else if (modoPin === "confirmar") {
     if (pinIngresado === pinNuevo) {
       pinCorrecto = pinNuevo;
       localStorage.setItem("pin_" + usuarioId, pinNuevo);
       document.getElementById("pin-screen").classList.remove("active");
-      alert("✅ PIN configurado correctamente");
+      alert("✅ PIN configurado");
       pinIngresado = "";
     } else {
-      document.getElementById("pin-error").textContent = "❌ No coinciden. Intenta de nuevo";
+      document.getElementById("pin-error").textContent = "❌ No coinciden";
       pinIngresado = "";
       pinNuevo = "";
       modoPin = "crear";
@@ -1963,15 +1749,12 @@ function validarPin() {
   }
 }
 
-// ---------- GUARDAR / CARGAR ----------
 async function guardar() {
   if (!usuarioId) return;
   sincronizando = true;
   mostrarEstadoSync("guardando", "Guardando...");
   try {
-    await db.collection("negocios").doc(usuarioId).set({
-      datos, actualizado: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    await db.collection("negocios").doc(usuarioId).set({ datos, actualizado: firebase.firestore.FieldValue.serverTimestamp() });
     mostrarEstadoSync("ok", "Guardado");
   } catch (e) {
     mostrarEstadoSync("error", "Error al guardar");
@@ -2002,7 +1785,6 @@ async function cargarDatos() {
     const doc = await db.collection("negocios").doc(usuarioId).get();
     if (doc.exists && doc.data().datos) {
       datos = doc.data().datos;
-      // Migraciones
       if (!datos.notas) datos.notas = [];
       if (!datos.inventario) datos.inventario = [];
       if (!datos.gastos) datos.gastos = [];
@@ -2021,7 +1803,6 @@ async function cargarDatos() {
     } else { await guardar(); }
     localStorage.setItem("negocio_backup_" + usuarioId, JSON.stringify(datos));
     renderTodo();
-    document.getElementById("inp-capital") && (document.getElementById("inp-capital").value = datos.capital || "");
   } catch (e) {
     mostrarEstadoSync("offline", "Modo offline");
     const backup = localStorage.getItem("negocio_backup_" + usuarioId);
@@ -2062,7 +1843,6 @@ function escucharCambios() {
   });
 }
 
-// ---------- AUTH STATE ----------
 auth.onAuthStateChanged(async (user) => {
   if (user) {
     usuarioId = user.uid;
@@ -2077,9 +1857,7 @@ auth.onAuthStateChanged(async (user) => {
       pedirPin("verificar");
     } else {
       setTimeout(() => {
-        if (confirm("¿Quieres configurar un PIN de 4 dígitos para proteger tu panel?")) {
-          pedirPin("crear");
-        }
+        if (confirm("¿Quieres configurar un PIN de 4 dígitos para proteger tu panel?")) pedirPin("crear");
       }, 1000);
     }
     setTimeout(() => { chequearNotificaciones(); pedirPermisoNotif(); actualizarBadgeNotif(); }, 2000);
@@ -2090,7 +1868,6 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
-// ---------- NAV ----------
 document.querySelectorAll("nav button").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
@@ -2100,19 +1877,14 @@ document.querySelectorAll("nav button").forEach(btn => {
     if (btn.dataset.tab === "estadisticas") renderCharts();
     if (btn.dataset.tab === "calendario") renderCalendario();
     if (btn.dataset.tab === "ranking") renderRanking();
-    if (btn.dataset.tab === "cartera") renderTodo();
-    if (btn.dataset.tab === "caja") renderTodo();
-    if (btn.dataset.tab === "movimientos") renderTodo();
   });
 });
 
-// ═══════════════════════════════════════════════════════════════
-// AQUÍ CONTINÚA LA PARTE 3 CON TODAS LAS FUNCIONES
-// ═══════════════════════════════════════════════════════════════
-</script>
-// ═══════════════════════════════════════════════════════════════
-// CAJA - MOVIMIENTOS MANUALES
-// ═══════════════════════════════════════════════════════════════
+function toggleQuincena() {
+  const t = document.getElementById("v-tipo").value;
+  document.getElementById("campo-quincena").style.display = t === "quincena" ? "block" : "none";
+}
+
 function abrirMovimientoCaja(tipo) {
   movimientoTipoActual = tipo;
   document.getElementById("mov-titulo").textContent = tipo === "ingreso" ? "➕ Nuevo ingreso" : "➖ Nuevo egreso";
@@ -2120,7 +1892,6 @@ function abrirMovimientoCaja(tipo) {
   document.getElementById("mov-monto").value = "";
   document.getElementById("mov-categoria").value = "";
   document.getElementById("modal-movimiento").classList.add("active");
-  setTimeout(() => document.getElementById("mov-concepto").focus(), 200);
 }
 function guardarMovimientoCaja() {
   const concepto = document.getElementById("mov-concepto").value.trim();
@@ -2133,7 +1904,7 @@ function guardarMovimientoCaja() {
   mostrarEstadoSync("ok", "Movimiento registrado");
 }
 function eliminarMovimiento(id) {
-  if (!confirm("¿Eliminar este movimiento de caja?")) return;
+  if (!confirm("¿Eliminar este movimiento?")) return;
   datos.caja.movimientos = datos.caja.movimientos.filter(m => m.id !== id);
   guardar(); renderTodo();
 }
@@ -2148,9 +1919,6 @@ function editarAperturaCaja() {
   alert("✅ Apertura actualizada");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// MEDIOS DE PAGO
-// ═══════════════════════════════════════════════════════════════
 function seleccionarMedioPago(el) {
   const padre = el.parentElement;
   padre.querySelectorAll(".medio-pago").forEach(m => m.classList.remove("selected"));
@@ -2163,24 +1931,11 @@ function obtenerMedioPagoSeleccionado(contenedorId) {
   return sel ? sel.dataset.medio : "efectivo";
 }
 
-// ═══════════════════════════════════════════════════════════════
-// CAPITAL
-// ═══════════════════════════════════════════════════════════════
-function guardarCapital() {
-  const v = parseFloat(document.getElementById("inp-capital").value);
-  if (isNaN(v) || v < 0) return alert("Ingresa un valor válido");
-  datos.capital = v; guardar(); renderTodo();
-  alert("✅ Capital guardado");
-}
-
-// ═══════════════════════════════════════════════════════════════
-// DEUDAS
-// ═══════════════════════════════════════════════════════════════
 function agregarDeuda() {
   const nombre = document.getElementById("d-nombre").value.trim();
   const monto = parseFloat(document.getElementById("d-monto").value);
   const nota = document.getElementById("d-nota").value.trim();
-  if (!nombre || isNaN(monto) || monto <= 0) return alert("Completa nombre y monto válido");
+  if (!nombre || isNaN(monto) || monto <= 0) return alert("Completa nombre y monto");
   datos.deudas.push({nombre, monto, nota, abonos: [], incobrable: false, fechaISO: new Date().toISOString()});
   guardar();
   document.getElementById("d-nombre").value = "";
@@ -2188,9 +1943,7 @@ function agregarDeuda() {
   document.getElementById("d-nota").value = "";
   renderTodo();
 }
-function eliminarDeuda(i) {
-  if (confirm("¿Eliminar esta deuda por completo?")) { datos.deudas.splice(i,1); guardar(); renderTodo(); }
-}
+function eliminarDeuda(i) { if (confirm("¿Eliminar?")) { datos.deudas.splice(i,1); guardar(); renderTodo(); } }
 function marcarIncobrableDeuda(i) {
   const d = datos.deudas[i]; if (!d) return;
   if (d.incobrable) { if (confirm("¿Marcar como activa?")) { d.incobrable = false; guardar(); renderTodo(); } }
@@ -2211,17 +1964,12 @@ function guardarEdicionDeuda() {
   const monto = parseFloat(document.getElementById("ed-monto").value);
   const nota = document.getElementById("ed-nota").value.trim();
   if (!nombre || isNaN(monto) || monto <= 0) return alert("Completa");
-  const abonado = calcularAbonado(d);
-  if (monto < abonado && !confirm(`El monto (${formato(monto)}) es menor que lo abonado (${formato(abonado)}). ¿Continuar?`)) return;
   d.nombre = nombre; d.monto = monto; d.nota = nota;
   guardar(); renderTodo();
   cerrarModal("modal-editar-deuda");
   alert("✅ Deuda actualizada");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// VENTAS
-// ═══════════════════════════════════════════════════════════════
 function registrarVenta() {
   const producto = document.getElementById("v-producto").value.trim();
   const categoria = document.getElementById("v-categoria").value.trim() || "General";
@@ -2232,24 +1980,15 @@ function registrarVenta() {
   const quincena = tipo === "quincena" ? document.getElementById("v-quincena").value : "";
   const codigo = document.getElementById("v-codigo").value.trim();
   const metodoPago = obtenerMedioPagoSeleccionado("medios-pago-venta");
-
   if (!producto || isNaN(precio)) return alert("Completa producto y precio");
-
-  const venta = {
+  datos.ventas.push({
     producto, categoria, costo, precio, tipo, cliente, quincena,
-    codigo: codigo || "",
-    metodoPago,
+    codigo: codigo || "", metodoPago,
     abonos: [], incobrable: false,
     fecha: new Date().toLocaleString("es-CO"),
     fechaISO: new Date().toISOString()
-  };
-  datos.ventas.push(venta);
-
-  // Si es contado, sumar a caja
-  if (tipo === "contado") {
-    agregarMovimiento("ingreso", precio, `Venta: ${producto}`, categoria, null, "venta-contado");
-  }
-
+  });
+  if (tipo === "contado") agregarMovimiento("ingreso", precio, `Venta: ${producto}`, categoria, null, "venta-contado");
   guardar();
   document.getElementById("v-producto").value = "";
   document.getElementById("v-categoria").value = "";
@@ -2259,9 +1998,7 @@ function registrarVenta() {
   document.getElementById("v-codigo").value = "";
   renderTodo();
 }
-function eliminarVenta(i) {
-  if (confirm("¿Eliminar esta venta?")) { datos.ventas.splice(i,1); guardar(); renderTodo(); }
-}
+function eliminarVenta(i) { if (confirm("¿Eliminar?")) { datos.ventas.splice(i,1); guardar(); renderTodo(); } }
 function marcarIncobrableVenta(i) {
   const v = datos.ventas[i]; if (!v || v.tipo !== "quincena") return;
   if (v.incobrable) { if (confirm("¿Marcar como activa?")) { v.incobrable = false; guardar(); renderTodo(); } }
@@ -2288,8 +2025,6 @@ function guardarEdicionVenta() {
   const cliente = document.getElementById("ev-cliente").value.trim();
   const quincena = document.getElementById("ev-quincena").value;
   if (!producto || isNaN(precio) || !cliente) return alert("Completa");
-  const abonado = calcularAbonado(v);
-  if (precio < abonado && !confirm(`El precio (${formato(precio)}) es menor que lo abonado (${formato(abonado)}). ¿Continuar?`)) return;
   v.producto = producto; v.categoria = categoria; v.costo = costo;
   v.precio = precio; v.cliente = cliente; v.quincena = quincena;
   guardar(); renderTodo();
@@ -2297,9 +2032,6 @@ function guardarEdicionVenta() {
   alert("✅ Venta actualizada");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// GASTOS
-// ═══════════════════════════════════════════════════════════════
 function agregarGasto() {
   const desc = document.getElementById("g-desc").value.trim();
   const categoria = document.getElementById("g-cat").value.trim() || "Otros";
@@ -2310,7 +2042,6 @@ function agregarGasto() {
     fecha: new Date().toLocaleString("es-CO"),
     fechaISO: new Date().toISOString()
   });
-  // Restar de caja
   agregarMovimiento("egreso", monto, `Gasto: ${desc}`, categoria, null, "gasto");
   guardar();
   document.getElementById("g-desc").value = "";
@@ -2318,13 +2049,8 @@ function agregarGasto() {
   document.getElementById("g-monto").value = "";
   renderTodo();
 }
-function eliminarGasto(i) {
-  if (confirm("¿Eliminar este gasto?")) { datos.gastos.splice(i,1); guardar(); renderTodo(); }
-}
+function eliminarGasto(i) { if (confirm("¿Eliminar?")) { datos.gastos.splice(i,1); guardar(); renderTodo(); } }
 
-// ═══════════════════════════════════════════════════════════════
-// INVENTARIO
-// ═══════════════════════════════════════════════════════════════
 function agregarInventario() {
   const producto = document.getElementById("i-producto").value.trim();
   const categoria = document.getElementById("i-categoria").value.trim() || "General";
@@ -2332,7 +2058,7 @@ function agregarInventario() {
   const precio = parseFloat(document.getElementById("i-precio").value) || 0;
   const cantidad = parseInt(document.getElementById("i-cantidad").value) || 1;
   const codigo = document.getElementById("i-codigo").value.trim();
-  if (!producto) return alert("Ingresa el nombre del producto");
+  if (!producto) return alert("Ingresa el nombre");
   datos.inventario.push({producto, categoria, costo, precio, cantidad, codigo});
   guardar();
   document.getElementById("i-producto").value = "";
@@ -2351,37 +2077,29 @@ function venderDelInventario(i) {
   if (!tipo) {
     cliente = prompt("Nombre del cliente:");
     if (!cliente) return;
-    const q = prompt("¿Quincena? Escribe 15 o 30:", "15");
+    const q = prompt("¿Quincena? 15 o 30:", "15");
     if (q !== "15" && q !== "30") return;
     quincena = q;
   }
-  const metodoPago = tipo ? (prompt("Método de pago (efectivo/transferencia/nequi/daviplata):", "efectivo") || "efectivo") : "";
+  const metodoPago = tipo ? (prompt("Método (efectivo/transferencia/nequi/daviplata):", "efectivo") || "efectivo") : "";
   datos.ventas.push({
     producto: item.producto, categoria: item.categoria,
     costo: item.costo, precio: item.precio,
     tipo: tipo ? "contado" : "quincena",
-    cliente, quincena,
-    metodoPago,
+    cliente, quincena, metodoPago,
     codigo: item.codigo || "",
     abonos: [], incobrable: false,
     fecha: new Date().toLocaleString("es-CO"),
     fechaISO: new Date().toISOString()
   });
-  if (tipo) {
-    agregarMovimiento("ingreso", item.precio, `Venta: ${item.producto}`, item.categoria, null, "venta-contado");
-  }
+  if (tipo) agregarMovimiento("ingreso", item.precio, `Venta: ${item.producto}`, item.categoria, null, "venta-contado");
   item.cantidad -= 1;
   if (item.cantidad <= 0) datos.inventario.splice(i,1);
   guardar(); renderTodo();
   alert("✅ Venta registrada");
 }
-function eliminarInventario(i) {
-  if (confirm("¿Eliminar?")) { datos.inventario.splice(i,1); guardar(); renderTodo(); }
-}
+function eliminarInventario(i) { if (confirm("¿Eliminar?")) { datos.inventario.splice(i,1); guardar(); renderTodo(); } }
 
-// ═══════════════════════════════════════════════════════════════
-// ABONOS
-// ═══════════════════════════════════════════════════════════════
 function abrirModalAbono(tipo, indice) {
   const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
   if (!item) return;
@@ -2420,7 +2138,7 @@ function procesarFotoAbono(ev) {
       fotoAbonoActual = canvas.toDataURL("image/jpeg", 0.7);
       document.getElementById("abono-foto-preview").innerHTML = `
         <img src="${fotoAbonoActual}" class="foto-preview">
-        <div style="font-size:0.8rem;color:var(--text-soft);margin-top:5px;text-align:center;">
+        <div style="font-size:0.8rem;text-align:center;margin-top:5px;">
           📸 Comprobante · <span style="color:#e74c3c;cursor:pointer;" onclick="quitarFotoAbono()">Quitar</span>
         </div>`;
     };
@@ -2442,8 +2160,7 @@ function confirmarAbono() {
   const nota = document.getElementById("abono-nota").value.trim();
   const metodoPago = obtenerMedioPagoSeleccionado("medios-pago-abono");
   const saldoActual = calcularSaldo(item);
-
-  if (isNaN(monto) || monto <= 0) return alert("Ingresa un monto válido");
+  if (isNaN(monto) || monto <= 0) return alert("Monto válido");
   if (monto > saldoActual + 0.01) {
     if (!confirm(`El abono (${formato(monto)}) es mayor que el saldo (${formato(saldoActual)}). ¿Abonar solo ${formato(saldoActual)}?`)) return;
     monto = saldoActual;
@@ -2455,16 +2172,13 @@ function confirmarAbono() {
     fechaISO: new Date().toISOString()
   };
   item.abonos.push(nuevoAbono);
-
-  // Sumar a caja
   const nombre = tipo === "deuda" ? item.nombre : item.cliente;
   agregarMovimiento("ingreso", monto, `Abono de ${nombre}`, "Abonos", null, "abono");
-
   guardar(); renderTodo();
   cerrarModal("modal-abono");
   mostrarEstadoSync("ok", "Abono registrado");
   setTimeout(() => {
-    if (confirm("¿Generar el recibo del abono?")) mostrarReciboAbono(tipo, indice, nuevoAbono);
+    if (confirm("¿Generar recibo del abono?")) mostrarReciboAbono(tipo, indice, nuevoAbono);
   }, 400);
 }
 function verHistorialAbonos(tipo, indice) {
@@ -2493,12 +2207,12 @@ function verHistorialAbonos(tipo, indice) {
         <div style="flex:1;">
           <div class="monto-abono">${iconoMedio} ${formato(a.monto)}</div>
           <div class="fecha-abono">${a.fecha}</div>
-          ${a.nota ? `<div style="font-size:0.8rem;color:var(--text-soft);margin-top:3px;">📝 ${a.nota}</div>` : ""}
+          ${a.nota ? `<div style="font-size:0.8rem;margin-top:3px;">📝 ${a.nota}</div>` : ""}
         </div>
         ${a.foto ? `<img src="${a.foto}" class="comprobante-mini" onclick="verFotoGrande('${a.foto}')">` : ""}
         <div style="display:flex;flex-direction:column;gap:4px;">
-          <button class="mini-btn azul" onclick="reciboDesdeHistorial('${tipo}', ${indice}, ${realIdx})" title="Recibo">🧾</button>
-          <button class="mini-btn" onclick="eliminarAbono('${tipo}', ${indice}, ${realIdx})" title="Eliminar">✕</button>
+          <button class="mini-btn azul" onclick="reciboDesdeHistorial('${tipo}', ${indice}, ${realIdx})">🧾</button>
+          <button class="mini-btn" onclick="eliminarAbono('${tipo}', ${indice}, ${realIdx})">✕</button>
         </div>
       </div>`;
     }).join("");
@@ -2528,12 +2242,8 @@ function eliminarAbono(tipo, itemIdx, abonoIdx) {
   item.abonos.splice(abonoIdx, 1);
   guardar(); renderTodo();
   cerrarModal("modal-historial-abonos");
-  mostrarEstadoSync("ok", "Abono eliminado");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RECIBOS
-// ═══════════════════════════════════════════════════════════════
 function mostrarReciboAbono(tipo, indice, abono) {
   const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
   if (!item) return;
@@ -2549,7 +2259,6 @@ function mostrarReciboAbonoCon(tipo, indice, abono, abonadoTotal, saldo) {
   const nombre = tipo === "deuda" ? item.nombre : item.cliente;
   const producto = tipo === "deuda" ? (item.nota || "Préstamo") : item.producto;
   const iconoMedio = { efectivo: "💵 Efectivo", transferencia: "📱 Transferencia", nequi: "💜 Nequi", daviplata: "🔴 Daviplata" }[abono.metodoPago || "efectivo"];
-
   document.getElementById("recibo-abono-contenido").innerHTML = `
     <div class="recibo-header">
       <div class="logo-recibo">EMMA</div>
@@ -2579,11 +2288,7 @@ function mostrarReciboAbonoCon(tipo, indice, abono, abonadoTotal, saldo) {
   document.getElementById("modal-recibo-abono").classList.add("active");
 }
 function compartirReciboAbonoWsp(nombre, producto, abono, total, abonado, saldo) {
-  const msg = `💵 *RECIBO DE ABONO*\n🏪 *Emma Studio*\n\n` +
-              `👤 Cliente: ${nombre}\n📦 Concepto: ${producto}\n🗓️ Fecha: ${abono.fecha}\n` +
-              `${abono.nota ? `📝 Nota: ${abono.nota}\n` : ""}` +
-              `━━━━━━━━━━━━━━\n💵 *ABONO: ${formato(abono.monto)}*\n━━━━━━━━━━━━━━\n` +
-              `📊 Total: ${formato(total)}\n✅ Abonado: ${formato(abonado)}\n💰 *SALDO: ${formato(saldo)}*\n\n¡Gracias por su pago!`;
+  const msg = `💵 *RECIBO DE ABONO*\n🏪 *Emma Studio*\n\n👤 Cliente: ${nombre}\n📦 Concepto: ${producto}\n🗓️ Fecha: ${abono.fecha}\n${abono.nota ? `📝 Nota: ${abono.nota}\n` : ""}━━━━━━━━━━━━━━\n💵 *ABONO: ${formato(abono.monto)}*\n━━━━━━━━━━━━━━\n📊 Total: ${formato(total)}\n✅ Abonado: ${formato(abonado)}\n💰 *SALDO: ${formato(saldo)}*\n\n¡Gracias por su pago!`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 function verRecibo(idx) {
@@ -2607,9 +2312,7 @@ function verRecibo(idx) {
       <div class="lbl">${saldo > 0 ? "Saldo pendiente" : "Estado"}</div>
       <div class="val">${saldo > 0 ? formato(saldo) : "✅ PAGADO"}</div>
     </div>
-    <div style="text-align:center;margin-top:14px;font-size:1rem;font-weight:700;color:#c9a227;">
-      📅 Cobrar en quincena día ${v.quincena}
-    </div>
+    <div style="text-align:center;margin-top:14px;font-size:1rem;font-weight:700;color:#c9a227;">📅 Cobrar en quincena día ${v.quincena}</div>
     <div class="firma">Firma: _______________________</div>
   `;
   document.getElementById("btn-wsp-recibo").onclick = () => compartirReciboWsp(v);
@@ -2618,8 +2321,7 @@ function verRecibo(idx) {
 function compartirReciboWsp(v) {
   const abonado = calcularAbonado(v);
   const saldo = calcularSaldo(v);
-  let msg = `🧾 *RECIBO FIADO*\n🏪 *Emma Studio*\n\n` +
-            `👤 Cliente: ${v.cliente}\n📦 Producto: ${v.producto}\n💰 Precio: ${formato(v.precio)}\n`;
+  let msg = `🧾 *RECIBO FIADO*\n🏪 *Emma Studio*\n\n👤 Cliente: ${v.cliente}\n📦 Producto: ${v.producto}\n💰 Precio: ${formato(v.precio)}\n`;
   if (abonado > 0) msg += `💵 Abonado: ${formato(abonado)}\n`;
   msg += `📅 Cobrar en quincena día ${v.quincena}\n🗓️ Fecha: ${v.fecha}\n━━━━━━━━━━━━━━\n`;
   if (saldo > 0) msg += `💰 *SALDO: ${formato(saldo)}*`;
@@ -2627,42 +2329,6 @@ function compartirReciboWsp(v) {
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RECIBO TÉRMICO 58mm
-// ═══════════════════════════════════════════════════════════════
-function generarReciboThermico(venta, tipoDoc) {
-  const abonado = calcularAbonado(venta);
-  const saldo = calcularSaldo(venta);
-  let html = `
-    <div class="centro">
-      <div class="grande">EMMA STUDIO</div>
-      <div>Estilo, hogar y detalles</div>
-      <div class="linea"></div>
-      <div>${tipoDoc || "RECIBO"}</div>
-      <div class="linea"></div>
-    </div>
-    <div class="fila-r"><span>Fecha:</span><span>${venta.fecha}</span></div>
-    <div class="fila-r"><span>Cliente:</span><span>${venta.cliente}</span></div>
-    <div class="linea"></div>
-    <div class="fila-r"><span>${venta.producto}</span></div>
-    <div class="fila-r"><span>Precio:</span><span>${formato(venta.precio)}</span></div>
-  `;
-  if (abonado > 0) html += `<div class="fila-r"><span>Abonado:</span><span>${formato(abonado)}</span></div>`;
-  html += `
-    <div class="linea"></div>
-    <div class="fila-r grande"><span>SALDO:</span><span>${saldo > 0 ? formato(saldo) : "PAGADO"}</span></div>
-    <div class="linea"></div>
-    <div class="centro">Quincena día ${venta.quincena}</div>
-    <div class="centro">¡Gracias por su compra!</div>
-    <div class="linea"></div>
-    <div class="centro">Emma Studio</div>
-  `;
-  return `<div class="recibo-termico">${html}</div>`;
-}
-
-// ═══════════════════════════════════════════════════════════════
-// GENERAR IMAGEN DESDE HTML (html2canvas - carga dinámica)
-// ═══════════════════════════════════════════════════════════════
 async function cargarHtml2Canvas() {
   if (window.html2canvas) return;
   return new Promise((resolve, reject) => {
@@ -2677,12 +2343,7 @@ async function generarImagenDeElemento(elemento, nombreArchivo, descargarAuto) {
   try {
     mostrarEstadoSync("cargando", "Generando imagen...");
     await cargarHtml2Canvas();
-    const canvas = await html2canvas(elemento, {
-      backgroundColor: "#ffffff",
-      scale: 2,
-      useCORS: true,
-      logging: false
-    });
+    const canvas = await html2canvas(elemento, { backgroundColor: "#ffffff", scale: 2, useCORS: true, logging: false });
     const dataUrl = canvas.toDataURL("image/png");
     imagenGeneradaActual = { dataUrl, nombre: nombreArchivo };
     if (descargarAuto) {
@@ -2697,21 +2358,15 @@ async function generarImagenDeElemento(elemento, nombreArchivo, descargarAuto) {
       mostrarEstadoSync("ok", "Imagen lista");
     }
   } catch (e) {
-    console.error(e);
     mostrarEstadoSync("error", "Error al generar imagen");
-    alert("No se pudo generar la imagen. Verifica tu conexión a internet.");
+    alert("No se pudo generar la imagen. Verifica tu conexión.");
   }
 }
 async function descargarReciboImagen(tipo) {
-  const mapa = {
-    "recibo": "recibo-contenido",
-    "recibo-abono": "recibo-abono-contenido",
-    "cierre-dia": "cierre-dia-contenido"
-  };
+  const mapa = { "recibo": "recibo-contenido", "recibo-abono": "recibo-abono-contenido", "cierre-dia": "cierre-dia-contenido" };
   const el = document.getElementById(mapa[tipo]);
   if (!el) return;
-  const nombre = `emma-${tipo}-${Date.now()}.png`;
-  await generarImagenDeElemento(el, nombre, true);
+  await generarImagenDeElemento(el, `emma-${tipo}-${Date.now()}.png`, true);
 }
 function descargarImagenGenerada() {
   if (!imagenGeneradaActual) return;
@@ -2721,9 +2376,6 @@ function descargarImagenGenerada() {
   link.click();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RECORDATORIOS MASIVOS
-// ═══════════════════════════════════════════════════════════════
 function abrirRecordatorios() {
   renderizarRecordatorios();
   document.getElementById("modal-recordatorios").classList.add("active");
@@ -2734,15 +2386,12 @@ function renderizarRecordatorios() {
   if (clientes.length === 0) {
     el.innerHTML = '<div class="vacio">¡Nadie debe! 🎉</div>';
   } else {
-    el.innerHTML = clientes.map((c, i) => `
+    el.innerHTML = clientes.map(c => `
       <label class="cliente-checkbox">
-        <input type="checkbox" data-cliente="${c.nombre}" onchange="actualizarContadorRecordatorios()" checked>
+        <input type="checkbox" data-cliente="${c.nombre.replace(/"/g,"&quot;")}" onchange="actualizarContadorRecordatorios()" checked>
         <div style="flex:1;">
           <div class="cc-nombre">${c.nombre}</div>
-          <div style="font-size:0.8rem;color:var(--text-soft);">
-            Fiado: ${formato(c.fiadoPendiente || 0)}
-            ${c.deudaAparte ? ` · Aparte: ${formato(c.deudaAparte)}` : ""}
-          </div>
+          <div style="font-size:0.8rem;color:var(--text-soft);">Fiado: ${formato(c.fiadoPendiente || 0)}${c.deudaAparte ? ` · Aparte: ${formato(c.deudaAparte)}` : ""}</div>
         </div>
         <div class="cc-monto">${formato((c.fiadoPendiente || 0) + (c.deudaAparte || 0))}</div>
       </label>
@@ -2767,60 +2416,35 @@ function actualizarContadorRecordatorios() {
 }
 function enviarRecordatorios() {
   const seleccionados = Array.from(document.querySelectorAll("#lista-recordatorios input[type=checkbox]:checked"));
-  if (seleccionados.length === 0) return alert("Selecciona al menos un cliente");
-
+  if (seleccionados.length === 0) return alert("Selecciona al menos uno");
   const clientes = agruparClientes();
   const mensajes = seleccionados.map(s => {
     const c = clientes.find(x => x.nombre === s.dataset.cliente);
     if (!c) return null;
-    const total = (c.fiadoPendiente || 0) + (c.deudaAparte || 0);
-    return {
-      nombre: c.nombre,
-      fiado: c.fiadoPendiente || 0,
-      aparte: c.deudaAparte || 0,
-      total
-    };
+    return { nombre: c.nombre, fiado: c.fiadoPendiente || 0, aparte: c.deudaAparte || 0, total: (c.fiadoPendiente || 0) + (c.deudaAparte || 0) };
   }).filter(Boolean);
-
   if (mensajes.length === 1) {
     const m = mensajes[0];
-    const texto = `¡Hola ${m.nombre}! 👋\n\nTe recuerdo amablemente que tienes un saldo pendiente con *Emma Studio*:\n\n` +
-                  (m.fiado > 0 ? `📦 Productos fiados: *${formato(m.fiado)}*\n` : "") +
-                  (m.aparte > 0 ? `💵 Préstamo aparte: *${formato(m.aparte)}*\n` : "") +
-                  `━━━━━━━━━━━━━━\n💰 *TOTAL: ${formato(m.total)}*\n\n` +
-                  `Cuando puedas, te agradezco mucho el pago. ¡Gracias! 🙏`;
+    const texto = `¡Hola ${m.nombre}! 👋\n\nTe recuerdo que tienes un saldo pendiente con *Emma Studio*:\n\n${m.fiado > 0 ? `📦 Productos fiados: *${formato(m.fiado)}*\n` : ""}${m.aparte > 0 ? `💵 Préstamo aparte: *${formato(m.aparte)}*\n` : ""}━━━━━━━━━━━━━━\n💰 *TOTAL: ${formato(m.total)}*\n\nCuando puedas, te agradezco el pago. ¡Gracias! 🙏`;
     window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, "_blank");
   } else {
-    // Más de uno: abrir WhatsApp con mensaje general
     const totalTodo = mensajes.reduce((s,m) => s + m.total, 0);
     const lista = mensajes.map(m => `• ${m.nombre}: ${formato(m.total)}`).join("\n");
-    const texto = `📋 *RECORDATORIO DE PAGOS*\n🏪 *Emma Studio*\n\n` +
-                  `Clientes con saldo pendiente:\n${lista}\n\n` +
-                  `━━━━━━━━━━━━━━\n💰 *TOTAL GENERAL: ${formato(totalTodo)}*\n\n` +
-                  `Por favor, cuando puedan, agradezco el pago. ¡Gracias! 🙏`;
+    const texto = `📋 *RECORDATORIO DE PAGOS*\n🏪 *Emma Studio*\n\n${lista}\n\n━━━━━━━━━━━━━━\n💰 *TOTAL: ${formato(totalTodo)}*\n\n¡Gracias! 🙏`;
     window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, "_blank");
-    alert(`📱 Se abrirá WhatsApp con un mensaje general.\n\nSi quieres mandar uno por uno, selecciona SOLO UN cliente a la vez y vuelve a tocar el botón.`);
+    alert("Se abrirá WhatsApp con un mensaje general.\n\nPara mandar uno por uno, selecciona SOLO UN cliente.");
   }
 }
 async function descargarRecordatoriosImagen() {
   const seleccionados = Array.from(document.querySelectorAll("#lista-recordatorios input[type=checkbox]:checked"));
-  if (seleccionados.length === 0) return alert("Selecciona al menos un cliente");
-
+  if (seleccionados.length === 0) return alert("Selecciona al menos uno");
   const clientes = agruparClientes();
   const mensajes = seleccionados.map(s => {
     const c = clientes.find(x => x.nombre === s.dataset.cliente);
     if (!c) return null;
-    return {
-      nombre: c.nombre,
-      fiado: c.fiadoPendiente || 0,
-      aparte: c.deudaAparte || 0,
-      total: (c.fiadoPendiente || 0) + (c.deudaAparte || 0)
-    };
+    return { nombre: c.nombre, fiado: c.fiadoPendiente || 0, aparte: c.deudaAparte || 0, total: (c.fiadoPendiente || 0) + (c.deudaAparte || 0) };
   }).filter(Boolean);
-
   const totalTodo = mensajes.reduce((s,m) => s + m.total, 0);
-
-  // Crear un div temporal con el formato de recibo
   const temp = document.createElement("div");
   temp.style.cssText = "position:fixed;left:-9999px;top:0;width:400px;background:white;padding:24px;font-family:'Segoe UI',Arial,sans-serif;color:#1a1a1a;";
   temp.innerHTML = `
@@ -2841,12 +2465,9 @@ async function descargarRecordatoriosImagen() {
       <div style="font-size:0.75rem;color:#666;text-transform:uppercase;letter-spacing:1px;">TOTAL GENERAL</div>
       <div style="font-size:1.8rem;font-weight:900;color:#c9a227;font-family:Georgia,serif;">${formato(totalTodo)}</div>
     </div>
-    <div style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px dashed #ddd;font-size:0.8rem;color:#999;">
-      Emma Studio · ${new Date().toLocaleDateString("es-CO")}
-    </div>
+    <div style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px dashed #ddd;font-size:0.8rem;color:#999;">Emma Studio · ${new Date().toLocaleDateString("es-CO")}</div>
   `;
   document.body.appendChild(temp);
-
   try {
     await cargarHtml2Canvas();
     const canvas = await html2canvas(temp, { backgroundColor: "#ffffff", scale: 2 });
@@ -2854,16 +2475,10 @@ async function descargarRecordatoriosImagen() {
     imagenGeneradaActual = { dataUrl, nombre: `emma-recordatorios-${Date.now()}.png` };
     document.getElementById("imagen-generada").src = dataUrl;
     document.getElementById("modal-imagen").classList.add("active");
-  } catch (e) {
-    alert("Error al generar imagen: " + e.message);
-  } finally {
-    document.body.removeChild(temp);
-  }
+  } catch (e) { alert("Error: " + e.message); }
+  finally { document.body.removeChild(temp); }
 }
 
-// ═══════════════════════════════════════════════════════════════
-// CLIENTES
-// ═══════════════════════════════════════════════════════════════
 function agruparClientes() {
   const mapa = {};
   datos.ventas.forEach((v, idx) => {
@@ -2887,24 +2502,16 @@ function verCliente(nombre) {
   const totalDeuda = deudasC.reduce((s,d)=>s+calcularSaldo(d),0);
   const foto = datos.fotosClientes[nombre];
   const etiqueta = datos.etiquetasClientes[nombre] || "";
-  const etiquetasOpts = ["", "vip", "moroso", "confiable", "nuevo"];
   const etiquetaTxt = { vip: "⭐ VIP", moroso: "🚨 Moroso", confiable: "✅ Confiable", nuevo: "🆕 Nuevo" };
-
   document.getElementById("cliente-detalle").innerHTML = `
     <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px;">
-      <div class="avatar" style="width:70px;height:70px;font-size:1.8rem;">
-        ${foto ? `<img src="${foto}">` : nombre.charAt(0).toUpperCase()}
-      </div>
+      <div class="avatar" style="width:70px;height:70px;font-size:1.8rem;">${foto ? `<img src="${foto}">` : nombre.charAt(0).toUpperCase()}</div>
       <div style="flex:1;">
         <h2 style="margin:0;border:none;padding:0;">${nombre}</h2>
         ${etiqueta ? `<span class="etiqueta-cliente ${etiqueta}" style="margin-top:6px;display:inline-block;">${etiquetaTxt[etiqueta]}</span>` : ""}
         <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-          <button class="btn morado pequeno" onclick="abrirFotoCliente('${nombre.replace(/'/g,"\\'")}')">
-            📸 ${foto ? "Cambiar foto" : "Agregar foto"}
-          </button>
-          <button class="btn pequeno" onclick="abrirEtiqueta('${nombre.replace(/'/g,"\\'")}', '${etiqueta}')">
-            🏷️ Etiqueta
-          </button>
+          <button class="btn morado pequeno" onclick="abrirFotoCliente('${nombre.replace(/'/g,"\\'")}')">📸 ${foto ? "Cambiar" : "Foto"}</button>
+          <button class="btn pequeno" onclick="abrirEtiqueta('${nombre.replace(/'/g,"\\'")}', '${etiqueta}')">🏷️ Etiqueta</button>
         </div>
       </div>
     </div>
@@ -2942,12 +2549,11 @@ function verCliente(nombre) {
       }).join("")}
   `;
   document.getElementById("btn-wsp-cliente").onclick = () => compartirClienteWsp(nombre, totalFiado, totalDeuda);
-  document.getElementById("btn-recordar-cliente").onclick = () => recordarClienteWsp(nombre, totalFiado, totalDeuda, ventasC.filter(v=>v.tipo==="quincena"));
+  document.getElementById("btn-recordar-cliente").onclick = () => recordarClienteWsp(nombre, totalFiado, totalDeuda);
   document.getElementById("modal-cliente").classList.add("active");
 }
 function abrirEtiqueta(nombre, actual) {
   const opciones = ["", "vip", "moroso", "confiable", "nuevo"];
-  const nombres = { "": "Sin etiqueta", vip: "⭐ VIP", moroso: "🚨 Moroso", confiable: "✅ Confiable", nuevo: "🆕 Nuevo" };
   const elegido = prompt("Elige etiqueta:\n\n1. Sin etiqueta\n2. ⭐ VIP\n3. 🚨 Moroso\n4. ✅ Confiable\n5. 🆕 Nuevo\n\nEscribe el número:", opciones.indexOf(actual) + 1);
   if (elegido === null) return;
   const idx = parseInt(elegido) - 1;
@@ -2959,29 +2565,22 @@ function abrirEtiqueta(nombre, actual) {
   setTimeout(() => verCliente(nombre), 300);
 }
 function compartirClienteWsp(nombre, fiado, deuda) {
-  const msg = `👤 *Estado de cuenta: ${nombre}*\n🏪 *Emma Studio*\n\n` +
-              `📦 Saldo fiado: ${formato(fiado)}\n💵 Saldo deuda aparte: ${formato(deuda)}\n` +
-              `━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR: ${formato(fiado + deuda)}*`;
+  const msg = `👤 *Estado de cuenta: ${nombre}*\n🏪 *Emma Studio*\n\n📦 Saldo fiado: ${formato(fiado)}\n💵 Saldo deuda aparte: ${formato(deuda)}\n━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR: ${formato(fiado + deuda)}*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
-function recordarClienteWsp(nombre, fiado, deuda, ventas) {
-  let msg = `¡Hola ${nombre}! 👋\n\n`;
-  msg += `Te recuerdo amablemente que tienes un saldo pendiente con *Emma Studio*:\n\n`;
+function recordarClienteWsp(nombre, fiado, deuda) {
+  let msg = `¡Hola ${nombre}! 👋\n\nTe recuerdo que tienes un saldo pendiente con *Emma Studio*:\n\n`;
   if (fiado > 0) msg += `📦 Productos fiados: *${formato(fiado)}*\n`;
   if (deuda > 0) msg += `💵 Préstamo aparte: *${formato(deuda)}*\n`;
-  msg += `━━━━━━━━━━━━━━\n💰 *TOTAL: ${formato(fiado + deuda)}*\n\n`;
-  msg += `Cuando puedas, te agradezco mucho el pago. ¡Gracias! 🙏`;
+  msg += `━━━━━━━━━━━━━━\n💰 *TOTAL: ${formato(fiado + deuda)}*\n\n¡Gracias! 🙏`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
-// ---------- FOTO CLIENTE ----------
 function abrirFotoCliente(nombre) {
   clienteFotoActual = nombre;
   fotoClienteTemp = datos.fotosClientes[nombre] || null;
   document.getElementById("fc-nombre").textContent = nombre;
-  document.getElementById("fc-preview").innerHTML = fotoClienteTemp
-    ? `<img src="${fotoClienteTemp}" class="foto-preview">`
-    : '<div class="vacio">Sin foto</div>';
+  document.getElementById("fc-preview").innerHTML = fotoClienteTemp ? `<img src="${fotoClienteTemp}" class="foto-preview">` : '<div class="vacio">Sin foto</div>';
   document.getElementById("modal-foto-cliente").classList.add("active");
 }
 function procesarFotoCliente(ev) {
@@ -3004,7 +2603,7 @@ function procesarFotoCliente(ev) {
   reader.readAsDataURL(file);
 }
 function guardarFotoCliente() {
-  if (!clienteFotoActual || !fotoClienteTemp) return alert("Selecciona una foto primero");
+  if (!clienteFotoActual || !fotoClienteTemp) return alert("Selecciona una foto");
   datos.fotosClientes[clienteFotoActual] = fotoClienteTemp;
   guardar(); renderTodo();
   cerrarModal("modal-foto-cliente");
@@ -3013,16 +2612,13 @@ function guardarFotoCliente() {
 }
 function eliminarFotoCliente() {
   if (!clienteFotoActual) return;
-  if (!confirm("¿Quitar la foto de este cliente?")) return;
+  if (!confirm("¿Quitar la foto?")) return;
   delete datos.fotosClientes[clienteFotoActual];
   guardar(); renderTodo();
   cerrarModal("modal-foto-cliente");
   setTimeout(() => verCliente(clienteFotoActual), 300);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RANKING
-// ═══════════════════════════════════════════════════════════════
 function renderRanking() {
   const clientes = agruparClientes().filter(c => c.nombre && c.nombre !== "Contado" && c.nombre !== "Cliente");
   const clientesConDatos = clientes.map(c => {
@@ -3038,14 +2634,11 @@ function renderRanking() {
   const malos = clientesConDatos.filter(c => c.saldoActual > 0).sort((a,b) => b.saldoActual - a.saldoActual).slice(0, 5);
   const medal = ["🥇","🥈","🥉","4️⃣","5️⃣"];
   const rb = document.getElementById("ranking-buenos");
-  if (buenos.length === 0) rb.innerHTML = '<div class="vacio">Sin datos suficientes</div>';
+  if (buenos.length === 0) rb.innerHTML = '<div class="vacio">Sin datos</div>';
   else rb.innerHTML = buenos.map((c,i) => `
     <div class="ranking-card ${i===0?'oro':i===1?'plata':i===2?'bronce':''}">
       <div class="pos">${medal[i]}</div>
-      <div class="info-r">
-        <div class="nombre-r">${c.nombre}</div>
-        <div class="detalle-r">Ha abonado ${formato(c.totalAbonado)} de ${formato(c.totalVendido)}</div>
-      </div>
+      <div class="info-r"><div class="nombre-r">${c.nombre}</div><div class="detalle-r">Abonado ${formato(c.totalAbonado)} de ${formato(c.totalVendido)}</div></div>
       <div class="monto-r">${c.cumplimiento.toFixed(0)}%</div>
     </div>
   `).join("");
@@ -3054,18 +2647,12 @@ function renderRanking() {
   else rm.innerHTML = malos.map((c,i) => `
     <div class="ranking-card malo">
       <div class="pos">${i+1}</div>
-      <div class="info-r">
-        <div class="nombre-r">${c.nombre}</div>
-        <div class="detalle-r">Saldo pendiente</div>
-      </div>
+      <div class="info-r"><div class="nombre-r">${c.nombre}</div><div class="detalle-r">Saldo pendiente</div></div>
       <div class="monto-r" style="color:#e74c3c;">${formato(c.saldoActual)}</div>
     </div>
   `).join("");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// AVISO QUINCENA + ALERTAS
-// ═══════════════════════════════════════════════════════════════
 function proximaQuincena() {
   const hoy = new Date();
   const dia = hoy.getDate();
@@ -3090,7 +2677,7 @@ function renderAviso() {
         <div style="font-size:1.05rem;">Día ${diaObjetivo} · ${fecha.toLocaleDateString("es-CO", {day:"numeric", month:"long"})}</div></div>
       <div style="text-align:right;"><div style="font-size:0.8rem;opacity:0.9;">Faltan</div>
         <div class="dias">${txtDias}</div></div>
-      <div style="text-align:right;"><div style="font-size:0.8rem;opacity:0.9;">Saldo por cobrar</div>
+      <div style="text-align:right;"><div style="font-size:0.8rem;opacity:0.9;">Saldo</div>
         <div style="font-size:1.2rem;font-weight:800;">${formato(fiadoQ)}</div></div>
     </div>`;
 }
@@ -3098,15 +2685,11 @@ function renderAlertasInteligentes() {
   const el = document.getElementById("alertas-inteligentes");
   if (!el) return;
   const alertas = [];
-
-  // Días sin ventas
   if (datos.ventas.length > 0) {
     const ultVenta = [...datos.ventas].sort((a,b) => new Date(b.fechaISO||0) - new Date(a.fechaISO||0))[0];
     const diasSin = Math.floor((new Date() - new Date(ultVenta.fechaISO)) / (1000*60*60*24));
     if (diasSin >= 3) alertas.push({ icono: "⚠️", texto: `Llevas <b>${diasSin} días</b> sin registrar ventas`, tipo: "critico", accion: "ventas" });
   }
-
-  // Clientes morosos
   const hoy = new Date();
   const deudasVencidas = [];
   datos.ventas.filter(v => v.tipo === "quincena" && calcularSaldo(v) > 0).forEach(v => {
@@ -3115,33 +2698,21 @@ function renderAlertasInteligentes() {
   });
   if (deudasVencidas.length > 0) {
     const total = deudasVencidas.reduce((s,d) => s + d.monto, 0);
-    alertas.push({ icono: "🚨", texto: `<b>${deudasVencidas.length} clientes</b> deben hace más de 30 días (${formato(total)})`, tipo: "critico", accion: "cartera" });
+    alertas.push({ icono: "🚨", texto: `<b>${deudasVencidas.length} clientes</b> deben hace +30 días (${formato(total)})`, tipo: "critico", accion: "cartera" });
   }
-
-  // Meta casi cumplida
   const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth()).reduce((s,v) => s + v.precio, 0);
   if (datos.metas.mensual > 0) {
     const pct = (ventasMes / datos.metas.mensual) * 100;
-    if (pct >= 80 && pct < 100) alertas.push({ icono: "🎯", texto: `¡Estás al <b>${pct.toFixed(0)}%</b> de tu meta mensual!`, tipo: "info", accion: "metas" });
-    else if (pct >= 100) alertas.push({ icono: "🎉", texto: `¡Felicidades! Superaste tu meta mensual`, tipo: "exito", accion: "metas" });
+    if (pct >= 80 && pct < 100) alertas.push({ icono: "🎯", texto: `¡Estás al <b>${pct.toFixed(0)}%</b> de tu meta!`, tipo: "info", accion: "metas" });
+    else if (pct >= 100) alertas.push({ icono: "🎉", texto: `¡Superaste tu meta mensual!`, tipo: "exito", accion: "metas" });
   }
-
-  // Saldo alto por cobrar
   const saldoTotal = totalSaldoDeudas() + totalSaldoFiadoQ("15") + totalSaldoFiadoQ("30");
-  if (saldoTotal > 100000) alertas.push({ icono: "💰", texto: `Tienes <b>${formato(saldoTotal)}</b> por cobrar en total`, tipo: "info", accion: "cartera" });
-
-  // Productos con stock bajo
+  if (saldoTotal > 100000) alertas.push({ icono: "💰", texto: `Tienes <b>${formato(saldoTotal)}</b> por cobrar`, tipo: "info", accion: "cartera" });
   const pocoStock = datos.inventario.filter(i => i.cantidad <= 2 && i.cantidad > 0);
-  if (pocoStock.length > 0) alertas.push({ icono: "📦", texto: `<b>${pocoStock.length} productos</b> con stock bajo (≤2)`, tipo: "info", accion: "inventario" });
-
-  // Caja baja
+  if (pocoStock.length > 0) alertas.push({ icono: "📦", texto: `<b>${pocoStock.length} productos</b> con stock bajo`, tipo: "info", accion: "inventario" });
   const caja = calcularCaja();
-  if (caja < 50000 && datos.caja.movimientos.length > 5) {
-    alertas.push({ icono: "💵", texto: `Tu caja está en <b>${formato(caja)}</b>. ¿Necesitas revisar?`, tipo: "info", accion: "caja" });
-  }
-
+  if (caja < 50000 && datos.caja.movimientos.length > 5) alertas.push({ icono: "💵", texto: `Tu caja está en <b>${formato(caja)}</b>`, tipo: "info", accion: "caja" });
   if (alertas.length === 0) { el.innerHTML = ""; return; }
-
   el.innerHTML = `
     <div class="alertas-section">
       <h3>🔔 Alertas inteligentes</h3>
@@ -3153,10 +2724,6 @@ function renderAlertasInteligentes() {
       `).join("")}
     </div>`;
 }
-
-// ═══════════════════════════════════════════════════════════════
-// PROYECCIONES
-// ═══════════════════════════════════════════════════════════════
 function renderProyecciones() {
   const el = document.getElementById("proyecciones-box");
   if (!el) return;
@@ -3166,22 +2733,20 @@ function renderProyecciones() {
   const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && new Date(v.fechaISO).getFullYear() === hoy.getFullYear());
   const totalMes = ventasMes.reduce((s,v) => s + v.precio, 0);
   const gananciaMes = ventasMes.reduce((s,v) => s + (v.precio - v.costo), 0);
-
   const promedioDiario = totalMes / diaActual;
   const proyeccionVentas = promedioDiario * diasMes;
   const proyeccionGanancia = (gananciaMes / diaActual) * diasMes;
-
   el.innerHTML = `
     <div class="dashboard-grid">
       <div class="dash-card dorado">
         <span class="dc-icono">📈</span>
-        <div class="dc-lbl">Proyección de ventas este mes</div>
+        <div class="dc-lbl">Proyección ventas del mes</div>
         <div class="dc-val">${formato(proyeccionVentas)}</div>
         <div class="dc-extra">Al ritmo actual (${formato(promedioDiario)}/día)</div>
       </div>
       <div class="dash-card verde">
         <span class="dc-icono">💰</span>
-        <div class="dc-lbl">Proyección de ganancia</div>
+        <div class="dc-lbl">Proyección ganancia</div>
         <div class="dc-val">${formato(proyeccionGanancia)}</div>
         <div class="dc-extra">Antes de gastos</div>
       </div>
@@ -3189,15 +2754,10 @@ function renderProyecciones() {
         <span class="dc-icono">📅</span>
         <div class="dc-lbl">Días restantes del mes</div>
         <div class="dc-val">${diasMes - diaActual}</div>
-        <div class="dc-extra">Ya van ${diaActual} días</div>
+        <div class="dc-extra">Van ${diaActual} días</div>
       </div>
-    </div>
-  `;
+    </div>`;
 }
-
-// ═══════════════════════════════════════════════════════════════
-// METAS POR CATEGORÍA
-// ═══════════════════════════════════════════════════════════════
 function guardarMetas() {
   datos.metas = datos.metas || {};
   datos.metas.mensual = parseFloat(document.getElementById("m-mensual").value) || 0;
@@ -3217,10 +2777,7 @@ function agregarMetaCategoria() {
   renderTodo();
 }
 function eliminarMetaCategoria(i) {
-  if (confirm("¿Eliminar esta meta?")) {
-    datos.metas.categorias.splice(i, 1);
-    guardar(); renderTodo();
-  }
+  if (confirm("¿Eliminar?")) { datos.metas.categorias.splice(i, 1); guardar(); renderTodo(); }
 }
 function renderMetasCategoria() {
   const el = document.getElementById("lista-metas-categoria");
@@ -3241,12 +2798,9 @@ function renderMetasCategoria() {
           <button class="mini-btn" onclick="eliminarMetaCategoria(${i})">✕</button>
         </div>
         <div class="barra"><div class="barra-fill ${pct>=100?'completa':pct>=75?'aviso':''}" style="width:${pct}%">${pct.toFixed(0)}%</div></div>
-      </div>
-    `;
+      </div>`;
   }).join("");
 }
-
-// ---------- RESPONSABILIDADES ----------
 function guardarResp() {
   datos.responsabilidades = {
     recibos: parseFloat(document.getElementById("res-recibos").value) || 0,
@@ -3257,8 +2811,6 @@ function guardarResp() {
   guardar(); renderTodo();
   alert("✅ Guardado");
 }
-
-// ---------- NOTAS ----------
 function agregarNota() {
   const texto = document.getElementById("n-texto").value.trim();
   if (!texto) return alert("Escribe algo");
@@ -3269,9 +2821,6 @@ function agregarNota() {
 }
 function eliminarNota(i) { if (confirm("¿Eliminar?")) { datos.notas.splice(i,1); guardar(); renderTodo(); } }
 
-// ═══════════════════════════════════════════════════════════════
-// QUINCENA
-// ═══════════════════════════════════════════════════════════════
 function cerrarQuincena() {
   const q = document.getElementById("q-tipo").value;
   const sueldo = parseFloat(document.getElementById("q-sueldo").value) || 0;
@@ -3285,33 +2834,9 @@ function cerrarQuincena() {
   const totalResp = (r.recibos||0) + (r.comida||0) + (r.arriendo||0) + (r.otros||0);
   const restante = neto + cobradoFiado - totalResp;
   const hoy = new Date();
-  const resumen = `📅 CIERRE QUINCENA DÍA ${q}
-Fecha: ${hoy.toLocaleDateString("es-CO")} ${hoy.toLocaleTimeString("es-CO")}
-━━━━━━━━━━━━━━━━━━━━━━━━━
-Sueldo:              ${formato(sueldo)}
-Descuentos:         -${formato(descuentos)}
-─────────────────────────
-Neto quincena:       ${formato(neto)}
-
-Fiados cobrados:     ${formato(cobradoFiado)}
-Saldo pendiente Q${q}:  ${formato(saldoPendienteQ)}
-
-RESPONSABILIDADES:
-  Recibos:          -${formato(r.recibos)}
-  Comida:           -${formato(r.comida)}
-  Arriendo:         -${formato(r.arriendo)}
-  Otros:            -${formato(r.otros)}
-  Total:            -${formato(totalResp)}
-━━━━━━━━━━━━━━━━━━━━━━━━━
-💰 RESTANTE:         ${formato(restante)}`;
+  const resumen = `📅 CIERRE QUINCENA DÍA ${q}\nFecha: ${hoy.toLocaleDateString("es-CO")} ${hoy.toLocaleTimeString("es-CO")}\n━━━━━━━━━━━━━━━━━━━━━━━━━\nSueldo:              ${formato(sueldo)}\nDescuentos:         -${formato(descuentos)}\n─────────────────────────\nNeto quincena:       ${formato(neto)}\n\nFiados cobrados:     ${formato(cobradoFiado)}\nSaldo pendiente Q${q}:  ${formato(saldoPendienteQ)}\n\nRESPONSABILIDADES:\n  Recibos:          -${formato(r.recibos)}\n  Comida:           -${formato(r.comida)}\n  Arriendo:         -${formato(r.arriendo)}\n  Otros:            -${formato(r.otros)}\n  Total:            -${formato(totalResp)}\n━━━━━━━━━━━━━━━━━━━━━━━━━\n💰 RESTANTE:         ${formato(restante)}`;
   if (!confirm(resumen + "\n\n¿Cerrar esta quincena?")) return;
-  datos.quincenas.push({
-    fecha: new Date().toLocaleString("es-CO"),
-    fechaISO: new Date().toISOString(),
-    quincena: q, sueldo, descuentos, neto,
-    cobradoFiado, gananciaFiado,
-    responsabilidades: {...r}, totalResp, restante
-  });
+  datos.quincenas.push({ fecha: new Date().toLocaleString("es-CO"), fechaISO: new Date().toISOString(), quincena: q, sueldo, descuentos, neto, cobradoFiado, gananciaFiado, responsabilidades: {...r}, totalResp, restante });
   datos.ventas = datos.ventas.filter(v => !(v.tipo === "quincena" && v.quincena === q && estaPagada(v)));
   guardar();
   document.getElementById("q-sueldo").value = "";
@@ -3326,9 +2851,6 @@ function compartirCierreWsp() {
   window.open(`https://wa.me/?text=${encodeURIComponent("*CIERRE QUINCENA EMMA STUDIO*\n\n" + ultimoCierreQuincena)}`, "_blank");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// CALENDARIO Y EVENTOS
-// ═══════════════════════════════════════════════════════════════
 function renderCalendario() {
   const anio = new Date().getFullYear();
   const elAnio = document.getElementById("anio-cal");
@@ -3343,30 +2865,19 @@ function renderCalendario() {
     const q30Pasado = q30 < hoy && !(q30.toDateString() === hoy.toDateString());
     const esHoy15 = q15.toDateString() === hoy.toDateString();
     const esHoy30 = q30.toDateString() === hoy.toDateString();
-    const tieneEvento = (datos.eventos || []).some(e => {
-      const d = new Date(e.fecha);
-      return d.getMonth() === idx && d.getFullYear() === anio;
-    });
     html += `<div class="mes-card"><h4>${mes}</h4>
-      <div class="dia q15 ${q15Pasado?'pasado':''} ${esHoy15?'hoy':''}">
-        <span>Día 15</span><span>${q15.toLocaleDateString("es-CO",{weekday:"short"})}</span></div>
-      <div class="dia q30 ${q30Pasado?'pasado':''} ${esHoy30?'hoy':''}">
-        <span>Día 30</span><span>${q30.toLocaleDateString("es-CO",{weekday:"short"})}</span></div>
+      <div class="dia q15 ${q15Pasado?'pasado':''} ${esHoy15?'hoy':''}"><span>Día 15</span><span>${q15.toLocaleDateString("es-CO",{weekday:"short"})}</span></div>
+      <div class="dia q30 ${q30Pasado?'pasado':''} ${esHoy30?'hoy':''}"><span>Día 30</span><span>${q30.toLocaleDateString("es-CO",{weekday:"short"})}</span></div>
     </div>`;
   });
   document.getElementById("calendario-view").innerHTML = html;
-
-  // Eventos
   const listaEv = document.getElementById("lista-eventos");
   const eventos = (datos.eventos || []).slice().sort((a,b) => new Date(a.fecha) - new Date(b.fecha));
   const proximos = eventos.filter(e => new Date(e.fecha) >= new Date(new Date().toDateString()));
   if (proximos.length === 0) listaEv.innerHTML = '<div class="vacio">Sin eventos próximos</div>';
-  else listaEv.innerHTML = proximos.slice(0, 10).map((e, i) => `
+  else listaEv.innerHTML = proximos.slice(0, 10).map(e => `
     <div class="card" style="border-left-color:var(--pink);">
-      <div class="info">
-        <div class="titulo">📌 ${e.titulo}</div>
-        <div class="detalle">${new Date(e.fecha).toLocaleDateString("es-CO", {weekday:"long", day:"numeric", month:"long"})}${e.nota ? " · " + e.nota : ""}</div>
-      </div>
+      <div class="info"><div class="titulo">📌 ${e.titulo}</div><div class="detalle">${new Date(e.fecha).toLocaleDateString("es-CO", {weekday:"long", day:"numeric", month:"long"})}${e.nota ? " · " + e.nota : ""}</div></div>
       <button class="mini-btn" onclick="eliminarEvento('${e.id}')">✕</button>
     </div>
   `).join("");
@@ -3383,21 +2894,16 @@ function guardarEvento() {
   const nota = document.getElementById("evento-nota").value.trim();
   if (!titulo || !fecha) return alert("Completa título y fecha");
   if (!datos.eventos) datos.eventos = [];
-  datos.eventos.push({
-    id: "ev_" + Date.now(),
-    titulo, fecha, nota,
-    creado: new Date().toISOString()
-  });
+  datos.eventos.push({ id: "ev_" + Date.now(), titulo, fecha, nota, creado: new Date().toISOString() });
   guardar(); renderTodo(); renderCalendario();
   cerrarModal("modal-evento");
 }
 function eliminarEvento(id) {
-  if (!confirm("¿Eliminar este evento?")) return;
+  if (!confirm("¿Eliminar?")) return;
   datos.eventos = datos.eventos.filter(e => e.id !== id);
   guardar(); renderCalendario();
 }
 
-// ---------- METAS ----------
 function totalVentasMes() {
   const hoy = new Date();
   return datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && new Date(v.fechaISO).getFullYear() === hoy.getFullYear()).reduce((s,v) => s + v.precio, 0);
@@ -3420,12 +2926,9 @@ function renderMeta(id, titulo, actual, meta) {
   else if (pct >= 75) clase = "aviso";
   el.innerHTML = `
     <div class="meta-container">
-      <div class="meta-titulo"><h3>${titulo}</h3>
-        <div class="meta-nums"><b>${formato(actual)}</b> / ${formato(meta)} (${pct.toFixed(1)}%)</div>
-      </div>
+      <div class="meta-titulo"><h3>${titulo}</h3><div class="meta-nums"><b>${formato(actual)}</b> / ${formato(meta)} (${pct.toFixed(1)}%)</div></div>
       <div class="barra"><div class="barra-fill ${clase}" style="width:${pct}%">${pct >= 15 ? pct.toFixed(0)+"%" : ""}</div></div>
-      <div style="margin-top:8px;font-size:0.85rem;color:var(--text-soft);">
-        ${pct >= 100 ? "🎉 ¡Meta cumplida!" : `Faltan ${formato(falta)}`}</div>
+      <div style="margin-top:8px;font-size:0.85rem;color:var(--text-soft);">${pct >= 100 ? "🎉 ¡Meta cumplida!" : `Faltan ${formato(falta)}`}</div>
     </div>`;
 }
 function renderMetas() {
@@ -3438,8 +2941,6 @@ function renderMetas() {
   }
   renderMetasCategoria();
 }
-
-// ---------- ABONOS TOTALES ----------
 function todosLosAbonos() {
   const lista = [];
   datos.deudas.forEach((d,i) => {
@@ -3452,16 +2953,8 @@ function todosLosAbonos() {
   });
   return lista.sort((a,b) => new Date(b.fechaISO||0) - new Date(a.fechaISO||0));
 }
+function filtrarMovimientos(f) { filtroMovActual = f; renderTodo(); }
 
-// ---------- MOVIMIENTOS FILTRO ----------
-function filtrarMovimientos(f) {
-  filtroMovActual = f;
-  renderTodo();
-}
-
-// ═══════════════════════════════════════════════════════════════
-// BÚSQUEDA GLOBAL
-// ═══════════════════════════════════════════════════════════════
 function abrirBusquedaGlobal() {
   document.getElementById("busqueda-input").value = "";
   document.getElementById("busqueda-resultados").innerHTML = "";
@@ -3474,17 +2967,13 @@ function ejecutarBusquedaGlobal() {
   if (!q) { el.innerHTML = ""; return; }
   const resultados = [];
   datos.ventas.forEach(v => {
-    if (v.producto.toLowerCase().includes(q) || v.cliente.toLowerCase().includes(q) || (v.codigo && v.codigo.toLowerCase().includes(q))) {
-      resultados.push({ icono: "🛒", titulo: v.producto, detalle: `Cliente: ${v.cliente} · ${formato(v.precio)}`, tipo: "Venta" });
-    }
+    if (v.producto.toLowerCase().includes(q) || v.cliente.toLowerCase().includes(q) || (v.codigo && v.codigo.toLowerCase().includes(q))) resultados.push({ icono: "🛒", titulo: v.producto, detalle: `Cliente: ${v.cliente} · ${formato(v.precio)}`, tipo: "Venta" });
   });
   datos.deudas.forEach(d => {
     if (d.nombre.toLowerCase().includes(q)) resultados.push({ icono: "📋", titulo: d.nombre, detalle: `Debe: ${formato(calcularSaldo(d))}`, tipo: "Deuda" });
   });
   datos.inventario.forEach(i => {
-    if (i.producto.toLowerCase().includes(q) || (i.codigo && i.codigo.toLowerCase().includes(q))) {
-      resultados.push({ icono: "📦", titulo: i.producto, detalle: `Precio: ${formato(i.precio)} · Stock: ${i.cantidad}`, tipo: "Inventario" });
-    }
+    if (i.producto.toLowerCase().includes(q) || (i.codigo && i.codigo.toLowerCase().includes(q))) resultados.push({ icono: "📦", titulo: i.producto, detalle: `Precio: ${formato(i.precio)} · Stock: ${i.cantidad}`, tipo: "Inventario" });
   });
   datos.gastos.forEach(g => {
     if (g.descripcion.toLowerCase().includes(q)) resultados.push({ icono: "💸", titulo: g.descripcion, detalle: `${formato(g.monto)} · ${g.fecha}`, tipo: "Gasto" });
@@ -3492,24 +2981,17 @@ function ejecutarBusquedaGlobal() {
   if (resultados.length === 0) el.innerHTML = '<div class="vacio">Sin resultados</div>';
   else el.innerHTML = resultados.slice(0, 30).map(r => `
     <div class="card" style="border-left-color:var(--gold);margin-bottom:8px;">
-      <div class="info">
-        <div class="titulo">${r.icono} ${r.titulo} <span class="categoria-tag">${r.tipo}</span></div>
-        <div class="detalle">${r.detalle}</div>
-      </div>
+      <div class="info"><div class="titulo">${r.icono} ${r.titulo} <span class="categoria-tag">${r.tipo}</span></div><div class="detalle">${r.detalle}</div></div>
     </div>
   `).join("");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// CIERRE DEL DÍA
-// ═══════════════════════════════════════════════════════════════
 function abrirCierreDia() {
   const hoy = new Date();
   const hoyStr = hoy.toLocaleDateString("es-CO");
   const ventasHoy = datos.ventas.filter(v => v.fecha && v.fecha.startsWith(hoyStr));
   const gastosHoy = datos.gastos.filter(g => g.fecha && g.fecha.startsWith(hoyStr));
   const abonosHoy = todosLosAbonos().filter(a => a.fecha && a.fecha.startsWith(hoyStr));
-
   const totalVentas = ventasHoy.reduce((s,v) => s + v.precio, 0);
   const totalContado = ventasHoy.filter(v => v.tipo==="contado").reduce((s,v) => s + v.precio, 0);
   const totalFiado = ventasHoy.filter(v => v.tipo==="quincena").reduce((s,v) => s + v.precio, 0);
@@ -3517,19 +2999,10 @@ function abrirCierreDia() {
   const totalGastos = gastosHoy.reduce((s,g) => s + g.monto, 0);
   const totalAbonos = abonosHoy.reduce((s,a) => s + a.monto, 0);
   const balance = ganancia - totalGastos;
-
-  // Desglose por método de pago
   const porMetodo = {};
-  ventasHoy.forEach(v => {
-    const m = v.metodoPago || "efectivo";
-    porMetodo[m] = (porMetodo[m] || 0) + v.precio;
-  });
-
+  ventasHoy.forEach(v => { const m = v.metodoPago || "efectivo"; porMetodo[m] = (porMetodo[m] || 0) + v.precio; });
   document.getElementById("cierre-dia-contenido").innerHTML = `
-    <div class="recibo-header">
-      <div class="logo-recibo">EMMA</div>
-      <div class="sub-recibo">STUDIO</div>
-    </div>
+    <div class="recibo-header"><div class="logo-recibo">EMMA</div><div class="sub-recibo">STUDIO</div></div>
     <div class="recibo-tipo">📊 CIERRE DEL DÍA</div>
     <div class="recibo-linea"><span>Fecha:</span><b>${hoyStr}</b></div>
     <div class="recibo-linea"><span>Hora:</span><b>${hoy.toLocaleTimeString("es-CO")}</b></div>
@@ -3539,17 +3012,16 @@ function abrirCierreDia() {
       <div class="recibo-linea" style="padding-left:20px;"><span>💵 Contado:</span><b>${formato(totalContado)}</b></div>
       <div class="recibo-linea" style="padding-left:20px;"><span>⏳ Fiado:</span><b>${formato(totalFiado)}</b></div>
       <div class="recibo-linea"><span>Ganancia:</span><b style="color:#27ae60;">${formato(ganancia)}</b></div>
-      <div class="recibo-linea"><span>Gastos del día:</span><b style="color:#e74c3c;">-${formato(totalGastos)}</b></div>
-      <div class="recibo-linea"><span>Abonos recibidos:</span><b style="color:#27ae60;">${formato(totalAbonos)}</b></div>
+      <div class="recibo-linea"><span>Gastos:</span><b style="color:#e74c3c;">-${formato(totalGastos)}</b></div>
+      <div class="recibo-linea"><span>Abonos:</span><b style="color:#27ae60;">${formato(totalAbonos)}</b></div>
       ${Object.keys(porMetodo).length > 0 ? `
         <div style="margin-top:12px;padding:10px;background:#f9f9f9;border-radius:8px;">
-          <div style="font-weight:700;font-size:0.85rem;margin-bottom:6px;">💳 Por método de pago:</div>
+          <div style="font-weight:700;font-size:0.85rem;margin-bottom:6px;">💳 Por método:</div>
           ${Object.entries(porMetodo).map(([m,v]) => {
             const icono = { efectivo: "💵", transferencia: "📱", nequi: "💜", daviplata: "🔴" }[m] || "💵";
             return `<div class="recibo-linea" style="padding-left:20px;"><span>${icono} ${m}:</span><b>${formato(v)}</b></div>`;
           }).join("")}
-        </div>
-      ` : ""}
+        </div>` : ""}
     </div>
     <div class="recibo-total">
       <div class="lbl">Balance del día</div>
@@ -3563,16 +3035,10 @@ function abrirCierreDia() {
 function compartirCierreDiaWsp() {
   if (!ultimoCierreDia) return;
   const c = ultimoCierreDia;
-  const msg = `📊 *CIERRE DEL DÍA*\n🏪 *Emma Studio*\n🗓️ ${c.fecha}\n━━━━━━━━━━━━━━\n` +
-              `Ventas: ${formato(c.totalVentas)}\n💵 Contado: ${formato(c.totalContado)}\n⏳ Fiado: ${formato(c.totalFiado)}\n` +
-              `💰 Ganancia: ${formato(c.ganancia)}\n💸 Gastos: ${formato(c.totalGastos)}\n💵 Abonos: ${formato(c.totalAbonos)}\n` +
-              `━━━━━━━━━━━━━━\n📈 *Balance: ${formato(c.balance)}*`;
+  const msg = `📊 *CIERRE DEL DÍA*\n🏪 *Emma Studio*\n🗓️ ${c.fecha}\n━━━━━━━━━━━━━━\nVentas: ${formato(c.totalVentas)}\n💵 Contado: ${formato(c.totalContado)}\n⏳ Fiado: ${formato(c.totalFiado)}\n💰 Ganancia: ${formato(c.ganancia)}\n💸 Gastos: ${formato(c.totalGastos)}\n💵 Abonos: ${formato(c.totalAbonos)}\n━━━━━━━━━━━━━━\n📈 *Balance: ${formato(c.balance)}*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// REPORTE MENSUAL
-// ═══════════════════════════════════════════════════════════════
 function abrirReporteMensual() {
   const hoy = new Date();
   const mesActual = hoy.getMonth();
@@ -3594,14 +3060,13 @@ function abrirReporteMensual() {
   const catGastos = {};
   gastosMes.forEach(g => { const c = g.categoria || "Otros"; catGastos[c] = (catGastos[c] || 0) + g.monto; });
   const topCatG = Object.entries(catGastos).sort((a,b) => b[1]-a[1]).slice(0,5);
-
   document.getElementById("reporte-contenido").innerHTML = `
     <div style="text-align:center;margin-bottom:20px;">
       <h2 style="margin:0;border:none;font-size:1.5rem;">📊 Reporte de ${nombreMes} ${anioActual}</h2>
       <div style="color:var(--text-soft);font-size:0.9rem;">Generado: ${new Date().toLocaleString("es-CO")}</div>
     </div>
     <div style="background:linear-gradient(135deg,#1a1a1a,#2c2c2c);color:white;padding:18px;border-radius:14px;margin-bottom:16px;text-align:center;border:2px solid var(--gold);">
-      <div style="font-size:0.85rem;opacity:0.9;color:var(--gold-soft);letter-spacing:1px;">BALANCE DEL MES</div>
+      <div style="font-size:0.85rem;color:var(--gold-soft);letter-spacing:1px;">BALANCE DEL MES</div>
       <div style="font-size:2rem;font-weight:800;">${formato(balance)}</div>
       <div style="font-size:0.85rem;opacity:0.9;margin-top:4px;">${balance >= 0 ? "🎉 Positivo" : "⚠️ Negativo"}</div>
     </div>
@@ -3613,7 +3078,7 @@ function abrirReporteMensual() {
       <tr><td style="padding:6px 0;">Número de ventas</td><td style="text-align:right;">${ventasMes.length}</td></tr>
       <tr style="border-top:1px solid var(--border);"><td style="padding:8px 0;font-weight:700;">Ganancia</td><td style="text-align:right;color:#27ae60;font-weight:700;">${formato(gananciaTotal)}</td></tr>
     </table>
-    <h3 style="font-size:1rem;margin:16px 0 8px;">💵 Abonos recibidos</h3>
+    <h3 style="font-size:1rem;margin:16px 0 8px;">💵 Abonos</h3>
     <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
       <tr><td style="padding:6px 0;">Total abonado</td><td style="text-align:right;color:#27ae60;font-weight:700;">${formato(totalAbonos)}</td></tr>
       <tr><td style="padding:6px 0;">Número de abonos</td><td style="text-align:right;">${abonosMes.length}</td></tr>
@@ -3623,10 +3088,8 @@ function abrirReporteMensual() {
       <tr><td style="padding:6px 0;">Total gastos</td><td style="text-align:right;color:#e74c3c;font-weight:700;">${formato(totalGastos)}</td></tr>
       <tr><td style="padding:6px 0;">Número de gastos</td><td style="text-align:right;">${gastosMes.length}</td></tr>
     </table>
-    ${topCat.length > 0 ? `<h3 style="font-size:1rem;margin:16px 0 8px;">🏆 Top categorías vendidas</h3>
-      ${topCat.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;"><span>${c}</span><span style="font-weight:700;">${formato(v)}</span></div>`).join("")}` : ""}
-    ${topCatG.length > 0 ? `<h3 style="font-size:1rem;margin:16px 0 8px;">🏷️ Top categorías de gastos</h3>
-      ${topCatG.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;"><span>${c}</span><span style="font-weight:700;color:#e74c3c;">${formato(v)}</span></div>`).join("")}` : ""}
+    ${topCat.length > 0 ? `<h3 style="font-size:1rem;margin:16px 0 8px;">🏆 Top categorías vendidas</h3>${topCat.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;"><span>${c}</span><span style="font-weight:700;">${formato(v)}</span></div>`).join("")}` : ""}
+    ${topCatG.length > 0 ? `<h3 style="font-size:1rem;margin:16px 0 8px;">🏷️ Top categorías de gastos</h3>${topCatG.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;"><span>${c}</span><span style="font-weight:700;color:#e74c3c;">${formato(v)}</span></div>`).join("")}` : ""}
     <h3 style="font-size:1rem;margin:16px 0 8px;">📋 Situación actual</h3>
     <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
       <tr><td style="padding:6px 0;">Caja disponible</td><td style="text-align:right;font-weight:700;">${formato(calcularCaja())}</td></tr>
@@ -3644,16 +3107,10 @@ function abrirReporteMensual() {
 function compartirReporteWsp() {
   if (!window._ultimoReporte) return;
   const r = window._ultimoReporte;
-  const msg = `📊 *REPORTE ${r.nombreMes.toUpperCase()} ${r.anioActual}*\n🏪 *Emma Studio*\n━━━━━━━━━━━━━━\n` +
-              `💰 Ventas: ${formato(r.totalVentas)}\n📈 Ganancia: ${formato(r.gananciaTotal)}\n` +
-              `💸 Gastos: ${formato(r.totalGastos)}\n💵 Abonos: ${formato(r.totalAbonos)}\n` +
-              `━━━━━━━━━━━━━━\n📊 *Balance: ${formato(r.balance)}*`;
+  const msg = `📊 *REPORTE ${r.nombreMes.toUpperCase()} ${r.anioActual}*\n🏪 *Emma Studio*\n━━━━━━━━━━━━━━\n💰 Ventas: ${formato(r.totalVentas)}\n📈 Ganancia: ${formato(r.gananciaTotal)}\n💸 Gastos: ${formato(r.totalGastos)}\n💵 Abonos: ${formato(r.totalAbonos)}\n━━━━━━━━━━━━━━\n📊 *Balance: ${formato(r.balance)}*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// EXPORTAR CSV
-// ═══════════════════════════════════════════════════════════════
 function descargarCSV(nombre, contenido) {
   const blob = new Blob(["\ufeff" + contenido], {type: "text/csv;charset=utf-8"});
   const url = URL.createObjectURL(blob);
@@ -3664,18 +3121,14 @@ function descargarCSV(nombre, contenido) {
   URL.revokeObjectURL(url);
 }
 function exportarCSVVentas() {
-  if (datos.ventas.length === 0) return alert("Sin ventas para exportar");
+  if (datos.ventas.length === 0) return alert("Sin ventas");
   const headers = ["Fecha", "Producto", "Categoría", "Cliente", "Tipo", "Quincena", "Costo", "Precio", "Ganancia", "Método pago", "Abonado", "Saldo"];
-  const rows = datos.ventas.map(v => [
-    v.fecha, v.producto, v.categoria || "", v.cliente, v.tipo, v.quincena || "",
-    v.costo, v.precio, v.precio - v.costo, v.metodoPago || "efectivo",
-    calcularAbonado(v), calcularSaldo(v)
-  ]);
+  const rows = datos.ventas.map(v => [v.fecha, v.producto, v.categoria || "", v.cliente, v.tipo, v.quincena || "", v.costo, v.precio, v.precio - v.costo, v.metodoPago || "efectivo", calcularAbonado(v), calcularSaldo(v)]);
   const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
   descargarCSV(`emma-ventas-${new Date().toISOString().slice(0,10)}.csv`, csv);
 }
 function exportarCSVGastos() {
-  if (datos.gastos.length === 0) return alert("Sin gastos para exportar");
+  if (datos.gastos.length === 0) return alert("Sin gastos");
   const headers = ["Fecha", "Descripción", "Categoría", "Monto"];
   const rows = datos.gastos.map(g => [g.fecha, g.descripcion, g.categoria, g.monto]);
   const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
@@ -3689,23 +3142,16 @@ function exportarCSVMovimientos() {
   descargarCSV(`emma-movimientos-${new Date().toISOString().slice(0,10)}.csv`, csv);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// TEMAS
-// ═══════════════════════════════════════════════════════════════
 function abrirTemas() {
   const actual = localStorage.getItem("temaEmma") || "dorado";
-  document.querySelectorAll(".tema-btn").forEach(b => {
-    b.classList.toggle("active", b.classList.contains(actual));
-  });
+  document.querySelectorAll(".tema-btn").forEach(b => b.classList.toggle("active", b.classList.contains(actual)));
   document.getElementById("modal-temas").classList.add("active");
 }
 function cambiarTema(tema) {
   document.body.classList.remove("tema-rosa", "tema-verde", "tema-azul", "tema-morado");
   if (tema !== "dorado") document.body.classList.add("tema-" + tema);
   localStorage.setItem("temaEmma", tema);
-  document.querySelectorAll(".tema-btn").forEach(b => {
-    b.classList.toggle("active", b.classList.contains(tema));
-  });
+  document.querySelectorAll(".tema-btn").forEach(b => b.classList.toggle("active", b.classList.contains(tema)));
   mostrarEstadoSync("ok", "Tema aplicado");
 }
 function aplicarTemaGuardado() {
@@ -3713,15 +3159,10 @@ function aplicarTemaGuardado() {
   if (tema !== "dorado") document.body.classList.add("tema-" + tema);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// NOTIFICACIONES
-// ═══════════════════════════════════════════════════════════════
 function pedirPermisoNotif() {
   if (!("Notification" in window)) return;
   if (Notification.permission === "default") {
-    Notification.requestPermission().then(p => {
-      if (p === "granted") notificar("✅ Notificaciones activadas", "Te avisaré de tus quincenas.");
-    });
+    Notification.requestPermission().then(p => { if (p === "granted") notificar("✅ Notificaciones activadas", "Te avisaré de tus quincenas."); });
   }
 }
 function notificar(titulo, cuerpo) {
@@ -3749,77 +3190,54 @@ function verNotificaciones() {
   const notifs = [];
   const { dias, diaObjetivo, fiadoQ } = proximaQuincena();
   if (dias <= 3) notifs.push({ icono: "📅", texto: `Faltan ${dias} días para la quincena del ${diaObjetivo}. Por cobrar: ${formato(fiadoQ)}` });
-  const hoy = new Date();
   const pocoStock = datos.inventario.filter(i => i.cantidad <= 2 && i.cantidad > 0);
   if (pocoStock.length > 0) notifs.push({ icono: "📦", texto: `${pocoStock.length} productos con stock bajo` });
   const saldoTotal = totalSaldoDeudas() + totalSaldoFiadoQ("15") + totalSaldoFiadoQ("30");
   if (saldoTotal > 100000) notifs.push({ icono: "💰", texto: `Tienes ${formato(saldoTotal)} por cobrar en total` });
-  if (datos.caja.movimientos.length === 0) notifs.push({ icono: "💵", texto: "Empieza a registrar movimientos de caja" });
-
   if (notifs.length === 0) el.innerHTML = '<div class="vacio">Sin notificaciones</div>';
-  else el.innerHTML = notifs.map(n => `
-    <div class="alerta-item info" style="margin-bottom:8px;">
-      <div class="icono-a">${n.icono}</div>
-      <div class="texto-a">${n.texto}</div>
-    </div>
-  `).join("");
+  else el.innerHTML = notifs.map(n => `<div class="alerta-item info" style="margin-bottom:8px;"><div class="icono-a">${n.icono}</div><div class="texto-a">${n.texto}</div></div>`).join("");
   document.getElementById("modal-notif").classList.add("active");
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RENDER PRINCIPAL
-// ═══════════════════════════════════════════════════════════════
 function renderTodo() {
   if (!document.getElementById("r-capital")) return;
-
-  // ===== DASHBOARD =====
   const hoy = new Date();
   const hoyStr = hoy.toLocaleDateString("es-CO");
 
-  // Caja y cartera
   document.getElementById("r-caja").textContent = formato(calcularCaja());
   document.getElementById("r-cartera").textContent = formato(totalSaldoDeudas() + totalSaldoFiadoQ("15") + totalSaldoFiadoQ("30"));
 
-  // Ventas hoy
   const ventasHoy = datos.ventas.filter(v => v.fecha && v.fecha.startsWith(hoyStr));
-  const totalVentasHoy = ventasHoy.reduce((s,v) => s + v.precio, 0);
-  document.getElementById("dc-ventas-hoy").textContent = formato(totalVentasHoy);
+  document.getElementById("dc-ventas-hoy").textContent = formato(ventasHoy.reduce((s,v) => s + v.precio, 0));
   document.getElementById("dc-ventas-hoy-num").textContent = `${ventasHoy.length} ventas`;
 
-  // Ganancia del mes
   const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && new Date(v.fechaISO).getFullYear() === hoy.getFullYear());
   const gananciaMes = ventasMes.reduce((s,v) => s + (v.precio - v.costo), 0);
   document.getElementById("dc-ganancia-mes").textContent = formato(gananciaMes);
 
-  // Gastos del mes
   const gastosMesList = datos.gastos.filter(g => g.fechaISO && new Date(g.fechaISO).getMonth() === hoy.getMonth() && new Date(g.fechaISO).getFullYear() === hoy.getFullYear());
   const gastosMes = gastosMesList.reduce((s,g) => s + g.monto, 0);
   document.getElementById("dc-gastos-mes").textContent = formato(gastosMes);
   document.getElementById("dc-gastos-num").textContent = `${gastosMesList.length} gastos`;
 
-  // Abonos del mes
   const abonos = todosLosAbonos();
   const abonosMesList = abonos.filter(a => a.fechaISO && new Date(a.fechaISO).getMonth() === hoy.getMonth() && new Date(a.fechaISO).getFullYear() === hoy.getFullYear());
   const abonadoMes = abonosMesList.reduce((s,a) => s + a.monto, 0);
   document.getElementById("dc-abonos-mes").textContent = formato(abonadoMes);
   document.getElementById("dc-abonos-num").textContent = `${abonosMesList.length} abonos`;
 
-  // Inventario
   const valorInv = datos.inventario.reduce((s,i) => s + (i.costo * i.cantidad), 0);
   document.getElementById("dc-inventario").textContent = formato(valorInv);
   document.getElementById("dc-inventario-num").textContent = `${datos.inventario.length} productos`;
 
-  // Clientes
   const clientesConDeuda = agruparClientes().filter(c => c.fiadoPendiente > 0 || c.deudaAparte > 0);
   document.getElementById("dc-clientes").textContent = clientesConDeuda.length;
 
-  // ===== RESUMEN GENERAL =====
   document.getElementById("r-capital").textContent = formato(datos.capital);
   document.getElementById("r-deudas").textContent = formato(totalSaldoDeudas());
   document.getElementById("r-q15").textContent = formato(totalSaldoFiadoQ("15"));
   document.getElementById("r-q30").textContent = formato(totalSaldoFiadoQ("30"));
-  const gan = datos.ventas.reduce((s,v) => s + (v.precio - v.costo), 0);
-  document.getElementById("r-gan").textContent = formato(gan);
+  document.getElementById("r-gan").textContent = formato(datos.ventas.reduce((s,v) => s + (v.precio - v.costo), 0));
   document.getElementById("r-gastos").textContent = formato(gastosMes);
   document.getElementById("r-abonado").textContent = formato(abonadoMes);
   document.getElementById("r-inv").textContent = formato(valorInv);
@@ -3828,25 +3246,18 @@ function renderTodo() {
   elBal.textContent = formato(balance);
   elBal.className = "val " + (balance >= 0 ? "verde" : "rojo");
 
-  // ===== CAJA =====
   const elCajaAct = document.getElementById("caja-actual");
   if (elCajaAct) {
     elCajaAct.textContent = formato(calcularCaja());
     const movHoy = movimientosHoy();
-    const ingHoy = movHoy.filter(m => m.tipo === "ingreso").reduce((s,m) => s + m.monto, 0);
-    const egrHoy = movHoy.filter(m => m.tipo === "egreso").reduce((s,m) => s + m.monto, 0);
+    document.getElementById("caja-ing-hoy").textContent = formato(movHoy.filter(m => m.tipo === "ingreso").reduce((s,m) => s + m.monto, 0));
+    document.getElementById("caja-egr-hoy").textContent = formato(movHoy.filter(m => m.tipo === "egreso").reduce((s,m) => s + m.monto, 0));
     const movMes = movimientosMes();
-    const ingMes = movMes.filter(m => m.tipo === "ingreso").reduce((s,m) => s + m.monto, 0);
-    const egrMes = movMes.filter(m => m.tipo === "egreso").reduce((s,m) => s + m.monto, 0);
-    document.getElementById("caja-ing-hoy").textContent = formato(ingHoy);
-    document.getElementById("caja-egr-hoy").textContent = formato(egrHoy);
-    document.getElementById("caja-ing-mes").textContent = formato(ingMes);
-    document.getElementById("caja-egr-mes").textContent = formato(egrMes);
+    document.getElementById("caja-ing-mes").textContent = formato(movMes.filter(m => m.tipo === "ingreso").reduce((s,m) => s + m.monto, 0));
+    document.getElementById("caja-egr-mes").textContent = formato(movMes.filter(m => m.tipo === "egreso").reduce((s,m) => s + m.monto, 0));
     document.getElementById("caja-apertura").textContent = formato(datos.caja.apertura || 0);
     document.getElementById("caja-mov-num").textContent = datos.caja.movimientos.length;
-    document.getElementById("caja-apertura").parentElement.onclick = editarAperturaCaja;
-
-    // Lista caja
+    document.getElementById("card-apertura").onclick = editarAperturaCaja;
     const busqCaja = (document.getElementById("buscar-caja")?.value || "").toLowerCase();
     const movsFiltrados = datos.caja.movimientos.filter(m => !busqCaja || m.concepto.toLowerCase().includes(busqCaja) || m.categoria.toLowerCase().includes(busqCaja));
     const lc = document.getElementById("lista-caja");
@@ -3854,24 +3265,19 @@ function renderTodo() {
     else lc.innerHTML = movsFiltrados.slice().reverse().slice(0, 100).map(m => `
       <div class="movimiento ${m.tipo === "egreso" ? "egreso" : ""}">
         <div class="icono-mov">${m.tipo === "ingreso" ? "📈" : "📉"}</div>
-        <div class="info-mov">
-          <div class="titulo-mov">${m.concepto}</div>
-          <div class="fecha-mov">${m.fecha} · ${m.categoria}</div>
-        </div>
+        <div class="info-mov"><div class="titulo-mov">${m.concepto}</div><div class="fecha-mov">${m.fecha} · ${m.categoria}</div></div>
         <div class="monto-mov">${m.tipo === "ingreso" ? "+" : "-"}${formato(m.monto)}</div>
         <button class="mini-btn" onclick="eliminarMovimiento('${m.id}')">✕</button>
       </div>
     `).join("");
   }
 
-  // ===== CARTERA =====
   const elCartD = document.getElementById("cartera-deudas");
   if (elCartD) {
     elCartD.textContent = formato(totalSaldoDeudas());
     document.getElementById("cartera-fiado").textContent = formato(totalSaldoFiadoQ("15") + totalSaldoFiadoQ("30"));
   }
 
-  // ===== LISTA DEUDAS =====
   const ld = document.getElementById("lista-deudas");
   if (ld) {
     if (datos.deudas.length === 0) ld.innerHTML = '<div class="vacio">Sin deudas</div>';
@@ -3905,7 +3311,6 @@ function renderTodo() {
     }).join("");
   }
 
-  // ===== VENTAS =====
   const busq = (document.getElementById("buscar-venta")?.value || "").toLowerCase();
   const lv = document.getElementById("lista-ventas");
   if (lv) {
@@ -3948,7 +3353,6 @@ function renderTodo() {
     }).join("");
   }
 
-  // ===== GASTOS =====
   const busqG = (document.getElementById("buscar-gasto")?.value || "").toLowerCase();
   const lg = document.getElementById("lista-gastos");
   if (lg) {
@@ -3956,14 +3360,11 @@ function renderTodo() {
       .filter(g => !busqG || g.descripcion.toLowerCase().includes(busqG) || (g.categoria||"").toLowerCase().includes(busqG));
     if (gastosFiltrados.length === 0) lg.innerHTML = '<div class="vacio">Sin gastos</div>';
     else lg.innerHTML = gastosFiltrados.slice().reverse().map(g=>`
-      <div class="card rojo-l"><div class="info">
-        <div class="titulo">${g.descripcion}${g.categoria?`<span class="categoria-tag">${g.categoria}</span>`:""}</div>
-        <div class="detalle">${g.fecha}</div></div>
+      <div class="card rojo-l"><div class="info"><div class="titulo">${g.descripcion}${g.categoria?`<span class="categoria-tag">${g.categoria}</span>`:""}</div><div class="detalle">${g.fecha}</div></div>
         <div class="monto">-${formato(g.monto)}</div>
         <button class="mini-btn" onclick="eliminarGasto(${g.realIdx})">✕</button></div>`).join("");
   }
 
-  // ===== INVENTARIO =====
   const busqI = (document.getElementById("buscar-inventario")?.value || "").toLowerCase();
   const li = document.getElementById("lista-inventario");
   if (li) {
@@ -3982,14 +3383,13 @@ function renderTodo() {
     }).join("");
   }
 
-  // ===== CLIENTES =====
   const clientes = agruparClientes();
   const busqC = (document.getElementById("buscar-cliente")?.value || "").toLowerCase();
-  const lc = document.getElementById("lista-clientes-view");
-  if (lc) {
+  const lc2 = document.getElementById("lista-clientes-view");
+  if (lc2) {
     const filtrados = clientes.filter(c => !busqC || c.nombre.toLowerCase().includes(busqC));
-    if (filtrados.length === 0) lc.innerHTML = '<div class="vacio">Sin clientes</div>';
-    else lc.innerHTML = filtrados.map(c=>{
+    if (filtrados.length === 0) lc2.innerHTML = '<div class="vacio">Sin clientes</div>';
+    else lc2.innerHTML = filtrados.map(c=>{
       const foto = datos.fotosClientes[c.nombre];
       const etiqueta = datos.etiquetasClientes[c.nombre] || "";
       const etiquetaTxt = { vip: "⭐ VIP", moroso: "🚨 Moroso", confiable: "✅ Confiable", nuevo: "🆕 Nuevo" };
@@ -4006,21 +3406,18 @@ function renderTodo() {
           <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
             <button class="btn azul pequeno" onclick="verCliente('${c.nombre.replace(/'/g,"\\'")}')">Ver detalle</button>
             <button class="btn wsp pequeno" onclick="compartirClienteWsp('${c.nombre.replace(/'/g,"\\'")}', ${c.fiadoPendiente||0}, ${c.deudaAparte||0})">📤 WhatsApp</button>
-            <button class="btn morado pequeno" onclick="recordarClienteWsp('${c.nombre.replace(/'/g,"\\'")}', ${c.fiadoPendiente||0}, ${c.deudaAparte||0}, [])">📱 Recordar</button>
+            <button class="btn morado pequeno" onclick="recordarClienteWsp('${c.nombre.replace(/'/g,"\\'")}', ${c.fiadoPendiente||0}, ${c.deudaAparte||0})">📱 Recordar</button>
           </div>
         </div>
       </div>`;
     }).join("");
   }
 
-  // ===== ABONOS =====
   const busqA = (document.getElementById("buscar-abono")?.value || "").toLowerCase();
   const la = document.getElementById("lista-abonos-todos");
   if (la) {
     const abonosFiltrados = abonos.filter(a => !busqA || a.nombre.toLowerCase().includes(busqA) || a.concepto.toLowerCase().includes(busqA));
-    const abonadoAnio = abonos
-      .filter(a => a.fechaISO && new Date(a.fechaISO).getFullYear() === hoy.getFullYear())
-      .reduce((s,a) => s + a.monto, 0);
+    const abonadoAnio = abonos.filter(a => a.fechaISO && new Date(a.fechaISO).getFullYear() === hoy.getFullYear()).reduce((s,a) => s + a.monto, 0);
     document.getElementById("a-mes").textContent = formato(abonadoMes);
     document.getElementById("a-anio").textContent = formato(abonadoAnio);
     document.getElementById("a-count").textContent = abonos.length;
@@ -4029,17 +3426,14 @@ function renderTodo() {
       const iconoMedio = { efectivo: "💵", transferencia: "📱", nequi: "💜", daviplata: "🔴" }[a.metodoPago || "efectivo"] || "💵";
       return `
       <div class="card">
-        <div class="info">
-          <div class="titulo">${a.nombre} ${a.tipo==="deuda"?'<span class="categoria-tag" style="background:#95a5a6;">Deuda aparte</span>':'<span class="categoria-tag">Venta fiada</span>'}</div>
-          <div class="detalle">${iconoMedio} ${a.concepto} · ${a.fecha}${a.nota ? ` · 📝 ${a.nota}` : ""}</div>
-        </div>
+        <div class="info"><div class="titulo">${a.nombre} ${a.tipo==="deuda"?'<span class="categoria-tag" style="background:#95a5a6;">Deuda aparte</span>':'<span class="categoria-tag">Venta fiada</span>'}</div>
+          <div class="detalle">${iconoMedio} ${a.concepto} · ${a.fecha}${a.nota ? ` · 📝 ${a.nota}` : ""}</div></div>
         <div class="monto" style="color:#27ae60;">${formato(a.monto)}</div>
         ${a.foto ? `<img src="${a.foto}" class="comprobante-mini" onclick="verFotoGrande('${a.foto}')">` : ""}
       </div>`;
     }).join("");
   }
 
-  // ===== MOVIMIENTOS =====
   const busqM = (document.getElementById("buscar-mov")?.value || "").toLowerCase();
   const lm = document.getElementById("lista-movimientos");
   if (lm) {
@@ -4051,41 +3445,28 @@ function renderTodo() {
     else lm.innerHTML = movsFilt.slice(0, 200).map(m => `
       <div class="movimiento ${m.tipo === "egreso" ? "egreso" : ""}">
         <div class="icono-mov">${m.tipo === "ingreso" ? "📈" : "📉"}</div>
-        <div class="info-mov">
-          <div class="titulo-mov">${m.concepto}</div>
-          <div class="fecha-mov">${m.fecha} · ${m.categoria} · ${m.origen}</div>
-        </div>
+        <div class="info-mov"><div class="titulo-mov">${m.concepto}</div><div class="fecha-mov">${m.fecha} · ${m.categoria} · ${m.origen}</div></div>
         <div class="monto-mov">${m.tipo === "ingreso" ? "+" : "-"}${formato(m.monto)}</div>
       </div>
     `).join("");
   }
 
-  // ===== Datalists =====
-  const nombresUnicos = [...new Set([
-    ...datos.ventas.filter(v=>v.cliente).map(v=>v.cliente),
-    ...datos.deudas.map(d=>d.nombre)
-  ])].filter(n => n && n !== "Contado" && n !== "Cliente");
+  const nombresUnicos = [...new Set([...datos.ventas.filter(v=>v.cliente).map(v=>v.cliente), ...datos.deudas.map(d=>d.nombre)])].filter(n => n && n !== "Contado" && n !== "Cliente");
   const elDL1 = document.getElementById("lista-clientes");
   if (elDL1) elDL1.innerHTML = nombresUnicos.map(n=>`<option value="${n}">`).join("");
-  const catsUnicas = [...new Set([
-    ...datos.ventas.map(v=>v.categoria).filter(Boolean),
-    ...datos.inventario.map(i=>i.categoria).filter(Boolean)
-  ])];
+  const catsUnicas = [...new Set([...datos.ventas.map(v=>v.categoria).filter(Boolean), ...datos.inventario.map(i=>i.categoria).filter(Boolean)])];
   const elDL2 = document.getElementById("lista-categorias");
   if (elDL2) elDL2.innerHTML = catsUnicas.map(c=>`<option value="${c}">`).join("");
 
-  // ===== QUINCENAS =====
   const lq = document.getElementById("lista-quincenas");
   if (lq) {
     if (datos.quincenas.length === 0) lq.innerHTML = '<div class="vacio">Sin quincenas</div>';
     else lq.innerHTML = datos.quincenas.slice().reverse().map(h=>`
-      <div class="card"><div class="info">
-        <div class="titulo">📅 Q${h.quincena} · ${h.fecha}</div>
+      <div class="card"><div class="info"><div class="titulo">📅 Q${h.quincena} · ${h.fecha}</div>
         <div class="detalle">Sueldo ${formato(h.sueldo)} · Desc ${formato(h.descuentos)} · Neto ${formato(h.neto)}<br>Fiados ${formato(h.cobradoFiado)} · Resp ${formato(h.totalResp)}</div></div>
         <div class="monto">${formato(h.restante)}</div></div>`).join("");
   }
 
-  // ===== NOTAS =====
   const ln = document.getElementById("lista-notas");
   if (ln) {
     if (datos.notas.length === 0) ln.innerHTML = '<div class="vacio">Sin notas</div>';
@@ -4097,7 +3478,6 @@ function renderTodo() {
     }).join("");
   }
 
-  // ===== RESPONSABILIDADES =====
   const r = datos.responsabilidades;
   const elR1 = document.getElementById("res-recibos");
   if (elR1) {
@@ -4112,7 +3492,6 @@ function renderTodo() {
     document.getElementById("m-quincenal").value = datos.metas.quincenal || "";
   }
 
-  // ===== ÚLTIMAS VENTAS =====
   const ult = document.getElementById("ultimas-ventas");
   if (ult) {
     if (datos.ventas.length === 0) ult.innerHTML = '<div class="vacio">Aún no hay ventas</div>';
@@ -4131,14 +3510,10 @@ function renderTodo() {
   actualizarBadgeNotif();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// GRÁFICOS
-// ═══════════════════════════════════════════════════════════════
 function renderCharts() {
   const textColor = getComputedStyle(document.body).getPropertyValue("--text").trim() || "#333";
   const gridColor = getComputedStyle(document.body).getPropertyValue("--border").trim() || "#e0e0e0";
   const gold = getComputedStyle(document.body).getPropertyValue("--gold").trim() || "#c9a227";
-
   const contado = datos.ventas.filter(v=>v.tipo==="contado").reduce((s,v)=>s+v.precio,0);
   const fiado = datos.ventas.filter(v=>v.tipo==="quincena").reduce((s,v)=>s+v.precio,0);
   if (charts.tipos) charts.tipos.destroy();
@@ -4147,42 +3522,27 @@ function renderCharts() {
     data: { labels: ["Contado", "Fiado"], datasets: [{ data: [contado, fiado], backgroundColor: ["#27ae60", "#e67e22"] }] },
     options: { responsive: true, plugins: { legend: { labels: { color: textColor } } } }
   });
-
   const dias = {};
   for (let i=6; i>=0; i--) { const d = new Date(); d.setDate(d.getDate()-i); dias[d.toLocaleDateString("es-CO")] = { ganancia: 0, gastos: 0 }; }
-  datos.ventas.forEach(v => {
-    if (!v.fechaISO) return;
-    const f = new Date(v.fechaISO).toLocaleDateString("es-CO");
-    if (f in dias) dias[f].ganancia += (v.precio - v.costo);
-  });
-  datos.gastos.forEach(g => {
-    if (!g.fechaISO) return;
-    const f = new Date(g.fechaISO).toLocaleDateString("es-CO");
-    if (f in dias) dias[f].gastos += g.monto;
-  });
+  datos.ventas.forEach(v => { if (!v.fechaISO) return; const f = new Date(v.fechaISO).toLocaleDateString("es-CO"); if (f in dias) dias[f].ganancia += (v.precio - v.costo); });
+  datos.gastos.forEach(g => { if (!g.fechaISO) return; const f = new Date(g.fechaISO).toLocaleDateString("es-CO"); if (f in dias) dias[f].gastos += g.monto; });
   if (charts.ganancia) charts.ganancia.destroy();
   charts.ganancia = new Chart(document.getElementById("chart-ganancia"), {
     type: "bar",
-    data: { labels: Object.keys(dias),
-      datasets: [
-        { label: "Ganancia", data: Object.values(dias).map(d=>d.ganancia), backgroundColor: "#27ae60" },
-        { label: "Gastos", data: Object.values(dias).map(d=>d.gastos), backgroundColor: "#e74c3c" }
-      ] },
+    data: { labels: Object.keys(dias), datasets: [
+      { label: "Ganancia", data: Object.values(dias).map(d=>d.ganancia), backgroundColor: "#27ae60" },
+      { label: "Gastos", data: Object.values(dias).map(d=>d.gastos), backgroundColor: "#e74c3c" }
+    ] },
     options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
-
-  // Tendencia 6 meses
   const meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
   const hoy = new Date();
-  const datosMeses = [];
-  const labelsMeses = [];
+  const datosMeses = [], labelsMeses = [];
   for (let i=5; i>=0; i--) {
     const d = new Date(hoy.getFullYear(), hoy.getMonth()-i, 1);
     labelsMeses.push(meses[d.getMonth()]);
-    const total = datos.ventas
-      .filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === d.getMonth() && new Date(v.fechaISO).getFullYear() === d.getFullYear())
-      .reduce((s,v) => s + (v.precio - v.costo), 0);
+    const total = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === d.getMonth() && new Date(v.fechaISO).getFullYear() === d.getFullYear()).reduce((s,v) => s + (v.precio - v.costo), 0);
     datosMeses.push(total);
   }
   if (charts.tendencia) charts.tendencia.destroy();
@@ -4192,14 +3552,9 @@ function renderCharts() {
     options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
-
   const diasAbonos = {};
   for (let i=6; i>=0; i--) { const d = new Date(); d.setDate(d.getDate()-i); diasAbonos[d.toLocaleDateString("es-CO")] = 0; }
-  todosLosAbonos().forEach(a => {
-    if (!a.fechaISO) return;
-    const f = new Date(a.fechaISO).toLocaleDateString("es-CO");
-    if (f in diasAbonos) diasAbonos[f] += a.monto;
-  });
+  todosLosAbonos().forEach(a => { if (!a.fechaISO) return; const f = new Date(a.fechaISO).toLocaleDateString("es-CO"); if (f in diasAbonos) diasAbonos[f] += a.monto; });
   if (charts.abonos) charts.abonos.destroy();
   charts.abonos = new Chart(document.getElementById("chart-abonos"), {
     type: "bar",
@@ -4207,19 +3562,16 @@ function renderCharts() {
     options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
-
   const totalOriginal = datos.deudas.reduce((s,d) => s + d.monto, 0) + datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + v.precio, 0);
   const totalAbonado = datos.deudas.reduce((s,d) => s + calcularAbonado(d), 0) + datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + calcularAbonado(v), 0);
   const totalSaldo = datos.deudas.reduce((s,d) => s + calcularSaldo(d), 0) + datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + calcularSaldo(v), 0);
   if (charts.deudas) charts.deudas.destroy();
   charts.deudas = new Chart(document.getElementById("chart-deudas"), {
     type: "bar",
-    data: { labels: ["Deuda original", "Abonado", "Saldo pendiente"],
-      datasets: [{ data: [totalOriginal, totalAbonado, totalSaldo], backgroundColor: [gold, "#27ae60", "#e74c3c"] }] },
+    data: { labels: ["Original", "Abonado", "Saldo"], datasets: [{ data: [totalOriginal, totalAbonado, totalSaldo], backgroundColor: [gold, "#27ae60", "#e74c3c"] }] },
     options: { responsive: true, plugins: { legend: { display: false } },
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
-
   const cats = {};
   datos.ventas.forEach(v => { const c = v.categoria || "General"; cats[c] = (cats[c] || 0) + v.precio; });
   const colores = [gold,"#27ae60","#e67e22","#e74c3c","#9b59b6","#3498db","#f39c12","#1abc9c","#e91e63","#95a5a6"];
@@ -4242,16 +3594,12 @@ function renderCharts() {
   if (charts.quincenas) charts.quincenas.destroy();
   charts.quincenas = new Chart(document.getElementById("chart-quincenas"), {
     type: "line",
-    data: { labels: qLabels.length ? qLabels : ["Sin datos"],
-      datasets: [{ label: "Restante", data: qVal.length ? qVal : [0], borderColor: gold, backgroundColor: gold + "33", fill: true, tension: 0.3 }] },
+    data: { labels: qLabels.length ? qLabels : ["Sin datos"], datasets: [{ label: "Restante", data: qVal.length ? qVal : [0], borderColor: gold, backgroundColor: gold + "33", fill: true, tension: 0.3 }] },
     options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
 }
 
-// ═══════════════════════════════════════════════════════════════
-// EXPORTAR / IMPORTAR
-// ═══════════════════════════════════════════════════════════════
 function exportar() {
   const blob = new Blob([JSON.stringify(datos, null, 2)], {type: "application/json"});
   const url = URL.createObjectURL(blob);
@@ -4287,7 +3635,6 @@ function importar(ev) {
   ev.target.value = "";
 }
 
-// ---------- MODO OSCURO ----------
 function toggleDark() {
   document.body.classList.toggle("dark");
   const dark = document.body.classList.contains("dark");
@@ -4301,7 +3648,6 @@ if (localStorage.getItem("modoOscuro") === "true") {
   if (b) b.textContent = "☀️";
 }
 
-// ---------- PWA ----------
 function generarIconoSVG() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -4348,13 +3694,11 @@ window.addEventListener("appinstalled", () => {
   if (btn) btn.style.display = "none";
 });
 
-// ---------- EVENTOS ----------
 document.getElementById("login-pass").addEventListener("keypress", (e) => { if (e.key === "Enter") hacerLogin(); });
 document.getElementById("login-email").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("login-pass").focus(); });
 const abonoMonto = document.getElementById("abono-monto");
 if (abonoMonto) abonoMonto.addEventListener("keypress", (e) => { if (e.key === "Enter") confirmarAbono(); });
 
-// Aplicar tema al cargar
 aplicarTemaGuardado();
 </script>
 </body>
