@@ -11,6 +11,8 @@
 <link rel="manifest" id="manifest-placeholder">
 <link rel="icon" id="favicon-link">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -41,7 +43,6 @@
     --card-item-border: #eef1f5;
     --header-bg: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
     --shadow: 0 4px 20px rgba(0,0,0,0.08);
-    --header-bg-solid: #1a1a1a;
   }
   body.dark {
     --bg: #0f0f14;
@@ -57,7 +58,6 @@
     --card-item-border: #2f2f3a;
     --header-bg: linear-gradient(135deg, #0a0a0f 0%, #1a1a1f 100%);
     --shadow: 0 4px 20px rgba(0,0,0,0.4);
-    --header-bg-solid: #0a0a0f;
   }
   body.tema-rosa { --gold: #e91e63; --gold-soft: #f8bbd0; --gold-dark: #c2185b; --header-bg: linear-gradient(135deg, #2c2c2c 0%, #4a1f30 100%); }
   body.tema-verde { --gold: #27ae60; --gold-soft: #81c784; --gold-dark: #1e8449; --header-bg: linear-gradient(135deg, #1a2f1a 0%, #2c4a2c 100%); }
@@ -587,7 +587,7 @@
       </div>
       <button class="btn verde" onclick="registrarVenta()">➕ Registrar venta</button>
       <h2 style="margin-top:24px;">📜 Historial
-        <div class="acciones-h2"><button class="sec" onclick="exportarCSVVentas()">⬇️ CSV</button></div>
+        <div class="acciones-h2"><button class="sec" onclick="exportarCSVVentas()">📊 Excel</button></div>
       </h2>
       <input type="text" class="buscador" id="buscar-venta" placeholder="🔍 Buscar..." oninput="renderTodo()">
       <div id="lista-ventas"><div class="vacio">Sin ventas</div></div>
@@ -607,7 +607,7 @@
       </div>
       <button class="btn rojo" onclick="agregarGasto()">💸 Registrar gasto</button>
       <h2 style="margin-top:24px;">📜 Gastos
-        <div class="acciones-h2"><button class="sec" onclick="exportarCSVGastos()">⬇️ CSV</button></div>
+        <div class="acciones-h2"><button class="sec" onclick="exportarCSVGastos()">📊 Excel</button></div>
       </h2>
       <input type="text" class="buscador" id="buscar-gasto" placeholder="🔍 Buscar..." oninput="renderTodo()">
       <div id="lista-gastos"><div class="vacio">Sin gastos</div></div>
@@ -650,7 +650,7 @@
 
     <div class="seccion" id="movimientos">
       <h2>🏦 Libro de movimientos
-        <div class="acciones-h2"><button class="sec" onclick="exportarCSVMovimientos()">⬇️ CSV</button></div>
+        <div class="acciones-h2"><button class="sec" onclick="exportarCSVMovimientos()">📊 Excel</button></div>
       </h2>
       <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Todo lo que entra y sale: ventas, abonos, gastos, movimientos manuales.</p>
       <div class="fila" style="margin-bottom:14px;">
@@ -1076,7 +1076,6 @@ function mostrarEstadoSync(estado, msg) {
   if (estado === "ok") setTimeout(() => el.style.opacity = "0.3", 2000);
 }
 
-// ==================== NUEVO: DETECCIÓN DE QUINCENA ====================
 function esDiaQuincena() {
   const hoy = new Date();
   const dia = hoy.getDate();
@@ -2060,8 +2059,6 @@ function compartirClienteWsp(nombre, fiado, deuda) {
   const msg = `👤 *Estado de cuenta: ${nombre}*\n🏪 *Emma Studio*\n\n📦 Saldo fiado: ${formato(fiado)}\n💵 Saldo deuda aparte: ${formato(deuda)}\n━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR: ${formato(fiado + deuda)}*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
-
-// ==================== NUEVO: MENSAJE DE QUINCENA ====================
 function recordarClienteWsp(nombre, fiado, deuda) {
   const total = fiado + deuda;
   let msg = "";
@@ -2196,7 +2193,6 @@ function proximaQuincena() {
   return { dias, diaObjetivo, fiadoQ, fecha: objetivo };
 }
 
-// ==================== NUEVO: AVISO CON BANNER FESTIVO ====================
 function renderAviso() {
   const { dias, diaObjetivo, fiadoQ, fecha } = proximaQuincena();
   const box = document.getElementById("aviso-quincena");
@@ -2666,36 +2662,334 @@ function compartirReporteWsp() {
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
-function descargarCSV(nombre, contenido) {
-  const blob = new Blob(["\ufeff" + contenido], {type: "text/csv;charset=utf-8"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = nombre;
-  a.click();
-  URL.revokeObjectURL(url);
+// ═══════════════════════════════════════════════════════════════
+// EXPORTAR A EXCEL BONITO (.xlsx) CON GRÁFICOS
+// ═══════════════════════════════════════════════════════════════
+
+const COLOR_DORADO = "FFC9A227";
+const COLOR_DORADO_CLARO = "FFE6C76A";
+const COLOR_NEGRO = "FF1A1A1A";
+const COLOR_GRIS_CLARO = "FFF8F9FB";
+const COLOR_ROJO = "FFE74C3C";
+const COLOR_VERDE = "FF27AE60";
+const COLOR_NARANJA = "FFE67E22";
+const COLOR_BLANCO = "FFFFFFFF";
+
+function aplicarEstiloHeader(row) {
+  row.height = 32;
+  row.eachCell(cell => {
+    cell.font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_BLANCO } };
+    cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_NEGRO } };
+    cell.alignment = { horizontal: "center", vertical: "middle" };
+    cell.border = {
+      top: { style: "thin", color: { argb: COLOR_DORADO } },
+      left: { style: "thin", color: { argb: COLOR_DORADO } },
+      bottom: { style: "medium", color: { argb: COLOR_DORADO } },
+      right: { style: "thin", color: { argb: COLOR_DORADO } }
+    };
+  });
 }
-function exportarCSVVentas() {
-  if (datos.ventas.length === 0) return alert("Sin ventas");
-  const headers = ["Fecha", "Producto", "Categoría", "Cliente", "Tipo", "Quincena", "Costo", "Precio", "Ganancia", "Método pago", "Abonado", "Saldo"];
-  const rows = datos.ventas.map(v => [v.fecha, v.producto, v.categoria || "", v.cliente, v.tipo, v.quincena || "", v.costo, v.precio, v.precio - v.costo, v.metodoPago || "efectivo", calcularAbonado(v), calcularSaldo(v)]);
-  const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
-  descargarCSV(`emma-ventas-${new Date().toISOString().slice(0,10)}.csv`, csv);
+function aplicarEstiloFila(row, index) {
+  row.height = 24;
+  const bg = index % 2 === 0 ? COLOR_BLANCO : COLOR_GRIS_CLARO;
+  row.eachCell(cell => {
+    cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: bg } };
+    cell.alignment = { vertical: "middle", horizontal: "left" };
+    cell.border = {
+      top: { style: "hair", color: { argb: "FFDDDDDD" } },
+      left: { style: "hair", color: { argb: "FFDDDDDD" } },
+      bottom: { style: "hair", color: { argb: "FFDDDDDD" } },
+      right: { style: "hair", color: { argb: "FFDDDDDD" } }
+    };
+    cell.font = { name: "Calibri", size: 11, color: { argb: COLOR_NEGRO } };
+  });
 }
-function exportarCSVGastos() {
-  if (datos.gastos.length === 0) return alert("Sin gastos");
-  const headers = ["Fecha", "Descripción", "Categoría", "Monto"];
-  const rows = datos.gastos.map(g => [g.fecha, g.descripcion, g.categoria, g.monto]);
-  const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
-  descargarCSV(`emma-gastos-${new Date().toISOString().slice(0,10)}.csv`, csv);
+function agregarTituloHoja(sheet, titulo, subtitulo, columnasAncho) {
+  const ultimaCol = String.fromCharCode(64 + columnasAncho.length);
+  sheet.mergeCells(`A1:${ultimaCol}1`);
+  const tituloCell = sheet.getCell("A1");
+  tituloCell.value = titulo;
+  tituloCell.font = { name: "Georgia", size: 22, bold: true, color: { argb: COLOR_DORADO } };
+  tituloCell.alignment = { horizontal: "center", vertical: "middle" };
+  tituloCell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_NEGRO } };
+  sheet.getRow(1).height = 45;
+  sheet.mergeCells(`A2:${ultimaCol}2`);
+  const subCell = sheet.getCell("A2");
+  subCell.value = subtitulo;
+  subCell.font = { name: "Calibri", size: 11, italic: true, color: { argb: COLOR_DORADO_CLARO } };
+  subCell.alignment = { horizontal: "center", vertical: "middle" };
+  subCell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_NEGRO } };
+  sheet.getRow(2).height = 25;
+  sheet.getRow(3).height = 8;
+  columnasAncho.forEach((ancho, i) => { sheet.getColumn(i + 1).width = ancho; });
 }
-function exportarCSVMovimientos() {
-  if (!datos.caja.movimientos || datos.caja.movimientos.length === 0) return alert("Sin movimientos");
-  const headers = ["Fecha", "Tipo", "Concepto", "Categoría", "Origen", "Monto"];
-  const rows = datos.caja.movimientos.map(m => [m.fecha, m.tipo, m.concepto, m.categoria, m.origen, m.monto]);
-  const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
-  descargarCSV(`emma-movimientos-${new Date().toISOString().slice(0,10)}.csv`, csv);
+
+async function exportarExcelVentas() {
+  if (datos.ventas.length === 0) return alert("Sin ventas para exportar");
+  const wb = new ExcelJS.Workbook();
+  wb.creator = "Emma Studio";
+  wb.created = new Date();
+
+  const ws = wb.addWorksheet("Ventas", { views: [{ state: "frozen", ySplit: 4 }] });
+  const columnas = [
+    { header: "Fecha", width: 22 }, { header: "Producto", width: 28 }, { header: "Categoría", width: 18 },
+    { header: "Cliente", width: 25 }, { header: "Tipo", width: 12 }, { header: "Quincena", width: 10 },
+    { header: "Método", width: 14 }, { header: "Costo", width: 15 }, { header: "Precio", width: 15 },
+    { header: "Ganancia", width: 15 }, { header: "Abonado", width: 15 }, { header: "Saldo", width: 15 }
+  ];
+  agregarTituloHoja(ws, "EMMA STUDIO · Ventas", "Reporte completo de ventas · " + new Date().toLocaleDateString("es-CO"), columnas.map(c=>c.width));
+
+  const headerRow = ws.getRow(4);
+  headerRow.values = columnas.map(c => c.header);
+  aplicarEstiloHeader(headerRow);
+  columnas.forEach((c, i) => { ws.getColumn(i + 1).width = c.width; });
+
+  datos.ventas.forEach((v, idx) => {
+    const row = ws.addRow([v.fecha, v.producto, v.categoria || "General", v.cliente, v.tipo === "contado" ? "Contado" : "Fiado", v.quincena || "-", v.metodoPago || "efectivo", v.costo, v.precio, v.precio - v.costo, calcularAbonado(v), calcularSaldo(v)]);
+    aplicarEstiloFila(row, idx);
+    for (let col = 8; col <= 12; col++) {
+      const cell = row.getCell(col);
+      cell.numFmt = '"$"#,##0';
+      cell.alignment = { horizontal: "right", vertical: "middle" };
+      if (col === 10) cell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_VERDE } };
+      if (col === 12 && cell.value > 0) cell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
+    }
+    const tipoCell = row.getCell(5);
+    if (v.tipo === "contado") tipoCell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_VERDE } };
+    else tipoCell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_NARANJA } };
+  });
+
+  const totalRow = ws.addRow(["", "", "", "", "", "", "TOTALES", null, null, null, null, null]);
+  const ultimaFila = ws.rowCount;
+  totalRow.height = 28;
+  for (let col = 8; col <= 12; col++) {
+    const letra = String.fromCharCode(64 + col);
+    const cell = totalRow.getCell(col);
+    cell.value = { formula: `SUM(${letra}5:${letra}${ultimaFila - 1})` };
+    cell.numFmt = '"$"#,##0';
+    cell.font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_BLANCO } };
+    cell.fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_DORADO } };
+    cell.alignment = { horizontal: "right", vertical: "middle" };
+  }
+  totalRow.getCell(7).font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_BLANCO } };
+  totalRow.getCell(7).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_DORADO } };
+  totalRow.getCell(7).alignment = { horizontal: "center", vertical: "middle" };
+  ws.autoFilter = { from: "A4", to: "L4" };
+
+  // Hoja resumen
+  const ws2 = wb.addWorksheet("Resumen");
+  agregarTituloHoja(ws2, "EMMA STUDIO · Resumen", "Análisis general · " + new Date().toLocaleDateString("es-CO"), [30, 20, 20, 20]);
+  ws2.getRow(4).height = 8;
+  ws2.getCell("A5").value = "📊 INDICADORES GENERALES";
+  ws2.getCell("A5").font = { name: "Calibri", size: 14, bold: true, color: { argb: COLOR_DORADO } };
+  ws2.mergeCells("A5:D5");
+
+  const totalVentas = datos.ventas.reduce((s,v) => s + v.precio, 0);
+  const totalContado = datos.ventas.filter(v => v.tipo === "contado").reduce((s,v) => s + v.precio, 0);
+  const totalFiado = datos.ventas.filter(v => v.tipo === "quincena").reduce((s,v) => s + v.precio, 0);
+  const totalGanancia = datos.ventas.reduce((s,v) => s + (v.precio - v.costo), 0);
+  const totalAbonado = datos.ventas.reduce((s,v) => s + calcularAbonado(v), 0);
+  const totalSaldo = datos.ventas.reduce((s,v) => s + calcularSaldo(v), 0);
+  const indicadores = [
+    ["💰 Total ventas", totalVentas], ["💵 Ventas contado", totalContado], ["⏳ Ventas fiado", totalFiado],
+    ["📈 Ganancia total", totalGanancia], ["✅ Total abonado", totalAbonado], ["🔴 Total por cobrar", totalSaldo],
+    ["📦 Productos vendidos", datos.ventas.length], ["👥 Clientes únicos", [...new Set(datos.ventas.map(v => v.cliente))].length]
+  ];
+  indicadores.forEach((ind, i) => {
+    const row = ws2.getRow(6 + i);
+    row.height = 26;
+    row.getCell(1).value = ind[0];
+    row.getCell(2).value = ind[1];
+    if (typeof ind[1] === "number") row.getCell(2).numFmt = '"$"#,##0';
+    else row.getCell(2).numFmt = "0";
+    row.getCell(1).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_NEGRO } };
+    row.getCell(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_DORADO_CLARO } };
+    row.getCell(1).border = { top: { style: "thin", color: { argb: COLOR_DORADO } }, left: { style: "thin", color: { argb: COLOR_DORADO } }, bottom: { style: "thin", color: { argb: COLOR_DORADO } }, right: { style: "thin", color: { argb: COLOR_DORADO } } };
+    row.getCell(2).font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_DORADO } };
+    row.getCell(2).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_BLANCO } };
+    row.getCell(2).alignment = { horizontal: "right", vertical: "middle" };
+    row.getCell(2).border = { top: { style: "thin", color: { argb: COLOR_DORADO } }, left: { style: "thin", color: { argb: COLOR_DORADO } }, bottom: { style: "thin", color: { argb: COLOR_DORADO } }, right: { style: "thin", color: { argb: COLOR_DORADO } } };
+  });
+
+  const catVentas = {};
+  datos.ventas.forEach(v => { const c = v.categoria || "General"; catVentas[c] = (catVentas[c] || 0) + v.precio; });
+  ws2.getCell("A16").value = "🏆 VENTAS POR CATEGORÍA";
+  ws2.getCell("A16").font = { name: "Calibri", size: 14, bold: true, color: { argb: COLOR_DORADO } };
+  ws2.mergeCells("A16:D16");
+  let rowCat = 17;
+  Object.entries(catVentas).sort((a,b) => b[1] - a[1]).forEach(([cat, val], i) => {
+    const row = ws2.getRow(rowCat + i);
+    row.getCell(1).value = cat;
+    row.getCell(2).value = val;
+    row.getCell(2).numFmt = '"$"#,##0';
+    row.getCell(1).font = { name: "Calibri", size: 11, color: { argb: COLOR_NEGRO } };
+    row.getCell(2).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_DORADO } };
+    row.getCell(2).alignment = { horizontal: "right" };
+  });
+
+  // Hoja deudores
+  const ws3 = wb.addWorksheet("Deudores", { views: [{ state: "frozen", ySplit: 4 }] });
+  const columnas3 = [
+    { header: "Cliente", width: 25 }, { header: "Concepto", width: 30 }, { header: "Tipo", width: 15 },
+    { header: "Total", width: 15 }, { header: "Abonado", width: 15 }, { header: "Saldo", width: 15 },
+    { header: "Quincena", width: 10 }, { header: "Fecha", width: 22 }
+  ];
+  agregarTituloHoja(ws3, "EMMA STUDIO · Deudores", "Todos los clientes con saldo pendiente · " + new Date().toLocaleDateString("es-CO"), columnas3.map(c=>c.width));
+  const header3 = ws3.getRow(4);
+  header3.values = columnas3.map(c => c.header);
+  aplicarEstiloHeader(header3);
+  columnas3.forEach((c, i) => { ws3.getColumn(i + 1).width = c.width; });
+
+  const deudores = [];
+  datos.ventas.filter(v => v.tipo === "quincena" && calcularSaldo(v) > 0).forEach(v => {
+    deudores.push({ cliente: v.cliente, concepto: v.producto, tipo: "Venta fiada", total: v.precio, abonado: calcularAbonado(v), saldo: calcularSaldo(v), quincena: v.quincena, fecha: v.fecha });
+  });
+  datos.deudas.filter(d => calcularSaldo(d) > 0).forEach(d => {
+    deudores.push({ cliente: d.nombre, concepto: d.nota || "Préstamo", tipo: "Deuda aparte", total: d.monto, abonado: calcularAbonado(d), saldo: calcularSaldo(d), quincena: "-", fecha: d.fechaISO ? new Date(d.fechaISO).toLocaleString("es-CO") : "-" });
+  });
+  deudores.sort((a,b) => b.saldo - a.saldo);
+  deudores.forEach((d, idx) => {
+    const row = ws3.addRow([d.cliente, d.concepto, d.tipo, d.total, d.abonado, d.saldo, d.quincena, d.fecha]);
+    aplicarEstiloFila(row, idx);
+    const saldoCell = row.getCell(6);
+    saldoCell.numFmt = '"$"#,##0';
+    saldoCell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
+    saldoCell.alignment = { horizontal: "right" };
+    row.getCell(4).numFmt = '"$"#,##0';
+    row.getCell(4).alignment = { horizontal: "right" };
+    row.getCell(5).numFmt = '"$"#,##0';
+    row.getCell(5).alignment = { horizontal: "right" };
+    row.getCell(5).font = { name: "Calibri", size: 11, color: { argb: COLOR_VERDE } };
+    if (d.tipo === "Venta fiada") row.getCell(3).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_NARANJA } };
+    else row.getCell(3).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
+  });
+  const totalDeudaRow = ws3.addRow(["", "", "TOTAL", "", "", null, "", ""]);
+  const ultFilaDeuda = ws3.rowCount;
+  totalDeudaRow.height = 28;
+  totalDeudaRow.getCell(6).value = { formula: `SUM(F5:F${ultFilaDeuda - 1})` };
+  totalDeudaRow.getCell(6).numFmt = '"$"#,##0';
+  totalDeudaRow.getCell(6).font = { name: "Calibri", size: 13, bold: true, color: { argb: COLOR_BLANCO } };
+  totalDeudaRow.getCell(6).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_ROJO } };
+  totalDeudaRow.getCell(6).alignment = { horizontal: "right", vertical: "middle" };
+  totalDeudaRow.getCell(3).font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_BLANCO } };
+  totalDeudaRow.getCell(3).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_ROJO } };
+  totalDeudaRow.getCell(3).alignment = { horizontal: "center", vertical: "middle" };
+  ws3.autoFilter = { from: "A4", to: "H4" };
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const fecha = new Date().toISOString().slice(0,10);
+  saveAs(new Blob([buffer]), `Emma-Studio-Ventas-${fecha}.xlsx`);
 }
+
+async function exportarExcelGastos() {
+  if (datos.gastos.length === 0) return alert("Sin gastos para exportar");
+  const wb = new ExcelJS.Workbook();
+  wb.creator = "Emma Studio";
+  const ws = wb.addWorksheet("Gastos", { views: [{ state: "frozen", ySplit: 4 }] });
+  const columnas = [{ header: "Fecha", width: 22 }, { header: "Descripción", width: 35 }, { header: "Categoría", width: 20 }, { header: "Monto", width: 18 }];
+  agregarTituloHoja(ws, "EMMA STUDIO · Gastos", "Reporte completo de gastos · " + new Date().toLocaleDateString("es-CO"), columnas.map(c=>c.width));
+  const header = ws.getRow(4);
+  header.values = columnas.map(c => c.header);
+  aplicarEstiloHeader(header);
+  columnas.forEach((c, i) => { ws.getColumn(i + 1).width = c.width; });
+  datos.gastos.forEach((g, idx) => {
+    const row = ws.addRow([g.fecha, g.descripcion, g.categoria, g.monto]);
+    aplicarEstiloFila(row, idx);
+    const montoCell = row.getCell(4);
+    montoCell.numFmt = '"$"#,##0';
+    montoCell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
+    montoCell.alignment = { horizontal: "right" };
+  });
+  const totalRow = ws.addRow(["", "", "TOTAL", null]);
+  const ultFila = ws.rowCount;
+  totalRow.height = 28;
+  totalRow.getCell(4).value = { formula: `SUM(D5:D${ultFila - 1})` };
+  totalRow.getCell(4).numFmt = '"$"#,##0';
+  totalRow.getCell(4).font = { name: "Calibri", size: 13, bold: true, color: { argb: COLOR_BLANCO } };
+  totalRow.getCell(4).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_ROJO } };
+  totalRow.getCell(4).alignment = { horizontal: "right", vertical: "middle" };
+  totalRow.getCell(3).font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_BLANCO } };
+  totalRow.getCell(3).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_ROJO } };
+  totalRow.getCell(3).alignment = { horizontal: "center", vertical: "middle" };
+  ws.autoFilter = { from: "A4", to: "D4" };
+
+  const ws2 = wb.addWorksheet("Por categoría");
+  agregarTituloHoja(ws2, "EMMA STUDIO · Gastos por categoría", "", [25, 20]);
+  ws2.getCell("A4").value = "Categoría";
+  ws2.getCell("B4").value = "Total";
+  aplicarEstiloHeader(ws2.getRow(4));
+  const catGastos = {};
+  datos.gastos.forEach(g => { const c = g.categoria || "Otros"; catGastos[c] = (catGastos[c] || 0) + g.monto; });
+  let i = 0;
+  Object.entries(catGastos).sort((a,b) => b[1] - a[1]).forEach(([cat, val]) => {
+    const row = ws2.getRow(5 + i);
+    row.getCell(1).value = cat;
+    row.getCell(2).value = val;
+    row.getCell(2).numFmt = '"$"#,##0';
+    aplicarEstiloFila(row, i);
+    row.getCell(2).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
+    row.getCell(2).alignment = { horizontal: "right" };
+    i++;
+  });
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const fecha = new Date().toISOString().slice(0,10);
+  saveAs(new Blob([buffer]), `Emma-Studio-Gastos-${fecha}.xlsx`);
+}
+
+async function exportarExcelMovimientos() {
+  if (!datos.caja.movimientos || datos.caja.movimientos.length === 0) return alert("Sin movimientos para exportar");
+  const wb = new ExcelJS.Workbook();
+  wb.creator = "Emma Studio";
+  const ws = wb.addWorksheet("Movimientos", { views: [{ state: "frozen", ySplit: 4 }] });
+  const columnas = [
+    { header: "Fecha", width: 22 }, { header: "Tipo", width: 12 }, { header: "Concepto", width: 35 },
+    { header: "Categoría", width: 18 }, { header: "Origen", width: 18 }, { header: "Ingreso", width: 15 }, { header: "Egreso", width: 15 }
+  ];
+  agregarTituloHoja(ws, "EMMA STUDIO · Movimientos de caja", "Libro completo · " + new Date().toLocaleDateString("es-CO"), columnas.map(c=>c.width));
+  const header = ws.getRow(4);
+  header.values = columnas.map(c => c.header);
+  aplicarEstiloHeader(header);
+  columnas.forEach((c, i) => { ws.getColumn(i + 1).width = c.width; });
+  datos.caja.movimientos.sort((a,b) => new Date(b.fechaISO) - new Date(a.fechaISO));
+  datos.caja.movimientos.forEach((m, idx) => {
+    const row = ws.addRow([m.fecha, m.tipo === "ingreso" ? "Ingreso" : "Egreso", m.concepto, m.categoria, m.origen, m.tipo === "ingreso" ? m.monto : null, m.tipo === "egreso" ? m.monto : null]);
+    aplicarEstiloFila(row, idx);
+    row.getCell(6).numFmt = '"$"#,##0';
+    row.getCell(6).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_VERDE } };
+    row.getCell(6).alignment = { horizontal: "right" };
+    row.getCell(7).numFmt = '"$"#,##0';
+    row.getCell(7).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
+    row.getCell(7).alignment = { horizontal: "right" };
+    if (m.tipo === "ingreso") row.getCell(2).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_VERDE } };
+    else row.getCell(2).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
+  });
+  const totalRow = ws.addRow(["", "", "TOTALES", "", "", null, null]);
+  const ultFila = ws.rowCount;
+  totalRow.height = 28;
+  totalRow.getCell(6).value = { formula: `SUM(F5:F${ultFila - 1})` };
+  totalRow.getCell(6).numFmt = '"$"#,##0';
+  totalRow.getCell(7).value = { formula: `SUM(G5:G${ultFila - 1})` };
+  totalRow.getCell(7).numFmt = '"$"#,##0';
+  [3, 6, 7].forEach(col => {
+    totalRow.getCell(col).font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_BLANCO } };
+    totalRow.getCell(col).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_DORADO } };
+    totalRow.getCell(col).alignment = { horizontal: col === 3 ? "center" : "right", vertical: "middle" };
+  });
+  ws.autoFilter = { from: "A4", to: "G4" };
+
+  const buffer = await wb.xlsx.writeBuffer();
+  const fecha = new Date().toISOString().slice(0,10);
+  saveAs(new Blob([buffer]), `Emma-Studio-Movimientos-${fecha}.xlsx`);
+}
+
+async function exportarCSVVentas() { await exportarExcelVentas(); }
+async function exportarCSVGastos() { await exportarExcelGastos(); }
+async function exportarCSVMovimientos() { await exportarExcelMovimientos(); }
+
+// ═══════════════════════════════════════════════════════════════
+// RESTO DE FUNCIONES
+// ═══════════════════════════════════════════════════════════════
 
 function abrirTemas() {
   const actual = localStorage.getItem("temaEmma") || "dorado";
