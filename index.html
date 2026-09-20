@@ -8,8 +8,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Emma Studio">
-<link rel="manifest" id="manifest-placeholder">
+<link rel="manifest" href="manifest.json">
 <link rel="icon" id="favicon-link">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231a1a1a'/%3E%3Cstop offset='100%25' stop-color='%23c9a227'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='100' fill='url(%23g)'/%3E%3Ctext x='50%25' y='58%25' font-size='220' font-weight='900' fill='%23ffffff' text-anchor='middle' dominant-baseline='middle' font-family='Georgia'%3EE%3C/text%3E%3C/svg%3E">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -115,7 +116,7 @@
   .icon-btn .badge-notif { position: absolute; top: -4px; right: -4px; background: var(--red); color: white; border-radius: 10px; padding: 1px 6px; font-size: 0.65rem; font-weight: 800; min-width: 18px; text-align: center; }
   .icon-btn .badge-notif.zero { display: none; }
   nav { display: flex; flex-wrap: wrap; background: var(--nav-bg); border-bottom: 2px solid var(--border); padding: 4px 4px 0; }
-  nav button { flex: 1; min-width: 82px; padding: 12px 4px; border: none; background: transparent; cursor: pointer; font-size: 0.7rem; font-weight: 700; color: var(--text-soft); transition: 0.2s; border-bottom: 3px solid transparent; border-radius: 8px 8px 0 0; position: relative; }
+  nav button { flex: 1; min-width: 78px; padding: 12px 4px; border: none; background: transparent; cursor: pointer; font-size: 0.68rem; font-weight: 700; color: var(--text-soft); transition: 0.2s; border-bottom: 3px solid transparent; border-radius: 8px 8px 0 0; position: relative; }
   nav button:hover { background: var(--card-item-bg); color: var(--text-strong); }
   nav button.active { color: var(--gold); border-bottom-color: var(--gold); background: var(--card-item-bg); }
   nav button.active::before { content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 2px; background: var(--gold); border-radius: 2px; }
@@ -123,8 +124,8 @@
   .seccion { display: none; }
   .seccion.active { display: block; animation: fade 0.3s; }
   @keyframes fade { from { opacity: 0; transform: translateY(6px);} to {opacity:1;} }
-  h2 { margin-bottom: 16px; color: var(--text-strong); font-size: 1.25rem; padding-bottom: 8px; border-bottom: 2px solid var(--gold); display: flex; align-items: center; gap: 8px; justify-content: space-between; }
-  h2 .acciones-h2 { display: flex; gap: 6px; }
+  h2 { margin-bottom: 16px; color: var(--text-strong); font-size: 1.25rem; padding-bottom: 8px; border-bottom: 2px solid var(--gold); display: flex; align-items: center; gap: 8px; justify-content: space-between; flex-wrap: wrap;}
+  h2 .acciones-h2 { display: flex; gap: 6px; flex-wrap: wrap;}
   h2 .acciones-h2 button { background: var(--gold); border: none; color: white; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
   h2 .acciones-h2 button:hover { transform: translateY(-1px); }
   h2 .acciones-h2 button.sec { background: var(--text-soft); }
@@ -347,7 +348,7 @@
     header h1 { font-size: 1.15rem; }
     .top-actions { top: 8px; right: 8px; gap: 4px; max-width: 75%; }
     .icon-btn { padding: 6px 8px; font-size: 0.85rem; }
-    nav button { font-size: 0.65rem; padding: 10px 3px; min-width: 62px; }
+    nav button { font-size: 0.62rem; padding: 10px 3px; min-width: 58px; }
     .login-box { padding: 30px 22px; }
     .login-box .logo .nombre { font-size: 1.8rem; }
     .login-box .logo .sub { font-size: 0.55rem; letter-spacing: 6px; }
@@ -437,6 +438,8 @@
     <button data-tab="calendario">🗓️ Calendario</button>
     <button data-tab="resp">🏠 Responsab.</button>
     <button data-tab="notas">📝 Notas</button>
+    <button data-tab="plantillas">💬 Plantillas</button>
+    <button data-tab="config">⚙️ Config</button>
     <button data-tab="estadisticas">📊 Estadísticas</button>
   </nav>
 
@@ -488,6 +491,8 @@
           <div class="dc-extra">Saldo pendiente</div>
         </div>
       </div>
+      <h2>📊 Comparativa con mes anterior</h2>
+      <div id="comparativa-box"></div>
       <h2>💼 Resumen general</h2>
       <div class="resumen-box">
         <h3>Capital del negocio</h3>
@@ -584,6 +589,12 @@
           <div class="medio-pago" data-medio="nequi" onclick="seleccionarMedioPago(this)">💜 Nequi</div>
           <div class="medio-pago" data-medio="daviplata" onclick="seleccionarMedioPago(this)">🔴 Daviplata</div>
         </div>
+      </div>
+      <div class="campo">
+        <label>Foto del producto (opcional)</label>
+        <div class="foto-input-wrapper" onclick="document.getElementById('venta-foto').click()">📸 Tomar foto del producto</div>
+        <input type="file" id="venta-foto" accept="image/*" capture="environment" style="display:none" onchange="procesarFotoVenta(event)">
+        <div id="venta-foto-preview"></div>
       </div>
       <button class="btn verde" onclick="registrarVenta()">➕ Registrar venta</button>
       <h2 style="margin-top:24px;">📜 Historial
@@ -732,6 +743,97 @@
       <button class="btn verde" onclick="agregarNota()">➕ Agregar nota</button>
       <h2 style="margin-top:24px;">📝 Mis notas</h2>
       <div id="lista-notas"><div class="vacio">Sin notas</div></div>
+    </div>
+
+    <div class="seccion" id="plantillas">
+      <h2>💬 Plantillas de WhatsApp</h2>
+      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">
+        Personaliza los mensajes que se envían a tus clientes. Usa estas variables:
+        <br>• <b>{nombre}</b> → Nombre del cliente
+        <br>• <b>{total}</b> → Total a pagar
+        <br>• <b>{fiado}</b> → Saldo fiado
+        <br>• <b>{deuda}</b> → Deuda aparte
+        <br>• <b>{empresa}</b> → Nombre del negocio
+        <br>• <b>{producto}, {precio}, {quincena}, {fecha}</b> → Para recibos
+      </p>
+
+      <div class="campo">
+        <label>📱 Mensaje normal (cualquier día)</label>
+        <textarea id="plantilla-normal" rows="6"></textarea>
+        <button class="btn pequeno" onclick="previewPlantilla('normal')">👁️ Vista previa</button>
+        <button class="btn gris pequeno" onclick="restaurarPlantilla('normal')">↩️ Restaurar</button>
+      </div>
+
+      <div class="campo">
+        <label>🎉 Mensaje día de quincena (15 y 30)</label>
+        <textarea id="plantilla-quincena" rows="6"></textarea>
+        <button class="btn pequeno" onclick="previewPlantilla('quincena')">👁️ Vista previa</button>
+        <button class="btn gris pequeno" onclick="restaurarPlantilla('quincena')">↩️ Restaurar</button>
+      </div>
+
+      <div class="campo">
+        <label>🎀 Mensaje previo (día 14 y 29)</label>
+        <textarea id="plantilla-previa" rows="6"></textarea>
+        <button class="btn pequeno" onclick="previewPlantilla('previa')">👁️ Vista previa</button>
+        <button class="btn gris pequeno" onclick="restaurarPlantilla('previa')">↩️ Restaurar</button>
+      </div>
+
+      <div class="campo">
+        <label>📤 Mensaje de recibo fiado</label>
+        <textarea id="plantilla-recibo" rows="6"></textarea>
+        <button class="btn pequeno" onclick="previewPlantilla('recibo')">👁️ Vista previa</button>
+        <button class="btn gris pequeno" onclick="restaurarPlantilla('recibo')">↩️ Restaurar</button>
+      </div>
+
+      <button class="btn verde" onclick="guardarPlantillas()">💾 Guardar plantillas</button>
+      <button class="btn rojo" onclick="restaurarTodasPlantillas()">🔄 Restaurar todas</button>
+    </div>
+
+    <div class="seccion" id="config">
+      <h2>⚙️ Configuración</h2>
+
+      <h3 style="margin-bottom:12px;font-size:1rem;">🔔 Notificaciones programadas</h3>
+      <div class="card" style="flex-direction:column;align-items:flex-start;">
+        <div style="font-weight:700;margin-bottom:8px;">Avisos automáticos de quincena</div>
+        <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:10px;">
+          Recibirás notificación en tu celular el día 14, 15, 29 y 30 de cada mes,
+          incluso si no tienes la app abierta.
+        </p>
+        <div class="fila">
+          <button class="btn verde" onclick="activarNotifProgramadas()">✅ Activar notificaciones</button>
+          <button class="btn gris" onclick="probarNotificacion()">🧪 Probar (5 seg)</button>
+        </div>
+      </div>
+
+      <h3 style="margin:20px 0 12px;font-size:1rem;">🎵 Sonido</h3>
+      <div class="card">
+        <div>
+          <div style="font-weight:700;">Sonido al registrar venta</div>
+          <div style="font-size:0.85rem;color:var(--text-soft);">Reproduce un "cha-ching" al guardar cada venta</div>
+        </div>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+          <input type="checkbox" id="sonido-activo" onchange="toggleSonido(this.checked)" style="width:auto;transform:scale(1.3);">
+          <span>Activo</span>
+        </label>
+      </div>
+
+      <h3 style="margin:20px 0 12px;font-size:1rem;">💾 Backup automático</h3>
+      <div class="card">
+        <div>
+          <div style="font-weight:700;">Copia de seguridad diaria</div>
+          <div style="font-size:0.85rem;color:var(--text-soft);">Se guarda una copia extra en la nube cada día</div>
+        </div>
+        <button class="btn azul pequeno" onclick="forzarBackup()">💾 Respaldar ahora</button>
+      </div>
+
+      <h3 style="margin:20px 0 12px;font-size:1rem;">📱 Modo Offline (PWA)</h3>
+      <div class="card">
+        <div>
+          <div style="font-weight:700;">Funcionar sin internet</div>
+          <div style="font-size:0.85rem;color:var(--text-soft);" id="offline-estado">Estado: verificando...</div>
+        </div>
+        <button class="btn pequeno" onclick="limpiarCache()">🔄 Actualizar app</button>
+      </div>
     </div>
 
     <div class="seccion" id="estadisticas">
@@ -900,6 +1002,8 @@
     <div id="reporte-contenido"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn rojo" onclick="exportarReportePDF()">📄 PDF</button>
+      <button class="btn morado" onclick="compartirReporteImagen()">🖼️ Imagen</button>
       <button class="btn wsp" onclick="compartirReporteWsp()">📤 WhatsApp</button>
       <button class="btn gris" onclick="cerrarModal('modal-reporte')">Cerrar</button>
     </div>
@@ -1038,6 +1142,7 @@ let usuarioId = null;
 let sincronizando = false;
 let abonoActual = { tipo: null, indice: null };
 let fotoAbonoActual = null;
+let fotoVentaActual = null;
 let indiceEditando = null;
 let clienteFotoActual = null;
 let fotoClienteTemp = null;
@@ -1050,6 +1155,8 @@ let modoPin = "verificar";
 let pinNuevo = "";
 let imagenGeneradaActual = null;
 let movimientoTipoActual = "ingreso";
+let swRegistration = null;
+let sonidoActivo = localStorage.getItem("sonidoVenta") === "true";
 
 function formato(n) {
   const num = Math.round(Number(n) || 0);
@@ -1333,6 +1440,7 @@ auth.onAuthStateChanged(async (user) => {
       }, 1000);
     }
     setTimeout(() => { chequearNotificaciones(); pedirPermisoNotif(); actualizarBadgeNotif(); }, 2000);
+    setTimeout(() => { hacerBackupNubeAuto(); }, 5000);
   } else {
     document.getElementById("login-screen").style.display = "flex";
     document.getElementById("app").classList.remove("visible");
@@ -1349,6 +1457,7 @@ document.querySelectorAll("nav button").forEach(btn => {
     if (btn.dataset.tab === "estadisticas") renderCharts();
     if (btn.dataset.tab === "calendario") renderCalendario();
     if (btn.dataset.tab === "ranking") renderRanking();
+    if (btn.dataset.tab === "plantillas") cargarPlantillas();
   });
 });
 
@@ -1442,6 +1551,36 @@ function guardarEdicionDeuda() {
   alert("✅ Deuda actualizada");
 }
 
+function procesarFotoVenta(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const maxW = 600;
+      const scale = Math.min(1, maxW / img.width);
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+      fotoVentaActual = canvas.toDataURL("image/jpeg", 0.7);
+      document.getElementById("venta-foto-preview").innerHTML = `
+        <img src="${fotoVentaActual}" class="foto-preview">
+        <div style="font-size:0.8rem;text-align:center;margin-top:5px;">
+          📸 Foto cargada · <span style="color:#e74c3c;cursor:pointer;" onclick="quitarFotoVenta()">Quitar</span>
+        </div>`;
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function quitarFotoVenta() {
+  fotoVentaActual = null;
+  document.getElementById("venta-foto-preview").innerHTML = "";
+  document.getElementById("venta-foto").value = "";
+}
+
 function registrarVenta() {
   const producto = document.getElementById("v-producto").value.trim();
   const categoria = document.getElementById("v-categoria").value.trim() || "General";
@@ -1456,6 +1595,7 @@ function registrarVenta() {
   datos.ventas.push({
     producto, categoria, costo, precio, tipo, cliente, quincena,
     codigo: codigo || "", metodoPago,
+    foto: fotoVentaActual || null,
     abonos: [], incobrable: false,
     fecha: new Date().toLocaleString("es-CO"),
     fechaISO: new Date().toISOString()
@@ -1468,6 +1608,8 @@ function registrarVenta() {
   document.getElementById("v-precio").value = "";
   document.getElementById("v-cliente").value = "";
   document.getElementById("v-codigo").value = "";
+  quitarFotoVenta();
+  reproducirSonidoVenta();
   renderTodo();
 }
 function eliminarVenta(i) { if (confirm("¿Eliminar?")) { datos.ventas.splice(i,1); guardar(); renderTodo(); } }
@@ -1568,6 +1710,7 @@ function venderDelInventario(i) {
   item.cantidad -= 1;
   if (item.cantidad <= 0) datos.inventario.splice(i,1);
   guardar(); renderTodo();
+  reproducirSonidoVenta();
   alert("✅ Venta registrada");
 }
 function eliminarInventario(i) { if (confirm("¿Eliminar?")) { datos.inventario.splice(i,1); guardar(); renderTodo(); } }
@@ -1653,6 +1796,48 @@ function confirmarAbono() {
     if (confirm("¿Generar recibo del abono?")) mostrarReciboAbono(tipo, indice, nuevoAbono);
   }, 400);
 }
+
+function renderTimelineAbonos(tipo, indice) {
+  const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
+  if (!item || !item.abonos || item.abonos.length === 0) return "";
+
+  const total = item.monto || item.precio;
+  let acumulado = 0;
+
+  let html = '<div style="position:relative;padding-left:30px;margin:16px 0;">';
+  html += '<div style="position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#c9a227,#27ae60);"></div>';
+
+  html += `
+    <div style="position:relative;margin-bottom:16px;">
+      <div style="position:absolute;left:-27px;top:4px;width:12px;height:12px;border-radius:50%;background:#c9a227;border:3px solid white;box-shadow:0 0 0 2px #c9a227;"></div>
+      <div style="font-size:0.75rem;color:var(--text-soft);">Inicio</div>
+      <div style="font-weight:700;">Total: ${formato(total)}</div>
+    </div>
+  `;
+
+  item.abonos.forEach((a, i) => {
+    acumulado += a.monto;
+    const restante = total - acumulado;
+    const iconoMedio = { efectivo: "💵", transferencia: "📱", nequi: "💜", daviplata: "🔴" }[a.metodoPago || "efectivo"] || "💵";
+    const esUltimo = i === item.abonos.length - 1;
+    const colorPunto = esUltimo && restante <= 0.01 ? "#27ae60" : "#2980b9";
+
+    html += `
+      <div style="position:relative;margin-bottom:16px;">
+        <div style="position:absolute;left:-27px;top:4px;width:12px;height:12px;border-radius:50%;background:${colorPunto};border:3px solid white;box-shadow:0 0 0 2px ${colorPunto};"></div>
+        <div style="font-size:0.75rem;color:var(--text-soft);">${a.fecha}</div>
+        <div style="font-weight:800;color:${colorPunto};">${iconoMedio} + ${formato(a.monto)}</div>
+        ${a.nota ? `<div style="font-size:0.8rem;color:var(--text-soft);margin-top:2px;">📝 ${a.nota}</div>` : ""}
+        <div style="font-size:0.8rem;margin-top:4px;">Saldo restante: <b style="color:${restante <= 0.01 ? '#27ae60' : '#e74c3c'};">${formato(restante)}</b></div>
+        ${a.foto ? `<img src="${a.foto}" style="max-width:100px;border-radius:8px;margin-top:6px;cursor:pointer;" onclick="verFotoGrande('${a.foto}')">` : ""}
+      </div>
+    `;
+  });
+
+  html += '</div>';
+  return html;
+}
+
 function verHistorialAbonos(tipo, indice) {
   const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
   if (!item) return;
@@ -1668,7 +1853,19 @@ function verHistorialAbonos(tipo, indice) {
       <div style="color:#27ae60;">Abonado: <b>${formato(abonado)}</b></div>
       <div style="color:#e74c3c;">Saldo: <b>${formato(saldo)}</b></div>
     </div>
-    <h3 style="font-size:1rem;margin-bottom:10px;">Abonos (${abonos.length})</h3>`;
+  `;
+
+  const timelineHTML = renderTimelineAbonos(tipo, indice);
+  if (timelineHTML) {
+    html += `
+      <div style="background:linear-gradient(135deg,#fff9e6,#fff);padding:14px;border-radius:10px;margin-bottom:14px;border:2px solid var(--gold);">
+        <div style="font-weight:800;color:var(--gold-dark);margin-bottom:8px;">📊 Línea de tiempo</div>
+        ${timelineHTML}
+      </div>
+    `;
+  }
+
+  html += `<h3 style="font-size:1rem;margin-bottom:10px;">Lista de abonos (${abonos.length})</h3>`;
   if (abonos.length === 0) html += '<div class="vacio">Sin abonos</div>';
   else {
     html += abonos.slice().reverse().map((a,idx) => {
@@ -2059,47 +2256,81 @@ function compartirClienteWsp(nombre, fiado, deuda) {
   const msg = `👤 *Estado de cuenta: ${nombre}*\n🏪 *Emma Studio*\n\n📦 Saldo fiado: ${formato(fiado)}\n💵 Saldo deuda aparte: ${formato(deuda)}\n━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR: ${formato(fiado + deuda)}*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
+
+const PLANTILLAS_DEFAULT = {
+  normal: `¡Hola {nombre}! 👋\n\nTe recuerdo que tienes un saldo pendiente con *{empresa}*:\n\n📦 Productos fiados: *{fiado}*\n💵 Préstamo aparte: *{deuda}*\n━━━━━━━━━━━━━━\n💰 *TOTAL: {total}*\n\nCuando puedas, te agradezco mucho el pago. ¡Gracias! 🙏`,
+  quincena: `🌸 ¡Hola {nombre}! 🌸\n\n🎉 *¡HOY ES DÍA DE QUINCENA!* 🎉\n💐 Espero que tengas un excelente día de pago\n\nTe recuerdo con mucho cariño tu saldo con *{empresa}*:\n\n🛍️ *Productos fiados:* {fiado}\n💰 *Préstamo aparte:* {deuda}\n━━━━━━━━━━━━━━━\n🌟 *TOTAL A PAGAR: {total}* 🌟\n━━━━━━━━━━━━━━━\n\nCuando puedas, te agradezco el pago 💝\n¡Que tengas un día hermoso! 🌺✨\n\nCon cariño,\n💼 *{empresa}* 🎀`,
+  previa: `🌷 ¡Hola {nombre}! 🌷\n\n🎀 *Mañana es la quincena* 🎀\n💫 Te escribo para recordarte que mañana es día de pago\n\nTu saldo pendiente con *{empresa}* es:\n\n🛍️ *Productos fiados:* {fiado}\n💰 *Préstamo aparte:* {deuda}\n━━━━━━━━━━━━━━━\n💖 *TOTAL: {total}* 💖\n━━━━━━━━━━━━━━━\n\n¡Gracias por tu preferencia! 🌸\n\nCon cariño,\n💼 *{empresa}* ✨`,
+  recibo: `🧾 *RECIBO FIADO*\n🏪 *{empresa}*\n\n👤 Cliente: {nombre}\n📦 Producto: {producto}\n💰 Precio: {precio}\n📅 Cobrar en quincena día {quincena}\n🗓️ Fecha: {fecha}\n━━━━━━━━━━━━━━\n💰 *SALDO: {total}*`
+};
+
+function cargarPlantillas() {
+  const guardadas = JSON.parse(localStorage.getItem("plantillasEmma") || "{}");
+  const p = { ...PLANTILLAS_DEFAULT, ...guardadas };
+  const elN = document.getElementById("plantilla-normal");
+  if (elN) {
+    elN.value = p.normal;
+    document.getElementById("plantilla-quincena").value = p.quincena;
+    document.getElementById("plantilla-previa").value = p.previa;
+    document.getElementById("plantilla-recibo").value = p.recibo;
+  }
+}
+
+function guardarPlantillas() {
+  const p = {
+    normal: document.getElementById("plantilla-normal").value,
+    quincena: document.getElementById("plantilla-quincena").value,
+    previa: document.getElementById("plantilla-previa").value,
+    recibo: document.getElementById("plantilla-recibo").value
+  };
+  localStorage.setItem("plantillasEmma", JSON.stringify(p));
+  alert("✅ Plantillas guardadas");
+}
+
+function restaurarPlantilla(nombre) {
+  if (!confirm("¿Restaurar esta plantilla a la versión original?")) return;
+  document.getElementById("plantilla-" + nombre).value = PLANTILLAS_DEFAULT[nombre];
+}
+
+function restaurarTodasPlantillas() {
+  if (!confirm("¿Restaurar TODAS las plantillas a la versión original?")) return;
+  localStorage.removeItem("plantillasEmma");
+  cargarPlantillas();
+  alert("✅ Plantillas restauradas");
+}
+
+function previewPlantilla(nombre) {
+  const texto = document.getElementById("plantilla-" + nombre).value;
+  const preview = texto
+    .replace(/{nombre}/g, "Juan Pérez")
+    .replace(/{total}/g, "$50.000")
+    .replace(/{fiado}/g, "$30.000")
+    .replace(/{deuda}/g, "$20.000")
+    .replace(/{empresa}/g, "Emma Studio")
+    .replace(/{producto}/g, "Camisa")
+    .replace(/{precio}/g, "$30.000")
+    .replace(/{quincena}/g, "15")
+    .replace(/{fecha}/g, new Date().toLocaleDateString("es-CO"));
+  alert("📱 Vista previa:\n\n" + preview);
+}
+
 function recordarClienteWsp(nombre, fiado, deuda) {
   const total = fiado + deuda;
-  let msg = "";
+  const guardadas = JSON.parse(localStorage.getItem("plantillasEmma") || "{}");
+  const p = { ...PLANTILLAS_DEFAULT, ...guardadas };
 
-  if (esExactoDiaQuincena()) {
-    const emojis = ["🌸", "💖", "✨", "🎀", "💫"];
-    const emojiRandom = emojis[Math.floor(Math.random() * emojis.length)];
-    msg = `${emojiRandom} ¡Hola ${nombre}! ${emojiRandom}\n\n`;
-    msg += `🎉 *¡HOY ES DÍA DE QUINCENA!* 🎉\n`;
-    msg += `💐 Espero que tengas un excelente día de pago\n\n`;
-    msg += `Te recuerdo con mucho cariño que tienes un saldo pendiente con *Emma Studio*:\n\n`;
-    if (fiado > 0) msg += `🛍️ *Productos fiados:* ${formato(fiado)}\n`;
-    if (deuda > 0) msg += `💰 *Préstamo aparte:* ${formato(deuda)}\n`;
-    msg += `━━━━━━━━━━━━━━━\n`;
-    msg += `🌟 *TOTAL A PAGAR: ${formato(total)}* 🌟\n`;
-    msg += `━━━━━━━━━━━━━━━\n\n`;
-    msg += `Cuando puedas, te agradezco mucho el pago 💝\n`;
-    msg += `¡Que tengas un día hermoso! 🌺✨\n\n`;
-    msg += `Con cariño,\n💼 *Emma Studio* 🎀`;
-  } else if (esDiaQuincena()) {
-    const diaQ = new Date().getDate() === 14 ? "15" : "30";
-    msg = `🌷 ¡Hola ${nombre}! 🌷\n\n`;
-    msg += `🎀 *Mañana es la quincena (día ${diaQ})* 🎀\n`;
-    msg += `💫 Te escribo para recordarte que mañana es día de pago\n\n`;
-    msg += `Tu saldo pendiente con *Emma Studio* es:\n\n`;
-    if (fiado > 0) msg += `🛍️ *Productos fiados:* ${formato(fiado)}\n`;
-    if (deuda > 0) msg += `💰 *Préstamo aparte:* ${formato(deuda)}\n`;
-    msg += `━━━━━━━━━━━━━━━\n`;
-    msg += `💖 *TOTAL: ${formato(total)}* 💖\n`;
-    msg += `━━━━━━━━━━━━━━━\n\n`;
-    msg += `¡Gracias por tu preferencia! 🌸\n\n`;
-    msg += `Con cariño,\n💼 *Emma Studio* ✨`;
-  } else {
-    msg = `¡Hola ${nombre}! 👋\n\n`;
-    msg += `Te recuerdo que tienes un saldo pendiente con *Emma Studio*:\n\n`;
-    if (fiado > 0) msg += `📦 Productos fiados: *${formato(fiado)}*\n`;
-    if (deuda > 0) msg += `💵 Préstamo aparte: *${formato(deuda)}*\n`;
-    msg += `━━━━━━━━━━━━━━\n`;
-    msg += `💰 *TOTAL: ${formato(total)}*\n\n`;
-    msg += `Cuando puedas, te agradezco mucho el pago. ¡Gracias! 🙏`;
-  }
+  let plantilla;
+  if (esExactoDiaQuincena()) plantilla = p.quincena;
+  else if (esDiaQuincena()) plantilla = p.previa;
+  else plantilla = p.normal;
+
+  const msg = plantilla
+    .replace(/{nombre}/g, nombre)
+    .replace(/{total}/g, formato(total))
+    .replace(/{fiado}/g, formato(fiado))
+    .replace(/{deuda}/g, formato(deuda))
+    .replace(/{empresa}/g, "Emma Studio");
+
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
@@ -2230,6 +2461,70 @@ function renderAviso() {
           <div style="font-size:1.2rem;font-weight:800;">${formato(fiadoQ)}</div></div>
       </div>`;
   }
+}
+
+function renderComparativa() {
+  const el = document.getElementById("comparativa-box");
+  if (!el) return;
+
+  const hoy = new Date();
+  const mesActual = hoy.getMonth();
+  const mesAnterior = mesActual === 0 ? 11 : mesActual - 1;
+  const añoActual = hoy.getFullYear();
+  const añoAnterior = mesActual === 0 ? añoActual - 1 : añoActual;
+
+  const ventasEsteMes = datos.ventas.filter(v => {
+    if (!v.fechaISO) return false;
+    const d = new Date(v.fechaISO);
+    return d.getMonth() === mesActual && d.getFullYear() === añoActual;
+  });
+  const ventasMesAnterior = datos.ventas.filter(v => {
+    if (!v.fechaISO) return false;
+    const d = new Date(v.fechaISO);
+    return d.getMonth() === mesAnterior && d.getFullYear() === añoAnterior;
+  });
+
+  const totalEste = ventasEsteMes.reduce((s,v) => s + v.precio, 0);
+  const totalAnterior = ventasMesAnterior.reduce((s,v) => s + v.precio, 0);
+  const gananciaEste = ventasEsteMes.reduce((s,v) => s + (v.precio - v.costo), 0);
+  const gananciaAnterior = ventasMesAnterior.reduce((s,v) => s + (v.precio - v.costo), 0);
+
+  const diff = totalAnterior > 0 ? ((totalEste - totalAnterior) / totalAnterior) * 100 : 0;
+  const diffGan = gananciaAnterior > 0 ? ((gananciaEste - gananciaAnterior) / gananciaAnterior) * 100 : 0;
+
+  const flecha = diff >= 0 ? "📈" : "📉";
+  const color = diff >= 0 ? "#27ae60" : "#e74c3c";
+  const flechaG = diffGan >= 0 ? "📈" : "📉";
+  const colorG = diffGan >= 0 ? "#27ae60" : "#e74c3c";
+
+  el.innerHTML = `
+    <div class="dashboard-grid">
+      <div class="dash-card ${diff >= 0 ? 'verde' : 'rojo'}">
+        <span class="dc-icono">${flecha}</span>
+        <div class="dc-lbl">Ventas vs mes anterior</div>
+        <div class="dc-val" style="color:${color};">${diff >= 0 ? "+" : ""}${diff.toFixed(1)}%</div>
+        <div class="dc-extra">Este mes: ${formato(totalEste)}<br>Anterior: ${formato(totalAnterior)}</div>
+      </div>
+      <div class="dash-card ${diffGan >= 0 ? 'verde' : 'rojo'}">
+        <span class="dc-icono">${flechaG}</span>
+        <div class="dc-lbl">Ganancia vs mes anterior</div>
+        <div class="dc-val" style="color:${colorG};">${diffGan >= 0 ? "+" : ""}${diffGan.toFixed(1)}%</div>
+        <div class="dc-extra">Este mes: ${formato(gananciaEste)}<br>Anterior: ${formato(gananciaAnterior)}</div>
+      </div>
+      <div class="dash-card dorado">
+        <span class="dc-icono">🛒</span>
+        <div class="dc-lbl">Número de ventas</div>
+        <div class="dc-val">${ventasEsteMes.length}</div>
+        <div class="dc-extra">Mes anterior: ${ventasMesAnterior.length}</div>
+      </div>
+      <div class="dash-card azul">
+        <span class="dc-icono">📊</span>
+        <div class="dc-lbl">Ticket promedio</div>
+        <div class="dc-val">${formato(ventasEsteMes.length > 0 ? totalEste / ventasEsteMes.length : 0)}</div>
+        <div class="dc-extra">Anterior: ${formato(ventasMesAnterior.length > 0 ? totalAnterior / ventasMesAnterior.length : 0)}</div>
+      </div>
+    </div>
+  `;
 }
 
 function renderAlertasInteligentes() {
@@ -2663,9 +2958,8 @@ function compartirReporteWsp() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// EXPORTAR A EXCEL BONITO (.xlsx) CON GRÁFICOS
+// EXCEL CON EXCELJS
 // ═══════════════════════════════════════════════════════════════
-
 const COLOR_DORADO = "FFC9A227";
 const COLOR_DORADO_CLARO = "FFE6C76A";
 const COLOR_NEGRO = "FF1A1A1A";
@@ -2728,8 +3022,6 @@ async function exportarExcelVentas() {
   if (datos.ventas.length === 0) return alert("Sin ventas para exportar");
   const wb = new ExcelJS.Workbook();
   wb.creator = "Emma Studio";
-  wb.created = new Date();
-
   const ws = wb.addWorksheet("Ventas", { views: [{ state: "frozen", ySplit: 4 }] });
   const columnas = [
     { header: "Fecha", width: 22 }, { header: "Producto", width: 28 }, { header: "Categoría", width: 18 },
@@ -2737,13 +3029,11 @@ async function exportarExcelVentas() {
     { header: "Método", width: 14 }, { header: "Costo", width: 15 }, { header: "Precio", width: 15 },
     { header: "Ganancia", width: 15 }, { header: "Abonado", width: 15 }, { header: "Saldo", width: 15 }
   ];
-  agregarTituloHoja(ws, "EMMA STUDIO · Ventas", "Reporte completo de ventas · " + new Date().toLocaleDateString("es-CO"), columnas.map(c=>c.width));
-
+  agregarTituloHoja(ws, "EMMA STUDIO · Ventas", "Reporte completo · " + new Date().toLocaleDateString("es-CO"), columnas.map(c=>c.width));
   const headerRow = ws.getRow(4);
   headerRow.values = columnas.map(c => c.header);
   aplicarEstiloHeader(headerRow);
   columnas.forEach((c, i) => { ws.getColumn(i + 1).width = c.width; });
-
   datos.ventas.forEach((v, idx) => {
     const row = ws.addRow([v.fecha, v.producto, v.categoria || "General", v.cliente, v.tipo === "contado" ? "Contado" : "Fiado", v.quincena || "-", v.metodoPago || "efectivo", v.costo, v.precio, v.precio - v.costo, calcularAbonado(v), calcularSaldo(v)]);
     aplicarEstiloFila(row, idx);
@@ -2758,7 +3048,6 @@ async function exportarExcelVentas() {
     if (v.tipo === "contado") tipoCell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_VERDE } };
     else tipoCell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_NARANJA } };
   });
-
   const totalRow = ws.addRow(["", "", "", "", "", "", "TOTALES", null, null, null, null, null]);
   const ultimaFila = ws.rowCount;
   totalRow.height = 28;
@@ -2776,14 +3065,12 @@ async function exportarExcelVentas() {
   totalRow.getCell(7).alignment = { horizontal: "center", vertical: "middle" };
   ws.autoFilter = { from: "A4", to: "L4" };
 
-  // Hoja resumen
   const ws2 = wb.addWorksheet("Resumen");
-  agregarTituloHoja(ws2, "EMMA STUDIO · Resumen", "Análisis general · " + new Date().toLocaleDateString("es-CO"), [30, 20, 20, 20]);
+  agregarTituloHoja(ws2, "EMMA STUDIO · Resumen", "Análisis general", [30, 20, 20, 20]);
   ws2.getRow(4).height = 8;
   ws2.getCell("A5").value = "📊 INDICADORES GENERALES";
   ws2.getCell("A5").font = { name: "Calibri", size: 14, bold: true, color: { argb: COLOR_DORADO } };
   ws2.mergeCells("A5:D5");
-
   const totalVentas = datos.ventas.reduce((s,v) => s + v.precio, 0);
   const totalContado = datos.ventas.filter(v => v.tipo === "contado").reduce((s,v) => s + v.precio, 0);
   const totalFiado = datos.ventas.filter(v => v.tipo === "quincena").reduce((s,v) => s + v.precio, 0);
@@ -2802,44 +3089,38 @@ async function exportarExcelVentas() {
     row.getCell(2).value = ind[1];
     if (typeof ind[1] === "number") row.getCell(2).numFmt = '"$"#,##0';
     else row.getCell(2).numFmt = "0";
-    row.getCell(1).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_NEGRO } };
+    row.getCell(1).font = { name: "Calibri", size: 11, bold: true };
     row.getCell(1).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_DORADO_CLARO } };
-    row.getCell(1).border = { top: { style: "thin", color: { argb: COLOR_DORADO } }, left: { style: "thin", color: { argb: COLOR_DORADO } }, bottom: { style: "thin", color: { argb: COLOR_DORADO } }, right: { style: "thin", color: { argb: COLOR_DORADO } } };
     row.getCell(2).font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_DORADO } };
-    row.getCell(2).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_BLANCO } };
     row.getCell(2).alignment = { horizontal: "right", vertical: "middle" };
-    row.getCell(2).border = { top: { style: "thin", color: { argb: COLOR_DORADO } }, left: { style: "thin", color: { argb: COLOR_DORADO } }, bottom: { style: "thin", color: { argb: COLOR_DORADO } }, right: { style: "thin", color: { argb: COLOR_DORADO } } };
   });
-
   const catVentas = {};
   datos.ventas.forEach(v => { const c = v.categoria || "General"; catVentas[c] = (catVentas[c] || 0) + v.precio; });
   ws2.getCell("A16").value = "🏆 VENTAS POR CATEGORÍA";
   ws2.getCell("A16").font = { name: "Calibri", size: 14, bold: true, color: { argb: COLOR_DORADO } };
   ws2.mergeCells("A16:D16");
   let rowCat = 17;
-  Object.entries(catVentas).sort((a,b) => b[1] - a[1]).forEach(([cat, val], i) => {
-    const row = ws2.getRow(rowCat + i);
+  Object.entries(catVentas).sort((a,b) => b[1] - a[1]).forEach(([cat, val]) => {
+    const row = ws2.getRow(rowCat);
     row.getCell(1).value = cat;
     row.getCell(2).value = val;
     row.getCell(2).numFmt = '"$"#,##0';
-    row.getCell(1).font = { name: "Calibri", size: 11, color: { argb: COLOR_NEGRO } };
     row.getCell(2).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_DORADO } };
     row.getCell(2).alignment = { horizontal: "right" };
+    rowCat++;
   });
 
-  // Hoja deudores
   const ws3 = wb.addWorksheet("Deudores", { views: [{ state: "frozen", ySplit: 4 }] });
   const columnas3 = [
     { header: "Cliente", width: 25 }, { header: "Concepto", width: 30 }, { header: "Tipo", width: 15 },
     { header: "Total", width: 15 }, { header: "Abonado", width: 15 }, { header: "Saldo", width: 15 },
     { header: "Quincena", width: 10 }, { header: "Fecha", width: 22 }
   ];
-  agregarTituloHoja(ws3, "EMMA STUDIO · Deudores", "Todos los clientes con saldo pendiente · " + new Date().toLocaleDateString("es-CO"), columnas3.map(c=>c.width));
+  agregarTituloHoja(ws3, "EMMA STUDIO · Deudores", "Clientes con saldo pendiente", columnas3.map(c=>c.width));
   const header3 = ws3.getRow(4);
   header3.values = columnas3.map(c => c.header);
   aplicarEstiloHeader(header3);
   columnas3.forEach((c, i) => { ws3.getColumn(i + 1).width = c.width; });
-
   const deudores = [];
   datos.ventas.filter(v => v.tipo === "quincena" && calcularSaldo(v) > 0).forEach(v => {
     deudores.push({ cliente: v.cliente, concepto: v.producto, tipo: "Venta fiada", total: v.precio, abonado: calcularAbonado(v), saldo: calcularSaldo(v), quincena: v.quincena, fecha: v.fecha });
@@ -2851,34 +3132,17 @@ async function exportarExcelVentas() {
   deudores.forEach((d, idx) => {
     const row = ws3.addRow([d.cliente, d.concepto, d.tipo, d.total, d.abonado, d.saldo, d.quincena, d.fecha]);
     aplicarEstiloFila(row, idx);
-    const saldoCell = row.getCell(6);
-    saldoCell.numFmt = '"$"#,##0';
-    saldoCell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
-    saldoCell.alignment = { horizontal: "right" };
+    row.getCell(6).numFmt = '"$"#,##0';
+    row.getCell(6).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
+    row.getCell(6).alignment = { horizontal: "right" };
     row.getCell(4).numFmt = '"$"#,##0';
     row.getCell(4).alignment = { horizontal: "right" };
     row.getCell(5).numFmt = '"$"#,##0';
     row.getCell(5).alignment = { horizontal: "right" };
     row.getCell(5).font = { name: "Calibri", size: 11, color: { argb: COLOR_VERDE } };
-    if (d.tipo === "Venta fiada") row.getCell(3).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_NARANJA } };
-    else row.getCell(3).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
   });
-  const totalDeudaRow = ws3.addRow(["", "", "TOTAL", "", "", null, "", ""]);
-  const ultFilaDeuda = ws3.rowCount;
-  totalDeudaRow.height = 28;
-  totalDeudaRow.getCell(6).value = { formula: `SUM(F5:F${ultFilaDeuda - 1})` };
-  totalDeudaRow.getCell(6).numFmt = '"$"#,##0';
-  totalDeudaRow.getCell(6).font = { name: "Calibri", size: 13, bold: true, color: { argb: COLOR_BLANCO } };
-  totalDeudaRow.getCell(6).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_ROJO } };
-  totalDeudaRow.getCell(6).alignment = { horizontal: "right", vertical: "middle" };
-  totalDeudaRow.getCell(3).font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_BLANCO } };
-  totalDeudaRow.getCell(3).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_ROJO } };
-  totalDeudaRow.getCell(3).alignment = { horizontal: "center", vertical: "middle" };
-  ws3.autoFilter = { from: "A4", to: "H4" };
-
   const buffer = await wb.xlsx.writeBuffer();
-  const fecha = new Date().toISOString().slice(0,10);
-  saveAs(new Blob([buffer]), `Emma-Studio-Ventas-${fecha}.xlsx`);
+  saveAs(new Blob([buffer]), `Emma-Studio-Ventas-${new Date().toISOString().slice(0,10)}.xlsx`);
 }
 
 async function exportarExcelGastos() {
@@ -2887,7 +3151,7 @@ async function exportarExcelGastos() {
   wb.creator = "Emma Studio";
   const ws = wb.addWorksheet("Gastos", { views: [{ state: "frozen", ySplit: 4 }] });
   const columnas = [{ header: "Fecha", width: 22 }, { header: "Descripción", width: 35 }, { header: "Categoría", width: 20 }, { header: "Monto", width: 18 }];
-  agregarTituloHoja(ws, "EMMA STUDIO · Gastos", "Reporte completo de gastos · " + new Date().toLocaleDateString("es-CO"), columnas.map(c=>c.width));
+  agregarTituloHoja(ws, "EMMA STUDIO · Gastos", "Reporte completo", columnas.map(c=>c.width));
   const header = ws.getRow(4);
   header.values = columnas.map(c => c.header);
   aplicarEstiloHeader(header);
@@ -2895,10 +3159,9 @@ async function exportarExcelGastos() {
   datos.gastos.forEach((g, idx) => {
     const row = ws.addRow([g.fecha, g.descripcion, g.categoria, g.monto]);
     aplicarEstiloFila(row, idx);
-    const montoCell = row.getCell(4);
-    montoCell.numFmt = '"$"#,##0';
-    montoCell.font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
-    montoCell.alignment = { horizontal: "right" };
+    row.getCell(4).numFmt = '"$"#,##0';
+    row.getCell(4).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
+    row.getCell(4).alignment = { horizontal: "right" };
   });
   const totalRow = ws.addRow(["", "", "TOTAL", null]);
   const ultFila = ws.rowCount;
@@ -2908,33 +3171,10 @@ async function exportarExcelGastos() {
   totalRow.getCell(4).font = { name: "Calibri", size: 13, bold: true, color: { argb: COLOR_BLANCO } };
   totalRow.getCell(4).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_ROJO } };
   totalRow.getCell(4).alignment = { horizontal: "right", vertical: "middle" };
-  totalRow.getCell(3).font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_BLANCO } };
-  totalRow.getCell(3).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_ROJO } };
-  totalRow.getCell(3).alignment = { horizontal: "center", vertical: "middle" };
   ws.autoFilter = { from: "A4", to: "D4" };
 
-  const ws2 = wb.addWorksheet("Por categoría");
-  agregarTituloHoja(ws2, "EMMA STUDIO · Gastos por categoría", "", [25, 20]);
-  ws2.getCell("A4").value = "Categoría";
-  ws2.getCell("B4").value = "Total";
-  aplicarEstiloHeader(ws2.getRow(4));
-  const catGastos = {};
-  datos.gastos.forEach(g => { const c = g.categoria || "Otros"; catGastos[c] = (catGastos[c] || 0) + g.monto; });
-  let i = 0;
-  Object.entries(catGastos).sort((a,b) => b[1] - a[1]).forEach(([cat, val]) => {
-    const row = ws2.getRow(5 + i);
-    row.getCell(1).value = cat;
-    row.getCell(2).value = val;
-    row.getCell(2).numFmt = '"$"#,##0';
-    aplicarEstiloFila(row, i);
-    row.getCell(2).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
-    row.getCell(2).alignment = { horizontal: "right" };
-    i++;
-  });
-
   const buffer = await wb.xlsx.writeBuffer();
-  const fecha = new Date().toISOString().slice(0,10);
-  saveAs(new Blob([buffer]), `Emma-Studio-Gastos-${fecha}.xlsx`);
+  saveAs(new Blob([buffer]), `Emma-Studio-Gastos-${new Date().toISOString().slice(0,10)}.xlsx`);
 }
 
 async function exportarExcelMovimientos() {
@@ -2946,7 +3186,7 @@ async function exportarExcelMovimientos() {
     { header: "Fecha", width: 22 }, { header: "Tipo", width: 12 }, { header: "Concepto", width: 35 },
     { header: "Categoría", width: 18 }, { header: "Origen", width: 18 }, { header: "Ingreso", width: 15 }, { header: "Egreso", width: 15 }
   ];
-  agregarTituloHoja(ws, "EMMA STUDIO · Movimientos de caja", "Libro completo · " + new Date().toLocaleDateString("es-CO"), columnas.map(c=>c.width));
+  agregarTituloHoja(ws, "EMMA STUDIO · Movimientos", "Libro completo", columnas.map(c=>c.width));
   const header = ws.getRow(4);
   header.values = columnas.map(c => c.header);
   aplicarEstiloHeader(header);
@@ -2961,26 +3201,9 @@ async function exportarExcelMovimientos() {
     row.getCell(7).numFmt = '"$"#,##0';
     row.getCell(7).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
     row.getCell(7).alignment = { horizontal: "right" };
-    if (m.tipo === "ingreso") row.getCell(2).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_VERDE } };
-    else row.getCell(2).font = { name: "Calibri", size: 11, bold: true, color: { argb: COLOR_ROJO } };
   });
-  const totalRow = ws.addRow(["", "", "TOTALES", "", "", null, null]);
-  const ultFila = ws.rowCount;
-  totalRow.height = 28;
-  totalRow.getCell(6).value = { formula: `SUM(F5:F${ultFila - 1})` };
-  totalRow.getCell(6).numFmt = '"$"#,##0';
-  totalRow.getCell(7).value = { formula: `SUM(G5:G${ultFila - 1})` };
-  totalRow.getCell(7).numFmt = '"$"#,##0';
-  [3, 6, 7].forEach(col => {
-    totalRow.getCell(col).font = { name: "Calibri", size: 12, bold: true, color: { argb: COLOR_BLANCO } };
-    totalRow.getCell(col).fill = { type: "pattern", pattern: "solid", fgColor: { argb: COLOR_DORADO } };
-    totalRow.getCell(col).alignment = { horizontal: col === 3 ? "center" : "right", vertical: "middle" };
-  });
-  ws.autoFilter = { from: "A4", to: "G4" };
-
   const buffer = await wb.xlsx.writeBuffer();
-  const fecha = new Date().toISOString().slice(0,10);
-  saveAs(new Blob([buffer]), `Emma-Studio-Movimientos-${fecha}.xlsx`);
+  saveAs(new Blob([buffer]), `Emma-Studio-Movimientos-${new Date().toISOString().slice(0,10)}.xlsx`);
 }
 
 async function exportarCSVVentas() { await exportarExcelVentas(); }
@@ -2988,9 +3211,332 @@ async function exportarCSVGastos() { await exportarExcelGastos(); }
 async function exportarCSVMovimientos() { await exportarExcelMovimientos(); }
 
 // ═══════════════════════════════════════════════════════════════
-// RESTO DE FUNCIONES
+// PDF
 // ═══════════════════════════════════════════════════════════════
+async function exportarReportePDF() {
+  try {
+    mostrarEstadoSync("cargando", "Generando PDF...");
+    if (!window.jspdf) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+    const { jsPDF: JsPDFClass } = window.jspdf;
+    const doc = new JsPDFClass();
+    const hoy = new Date();
+    const nombreMes = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"][hoy.getMonth()];
+    const dorado = [201, 162, 39];
+    const negro = [26, 26, 26];
+    const verde = [39, 174, 96];
+    const rojo = [231, 76, 60];
 
+    doc.setFillColor(...negro);
+    doc.rect(0, 0, 210, 35, "F");
+    doc.setTextColor(...dorado);
+    doc.setFontSize(24);
+    doc.setFont("times", "bold");
+    doc.text("EMMA STUDIO", 105, 18, { align: "center" });
+    doc.setFontSize(10);
+    doc.setTextColor(230, 199, 106);
+    doc.text("Reporte mensual · " + nombreMes + " " + hoy.getFullYear(), 105, 28, { align: "center" });
+
+    let y = 45;
+    doc.setTextColor(...negro);
+
+    const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && new Date(v.fechaISO).getFullYear() === hoy.getFullYear());
+    const gastosMes = datos.gastos.filter(g => g.fechaISO && new Date(g.fechaISO).getMonth() === hoy.getMonth() && new Date(g.fechaISO).getFullYear() === hoy.getFullYear());
+    const abonosMes = todosLosAbonos().filter(a => a.fechaISO && new Date(a.fechaISO).getMonth() === hoy.getMonth() && new Date(a.fechaISO).getFullYear() === hoy.getFullYear());
+
+    const totalVentas = ventasMes.reduce((s,v) => s + v.precio, 0);
+    const gananciaTotal = ventasMes.reduce((s,v) => s + (v.precio - v.costo), 0);
+    const totalGastos = gastosMes.reduce((s,g) => s + g.monto, 0);
+    const totalAbonos = abonosMes.reduce((s,a) => s + a.monto, 0);
+    const balance = gananciaTotal - totalGastos;
+
+    doc.setFillColor(...dorado);
+    doc.roundedRect(15, y, 180, 25, 3, 3, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(11);
+    doc.text("BALANCE DEL MES", 20, y + 8);
+    doc.setFontSize(18);
+    doc.setFont("times", "bold");
+    doc.text(formato(balance), 190, y + 18, { align: "right" });
+    y += 35;
+
+    doc.setTextColor(...negro);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.text("VENTAS", 20, y);
+    y += 7;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.text("Total ventas:", 25, y);
+    doc.text(formato(totalVentas), 190, y, { align: "right" });
+    y += 6;
+    doc.text("Contado:", 25, y);
+    doc.text(formato(ventasMes.filter(v=>v.tipo==="contado").reduce((s,v)=>s+v.precio,0)), 190, y, { align: "right" });
+    y += 6;
+    doc.text("Fiado:", 25, y);
+    doc.text(formato(ventasMes.filter(v=>v.tipo==="quincena").reduce((s,v)=>s+v.precio,0)), 190, y, { align: "right" });
+    y += 6;
+    doc.setTextColor(...verde);
+    doc.text("Ganancia:", 25, y);
+    doc.text(formato(gananciaTotal), 190, y, { align: "right" });
+    y += 12;
+
+    doc.setTextColor(...negro);
+    doc.setFont("helvetica", "bold");
+    doc.text("ABONOS", 20, y);
+    y += 7;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...verde);
+    doc.text("Total abonado:", 25, y);
+    doc.text(formato(totalAbonos), 190, y, { align: "right" });
+    y += 12;
+
+    doc.setTextColor(...negro);
+    doc.setFont("helvetica", "bold");
+    doc.text("GASTOS", 20, y);
+    y += 7;
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...rojo);
+    doc.text("Total gastos:", 25, y);
+    doc.text(formato(totalGastos), 190, y, { align: "right" });
+    y += 12;
+
+    doc.setTextColor(...negro);
+    doc.setFont("helvetica", "bold");
+    doc.text("SITUACIÓN ACTUAL", 20, y);
+    y += 7;
+    doc.setFont("helvetica", "normal");
+    doc.text("Caja disponible:", 25, y);
+    doc.text(formato(calcularCaja()), 190, y, { align: "right" });
+    y += 6;
+    doc.text("Por cobrar (deudas):", 25, y);
+    doc.text(formato(totalSaldoDeudas()), 190, y, { align: "right" });
+    y += 6;
+    doc.text("Fiado Q15:", 25, y);
+    doc.text(formato(totalSaldoFiadoQ("15")), 190, y, { align: "right" });
+    y += 6;
+    doc.text("Fiado Q30:", 25, y);
+    doc.text(formato(totalSaldoFiadoQ("30")), 190, y, { align: "right" });
+    y += 6;
+    doc.text("Valor inventario:", 25, y);
+    doc.text(formato(datos.inventario.reduce((s,i)=>s+(i.costo*i.cantidad),0)), 190, y, { align: "right" });
+    y += 6;
+    doc.text("Capital:", 25, y);
+    doc.text(formato(datos.capital), 190, y, { align: "right" });
+
+    doc.setFillColor(...negro);
+    doc.rect(0, 280, 210, 15, "F");
+    doc.setTextColor(...dorado);
+    doc.setFontSize(8);
+    doc.text("Emma Studio · Generado automáticamente · " + new Date().toLocaleString("es-CO"), 105, 288, { align: "center" });
+
+    doc.save(`Emma-Studio-Reporte-${nombreMes}-${hoy.getFullYear()}.pdf`);
+    mostrarEstadoSync("ok", "PDF generado");
+  } catch (e) {
+    console.error(e);
+    mostrarEstadoSync("error", "Error al generar PDF");
+    alert("Error al generar el PDF.");
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// COMPARTIR REPORTE COMO IMAGEN
+// ═══════════════════════════════════════════════════════════════
+async function compartirReporteImagen() {
+  if (!window._ultimoReporte) return alert("Abre primero el reporte");
+  const r = window._ultimoReporte;
+  const hoy = new Date();
+  const temp = document.createElement("div");
+  temp.style.cssText = "position:fixed;left:-9999px;top:0;width:500px;background:white;padding:0;font-family:'Segoe UI',Arial,sans-serif;color:#1a1a1a;";
+  temp.innerHTML = `
+    <div style="background:linear-gradient(135deg,#1a1a1a,#2c2c2c);padding:24px;text-align:center;">
+      <div style="font-family:Georgia,serif;font-size:2rem;font-weight:900;letter-spacing:3px;color:#c9a227;">EMMA STUDIO</div>
+      <div style="font-size:0.8rem;letter-spacing:5px;color:#e6c76a;font-weight:700;">REPORTE ${r.nombreMes.toUpperCase()} ${r.anioActual}</div>
+    </div>
+    <div style="padding:24px;">
+      <div style="background:linear-gradient(135deg,#c9a227,#a68116);color:white;padding:20px;border-radius:12px;text-align:center;margin-bottom:20px;">
+        <div style="font-size:0.85rem;opacity:0.9;">BALANCE DEL MES</div>
+        <div style="font-size:2.4rem;font-weight:900;font-family:Georgia,serif;margin-top:8px;">${formato(r.balance)}</div>
+        <div style="font-size:0.9rem;margin-top:6px;">${r.balance >= 0 ? "🎉 Mes positivo" : "⚠️ Mes negativo"}</div>
+      </div>
+      <div style="background:#f8f9fb;padding:16px;border-radius:10px;margin-bottom:12px;border-left:4px solid #27ae60;">
+        <div style="font-size:0.75rem;color:#666;text-transform:uppercase;font-weight:700;">💰 Ventas</div>
+        <div style="font-size:1.4rem;font-weight:800;margin-top:4px;">${formato(r.totalVentas)}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div style="background:#e8f5e9;padding:14px;border-radius:10px;">
+          <div style="font-size:0.7rem;color:#2e7d32;text-transform:uppercase;font-weight:700;">📈 Ganancia</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#1b5e20;margin-top:4px;">${formato(r.gananciaTotal)}</div>
+        </div>
+        <div style="background:#ffebee;padding:14px;border-radius:10px;">
+          <div style="font-size:0.7rem;color:#c62828;text-transform:uppercase;font-weight:700;">💸 Gastos</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#b71c1c;margin-top:4px;">${formato(r.totalGastos)}</div>
+        </div>
+      </div>
+      <div style="background:#e3f2fd;padding:14px;border-radius:10px;">
+        <div style="font-size:0.7rem;color:#1565c0;text-transform:uppercase;font-weight:700;">💵 Abonos recibidos</div>
+        <div style="font-size:1.2rem;font-weight:800;color:#0d47a1;margin-top:4px;">${formato(r.totalAbonos)}</div>
+      </div>
+      <div style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px dashed #ddd;font-size:0.75rem;color:#999;">
+        Generado el ${hoy.toLocaleDateString("es-CO")} · Emma Studio
+      </div>
+    </div>
+  `;
+  document.body.appendChild(temp);
+  try {
+    await cargarHtml2Canvas();
+    const canvas = await html2canvas(temp, { backgroundColor: "#ffffff", scale: 2 });
+    const dataUrl = canvas.toDataURL("image/png");
+    imagenGeneradaActual = { dataUrl, nombre: `emma-reporte-${Date.now()}.png` };
+    document.getElementById("imagen-generada").src = dataUrl;
+    document.getElementById("modal-imagen").classList.add("active");
+  } catch (e) { alert("Error: " + e.message); }
+  finally { document.body.removeChild(temp); }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SONIDO
+// ═══════════════════════════════════════════════════════════════
+function toggleSonido(activado) {
+  sonidoActivo = activado;
+  localStorage.setItem("sonidoVenta", activado);
+}
+function reproducirSonidoVenta() {
+  if (!sonidoActivo) return;
+  try {
+    const audio = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
+    audio.volume = 0.4;
+    audio.play().catch(e => console.log("Sonido bloqueado"));
+  } catch (e) {}
+}
+setTimeout(() => {
+  const cb = document.getElementById("sonido-activo");
+  if (cb) cb.checked = sonidoActivo;
+}, 500);
+
+// ═══════════════════════════════════════════════════════════════
+// SERVICE WORKER (MODO OFFLINE)
+// ═══════════════════════════════════════════════════════════════
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(reg => {
+        swRegistration = reg;
+        console.log("✅ Service Worker registrado");
+        const estado = document.getElementById("offline-estado");
+        if (estado) estado.innerHTML = "Estado: <b style='color:#27ae60;'>✅ Activo - funciona sin internet</b>";
+      })
+      .catch(err => {
+        console.log("⚠️ Service Worker no disponible:", err);
+        const estado = document.getElementById("offline-estado");
+        if (estado) estado.innerHTML = "Estado: <b style='color:#e74c3c;'>⚠️ No activo</b>";
+      });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NOTIFICACIONES PROGRAMADAS
+// ═══════════════════════════════════════════════════════════════
+async function activarNotifProgramadas() {
+  if (!("Notification" in window)) return alert("Tu navegador no soporta notificaciones");
+  if (!swRegistration) swRegistration = await navigator.serviceWorker.ready;
+  const perm = await Notification.requestPermission();
+  if (perm !== "granted") return alert("⚠️ Necesitas permitir notificaciones");
+  programarNotificacionesDelMes();
+  localStorage.setItem("notifProgramadas", "true");
+  alert("✅ Notificaciones activadas.\n\nTe avisaré los días 14, 15, 29 y 30.");
+}
+function programarNotificacionesDelMes() {
+  if (!swRegistration) return;
+  const ahora = new Date();
+  const año = ahora.getFullYear();
+  const mes = ahora.getMonth();
+  [14, 15, 29, 30].forEach(dia => {
+    const fecha = new Date(año, mes, dia, 8, 0, 0);
+    if (fecha.getTime() > Date.now()) {
+      const titulo = dia === 15 || dia === 30 ? "🎉 ¡HOY ES DÍA DE QUINCENA!" : "📅 Mañana es la quincena";
+      const cuerpo = dia === 15 || dia === 30
+        ? "Es momento de cobrar. Abre la app para ver tu saldo pendiente 💰"
+        : `Recuerda que mañana es la quincena del día ${dia === 14 ? 15 : 30}. ¡Prepara tus cobros! 💐`;
+      if (swRegistration.active) {
+        swRegistration.active.postMessage({ tipo: "programarNotif", titulo, cuerpo, cuando: fecha.getTime() });
+      }
+    }
+  });
+}
+function probarNotificacion() {
+  if (!("Notification" in window)) return alert("No soportado");
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission().then(p => {
+      if (p === "granted") notificar("✅ Notificaciones funcionando", "Esta es una prueba.");
+    });
+    return;
+  }
+  setTimeout(() => notificar("🧪 Notificación de prueba", "¡Funciona perfectamente! 🎉"), 5000);
+  alert("Espera 5 segundos...");
+}
+setTimeout(() => {
+  if (localStorage.getItem("notifProgramadas") === "true" && "Notification" in window && Notification.permission === "granted") {
+    navigator.serviceWorker.ready.then(reg => { swRegistration = reg; programarNotificacionesDelMes(); });
+  }
+}, 3000);
+
+// ═══════════════════════════════════════════════════════════════
+// BACKUP AUTOMÁTICO A LA NUBE
+// ═══════════════════════════════════════════════════════════════
+async function hacerBackupNube() {
+  if (!usuarioId) return;
+  try {
+    const hoy = new Date().toISOString().slice(0, 10);
+    await db.collection("negocios").doc(usuarioId).collection("backups").doc(hoy).set({
+      datos, fecha: new Date().toISOString(), version: "1.0"
+    });
+    console.log("✅ Backup guardado:", hoy);
+  } catch (e) {
+    console.log("Error backup:", e);
+  }
+}
+async function forzarBackup() {
+  await hacerBackupNube();
+  alert("✅ Respaldo guardado en la nube");
+}
+async function hacerBackupNubeAuto() {
+  if (!usuarioId) return;
+  const hoy = new Date().toISOString().slice(0, 10);
+  const ultimo = localStorage.getItem("ultimoBackup_" + usuarioId);
+  if (ultimo !== hoy) {
+    await hacerBackupNube();
+    localStorage.setItem("ultimoBackup_" + usuarioId, hoy);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LIMPIAR CACHÉ
+// ═══════════════════════════════════════════════════════════════
+async function limpiarCache() {
+  if (!confirm("Se actualizará la app. ¿Continuar?")) return;
+  if ("caches" in window) {
+    const keys = await caches.keys();
+    await Promise.all(keys.map(k => caches.delete(k)));
+  }
+  if ("serviceWorker" in navigator) {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    await Promise.all(regs.map(r => r.unregister()));
+  }
+  alert("✅ Actualizado. La página se recargará.");
+  window.location.reload(true);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RESTO
+// ═══════════════════════════════════════════════════════════════
 function abrirTemas() {
   const actual = localStorage.getItem("temaEmma") || "dorado";
   document.querySelectorAll(".tema-btn").forEach(b => b.classList.toggle("active", b.classList.contains(actual)));
@@ -3052,36 +3598,28 @@ function renderTodo() {
   if (!document.getElementById("r-capital")) return;
   const hoy = new Date();
   const hoyStr = hoy.toLocaleDateString("es-CO");
-
   document.getElementById("r-caja").textContent = formato(calcularCaja());
   document.getElementById("r-cartera").textContent = formato(totalSaldoDeudas() + totalSaldoFiadoQ("15") + totalSaldoFiadoQ("30"));
-
   const ventasHoy = datos.ventas.filter(v => v.fecha && v.fecha.startsWith(hoyStr));
   document.getElementById("dc-ventas-hoy").textContent = formato(ventasHoy.reduce((s,v) => s + v.precio, 0));
   document.getElementById("dc-ventas-hoy-num").textContent = `${ventasHoy.length} ventas`;
-
   const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && new Date(v.fechaISO).getFullYear() === hoy.getFullYear());
   const gananciaMes = ventasMes.reduce((s,v) => s + (v.precio - v.costo), 0);
   document.getElementById("dc-ganancia-mes").textContent = formato(gananciaMes);
-
   const gastosMesList = datos.gastos.filter(g => g.fechaISO && new Date(g.fechaISO).getMonth() === hoy.getMonth() && new Date(g.fechaISO).getFullYear() === hoy.getFullYear());
   const gastosMes = gastosMesList.reduce((s,g) => s + g.monto, 0);
   document.getElementById("dc-gastos-mes").textContent = formato(gastosMes);
   document.getElementById("dc-gastos-num").textContent = `${gastosMesList.length} gastos`;
-
   const abonos = todosLosAbonos();
   const abonosMesList = abonos.filter(a => a.fechaISO && new Date(a.fechaISO).getMonth() === hoy.getMonth() && new Date(a.fechaISO).getFullYear() === hoy.getFullYear());
   const abonadoMes = abonosMesList.reduce((s,a) => s + a.monto, 0);
   document.getElementById("dc-abonos-mes").textContent = formato(abonadoMes);
   document.getElementById("dc-abonos-num").textContent = `${abonosMesList.length} abonos`;
-
   const valorInv = datos.inventario.reduce((s,i) => s + (i.costo * i.cantidad), 0);
   document.getElementById("dc-inventario").textContent = formato(valorInv);
   document.getElementById("dc-inventario-num").textContent = `${datos.inventario.length} productos`;
-
   const clientesConDeuda = agruparClientes().filter(c => c.fiadoPendiente > 0 || c.deudaAparte > 0);
   document.getElementById("dc-clientes").textContent = clientesConDeuda.length;
-
   document.getElementById("r-capital").textContent = formato(datos.capital);
   document.getElementById("r-deudas").textContent = formato(totalSaldoDeudas());
   document.getElementById("r-q15").textContent = formato(totalSaldoFiadoQ("15"));
@@ -3356,6 +3894,7 @@ function renderTodo() {
   renderMetas();
   renderAlertasInteligentes();
   renderProyecciones();
+  renderComparativa();
   actualizarBadgeNotif();
 }
 
@@ -3508,17 +4047,6 @@ function generarIconoSVG() {
 }
 const iconoBase64 = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(generarIconoSVG())));
 document.getElementById("favicon-link").href = iconoBase64;
-const manifest = {
-  name: "Emma Studio", short_name: "Emma Studio",
-  start_url: ".", display: "standalone",
-  background_color: "#1a1a1a", theme_color: "#1a1a1a",
-  icons: [
-    { src: iconoBase64, sizes: "192x192", type: "image/svg+xml", purpose: "any" },
-    { src: iconoBase64, sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
-  ]
-};
-const manifestBlob = new Blob([JSON.stringify(manifest)], {type: "application/manifest+json"});
-document.getElementById("manifest-placeholder").href = URL.createObjectURL(manifestBlob);
 
 let deferredPrompt = null;
 window.addEventListener("beforeinstallprompt", (e) => {
@@ -3549,6 +4077,7 @@ const abonoMonto = document.getElementById("abono-monto");
 if (abonoMonto) abonoMonto.addEventListener("keypress", (e) => { if (e.key === "Enter") confirmarAbono(); });
 
 aplicarTemaGuardado();
+cargarPlantillas();
 </script>
 </body>
 </html>
