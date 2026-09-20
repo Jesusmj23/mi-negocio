@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Negocio</title>
+<meta name="theme-color" content="#667eea">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mi Negocio">
+<link rel="manifest" id="manifest-placeholder">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --bg-grad-1: #667eea;
+    --bg-grad-2: #764ba2;
+    --card-bg: #ffffff;
+    --text: #333;
+    --text-soft: #666;
+    --text-strong: #2c3e50;
+    --border: #e0e0e0;
+    --input-bg: #fff;
+    --input-border: #ddd;
+    --nav-bg: #f4f6f9;
+    --nav-hover: #e8ecf1;
+    --card-item-bg: #f8f9fb;
+    --card-item-border: #eef1f5;
+    --header-bg: #2c3e50;
+  }
+  body.dark {
+    --bg-grad-1: #1a1a2e;
+    --bg-grad-2: #16213e;
+    --card-bg: #1f2233;
+    --text: #e0e0e0;
+    --text-soft: #a0a0a0;
+    --text-strong: #ffffff;
+    --border: #333;
+    --input-bg: #2a2e44;
+    --input-border: #3a3e54;
+    --nav-bg: #252938;
+    --nav-hover: #2f3448;
+    --card-item-bg: #262a3d;
+    --card-item-border: #333750;
+    --header-bg: #0f1420;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+  }
+  .app {
+    max-width: 950px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  header {
+    background: var(--header-bg);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 { font-size: 1.6rem; }
+  header p { font-size: 0.9rem; opacity: 0.8; margin-top: 4px; }
+  .top-actions {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 60%;
+  }
+  .icon-btn {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.2s;
+  }
+  .icon-btn:hover { background: rgba(255,255,255,0.3); }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--nav-bg);
+    border-bottom: 2px solid var(--border);
+  }
+  nav button {
+    flex: 1;
+    min-width: 90px;
+    padding: 12px 6px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-soft);
+    transition: 0.2s;
+    border-bottom: 3px solid transparent;
+  }
+  nav button:hover { background: var(--nav-hover); }
+  nav button.active {
+    color: #667eea;
+    border-bottom-color: #667eea;
+    background: var(--card-bg);
+  }
+
+  .contenido { padding: 24px; }
+  .seccion { display: none; }
+  .seccion.active { display: block; animation: fade 0.3s; }
+  @keyframes fade { from { opacity: 0; transform: translateY(5px);} to {opacity:1;} }
+
+  h2 { margin-bottom: 16px; color: var(--text-strong); font-size: 1.3rem; border-bottom: 2px solid #667eea; padding-bottom: 6px;}
+  h3 { color: var(--text-strong); }
+
+  .campo { margin-bottom: 14px; }
+  label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--text);}
+  input, select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--input-bg);
+    color: var(--text);
+    transition: 0.2s;
+    font-family: inherit;
+  }
+  textarea { resize: vertical; min-height: 60px; }
+  input:focus, select:focus, textarea:focus { border-color: #667eea; outline: none; }
+
+  .btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-right: 8px;
+    margin-top: 4px;
+  }
+  .btn:hover { background: #5568d3; transform: translateY(-1px); }
+  .btn.verde { background: #27ae60; }
+  .btn.verde:hover { background: #219150; }
+  .btn.rojo { background: #e74c3c; }
+  .btn.rojo:hover { background: #c0392b; }
+  .btn.gris { background: #95a5a6; }
+  .btn.gris:hover { background: #7f8c8d; }
+  .btn.azul { background: #2980b9; }
+  .btn.azul:hover { background: #21618c; }
+  .btn.naranja { background: #e67e22; }
+  .btn.naranja:hover { background: #ca6f1e; }
+  .btn.wsp { background: #25D366; }
+  .btn.wsp:hover { background: #128C7E; }
+
+  .fila { display: flex; gap: 12px; flex-wrap: wrap; }
+  .fila > .campo { flex: 1; min-width: 180px; }
+
+  .card {
+    background: var(--card-item-bg);
+    border-left: 4px solid #667eea;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .card .info { flex: 1; min-width: 200px; }
+  .card .titulo { font-weight: 700; color: var(--text-strong); }
+  .card .detalle { font-size: 0.85rem; color: var(--text-soft); margin-top: 3px; }
+  .card .monto { font-weight: 700; color: #27ae60; font-size: 1.1rem; white-space: nowrap;}
+  .card.rojo-l { border-left-color: #e74c3c; }
+  .card.rojo-l .monto { color: #e74c3c; }
+  .card.amarillo-l { border-left-color: #f39c12; }
+  .card.verde-l { border-left-color: #27ae60; }
+  .card .acciones { display: flex; gap: 4px; flex-wrap: wrap; }
+  .card .mini-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 5px 9px;
+    cursor: pointer;
+    font-size: 0.8rem;
+  }
+  .card .mini-btn.azul { background: #2980b9; }
+  .card .mini-btn.gris { background: #95a5a6; }
+  .card .mini-btn.wsp { background: #25D366; }
+  .card .mini-btn.verde { background: #27ae60; }
+
+  .resumen-box {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+  .resumen-box h3 { font-size: 1rem; opacity: 0.9; color: white; }
+  .resumen-box .num { font-size: 1.8rem; font-weight: 700; margin-top: 4px; }
+
+  .grid-resumen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .mini-card {
+    background: var(--card-item-bg);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    border: 2px solid var(--card-item-border);
+  }
+  .mini-card .lbl { font-size: 0.8rem; color: var(--text-soft); font-weight: 600;}
+  .mini-card .val { font-size: 1.3rem; font-weight: 700; color: var(--text-strong); margin-top: 4px; }
+
+  .vacio { text-align: center; color: var(--text-soft); padding: 20px; font-style: italic; }
+
+  .alerta {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    display: none;
+  }
+  .alerta.ok { background: #d4edda; color: #155724; display: block; }
+  .alerta.err { background: #f8d7da; color: #721c24; display: block; }
+
+  .aviso-quincena {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .aviso-quincena .dias { font-size: 1.4rem; font-weight: 800; }
+
+  .chart-container {
+    background: var(--card-item-bg);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 2px solid var(--card-item-border);
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .modal.active { display: flex; }
+  .modal-contenido {
+    background: var(--card-bg);
+    color: var(--text);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 520px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-contenido h3 { margin-bottom: 14px; color: var(--text-strong); }
+  .modal-contenido pre {
+    background: var(--card-item-bg);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    color: var(--text);
+    font-family: 'Courier New', monospace;
+  }
+
+  .recibo {
+    background: white;
+    color: #000;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    border: 2px dashed #999;
+    border-radius: 8px;
+    margin-top: 12px;
+  }
+  .recibo h2 { color: #000; border-bottom: 1px dashed #999; font-size: 1.1rem; }
+
+  .nota-item {
+    background: linear-gradient(135deg, #fff9c4, #ffe082);
+    color: #333;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  body.dark .nota-item { background: linear-gradient(135deg, #4a4000, #6b5d1f); color: #f0e68c; }
+  .nota-item .texto { flex: 1; font-size: 0.95rem; }
+  .nota-item .fecha { font-size: 0.75rem; opacity: 0.7; margin-top: 4px; }
+
+  .cliente-card {
+    background: var(--card-item-bg);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border-left: 4px solid #667eea;
+  }
+  .cliente-card .nombre { font-weight: 700; color: var(--text-strong); font-size: 1.05rem; }
+  .cliente-card .stats { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-soft); margin-top: 6px;}
+  .cliente-card .deuda-actual { color: #e74c3c; font-weight: 700; }
+
+  /* CALENDARIO */
+  .calendario {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .mes-card {
+    background: var(--card-item-bg);
+    border-radius: 8px;
+    padding: 10px;
+    border: 2px solid var(--card-item-border);
+  }
+  .mes-card h4 { font-size: 0.85rem; color: var(--text-strong); text-align: center; margin-bottom: 8px; }
+  .mes-card .dia {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    padding: 3px 6px;
+    border-radius: 4px;
+    margin-bottom: 3px;
+  }
+  .mes-card .dia.pasado { opacity: 0.4; }
+  .mes-card .dia.hoy { background: #667eea; color: white; font-weight: 700; }
+  .mes-card .dia.q15 { background: #27ae60; color: white; }
+  .mes-card .dia.q30 { background: #e67e22; color: white; }
+
+  .categoria-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: #667eea;
+    color: white;
+    margin-left: 6px;
+  }
+
+  .buscador {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 20px;
+    border: 2px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text);
+    margin-bottom: 14px;
+    font-size: 1rem;
+  }
+
+  @media print {
+    body { background: white; padding: 0; color: black; }
+    body.dark { background: white; color: black; }
+    .app { box-shadow: none; }
+    nav, .top-actions, .btn, .icon-btn, header p { display: none !important; }
+    .modal { position: static; background: none; padding: 0; display: block !important; overflow: visible; }
+    .modal-contenido { box-shadow: none; max-width: 100%; max-height: none; color: black; background: white;}
+    header { background: white; color: black; }
+  }
+
+  @media (max-width: 600px) {
+    .calendario { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .contenido { padding: 16px; }
+    header h1 { font-size: 1.3rem; }
+    .top-actions { top: 8px; right: 8px; gap: 4px; max-width: 70%;}
+    .icon-btn { padding: 6px 8px; font-size: 0.85rem;}
+    nav button { font-size: 0.72rem; padding: 10px 4px; min-width: 75px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>💼 Mi Negocio</h1>
+    <p>Control de capital, ventas, fiados y quincenas</p>
+    <div class="top-actions">
+      <button class="icon-btn" title="Instalar app" onclick="instalarPWA()" id="install-btn" style="display:none;">📲</button>
+      <button class="icon-btn" title="Modo oscuro" onclick="toggleDark()" id="dark-btn">🌙</button>
+      <button class="icon-btn" title="Exportar respaldo" onclick="exportar()">⬇️</button>
+      <button class="icon-btn" title="Importar respaldo" onclick="document.getElementById('file-import').click()">⬆️</button>
+      <input type="file" id="file-import" accept=".json" style="display:none" onchange="importar(event)">
+    </div>
+  </header>
+
+  <nav>
+    <button class="active" data-tab="inicio">🏠 Inicio</button>
+    <button data-tab="capital">💰 Capital</button>
+    <button data-tab="deudas">📋 Me deben</button>
+    <button data-tab="ventas">🛒 Ventas</button>
+    <button data-tab="inventario">📦 Inventario</button>
+    <button data-tab="clientes">👥 Clientes</button>
+    <button data-tab="quincena">📅 Quincena</button>
+    <button data-tab="calendario">🗓️ Calendario</button>
+    <button data-tab="resp">🏠 Responsab.</button>
+    <button data-tab="notas">📝 Notas</button>
+    <button data-tab="estadisticas">📊 Estadísticas</button>
+  </nav>
+
+  <div class="contenido">
+
+    <!-- INICIO -->
+    <div class="seccion active" id="inicio">
+      <div id="aviso-quincena"></div>
+      <h2>Resumen general</h2>
+      <div class="resumen-box">
+        <h3>Capital actual</h3>
+        <div class="num" id="r-capital">$0.00</div>
+      </div>
+      <div class="grid-resumen">
+        <div class="mini-card"><div class="lbl">Me deben (aparte)</div><div class="val" id="r-deudas">$0</div></div>
+        <div class="mini-card"><div class="lbl">Fiado Q15</div><div class="val" id="r-q15">$0</div></div>
+        <div class="mini-card"><div class="lbl">Fiado Q30</div><div class="val" id="r-q30">$0</div></div>
+        <div class="mini-card"><div class="lbl">Ganancia pendiente</div><div class="val" id="r-gan">$0</div></div>
+        <div class="mini-card"><div class="lbl">Valor inventario</div><div class="val" id="r-inv">$0</div></div>
+        <div class="mini-card"><div class="lbl">Ventas totales</div><div class="val" id="r-ventas">0</div></div>
+      </div>
+      <h2>Últimas ventas</h2>
+      <div id="ultimas-ventas"><div class="vacio">Aún no hay ventas</div></div>
+    </div>
+
+    <!-- CAPITAL -->
+    <div class="seccion" id="capital">
+      <h2>Configurar capital</h2>
+      <div id="alerta-capital" class="alerta"></div>
+      <div class="campo">
+        <label>Capital actual del negocio ($)</label>
+        <input type="number" id="inp-capital" step="0.01" placeholder="0.00">
+      </div>
+      <button class="btn verde" onclick="guardarCapital()">💾 Guardar capital</button>
+    </div>
+
+    <!-- DEUDAS -->
+    <div class="seccion" id="deudas">
+      <h2>Dinero que me deben (aparte)</h2>
+      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Registra plata que te deben sin relación con productos vendidos.</p>
+      <div class="fila">
+        <div class="campo">
+          <label>Nombre de la persona</label>
+          <input type="text" id="d-nombre" placeholder="Ej: Juan">
+        </div>
+        <div class="campo">
+          <label>Monto ($)</label>
+          <input type="number" id="d-monto" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <div class="campo">
+        <label>Nota (opcional)</label>
+        <input type="text" id="d-nota" placeholder="Ej: préstamo para el arriendo">
+      </div>
+      <button class="btn verde" onclick="agregarDeuda()">➕ Agregar deuda</button>
+      <h2 style="margin-top:24px;">Lista de deudas</h2>
+      <div id="lista-deudas"><div class="vacio">Sin deudas registradas</div></div>
+    </div>
+
+    <!-- VENTAS -->
+    <div class="seccion" id="ventas">
+      <h2>Registrar venta</h2>
+      <div class="fila">
+        <div class="campo">
+          <label>Producto</label>
+          <input type="text" id="v-producto" placeholder="Ej: Camisa">
+        </div>
+        <div class="campo">
+          <label>Categoría</label>
+          <input type="text" id="v-categoria" placeholder="Ej: Ropa" list="lista-categorias">
+          <datalist id="lista-categorias"></datalist>
+        </div>
+      </div>
+      <div class="fila">
+        <div class="campo">
+          <label>Costo ($)</label>
+          <input type="number" id="v-costo" step="0.01" placeholder="0.00">
+        </div>
+        <div class="campo">
+          <label>Precio de venta ($)</label>
+          <input type="number" id="v-precio" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <div class="fila">
+        <div class="campo">
+          <label>Tipo de venta</label>
+          <select id="v-tipo" onchange="toggleQuincena()">
+            <option value="contado">Contado</option>
+            <option value="quincena">Fiado (quincena)</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label>Cliente</label>
+          <input type="text" id="v-cliente" placeholder="Nombre del cliente" list="lista-clientes">
+          <datalist id="lista-clientes"></datalist>
+        </div>
+        <div class="campo" id="campo-quincena" style="display:none;">
+          <label>Cobrar en</label>
+          <select id="v-quincena">
+            <option value="15">Día 15</option>
+            <option value="30">Día 30</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn verde" onclick="registrarVenta()">➕ Registrar venta</button>
+      <h2 style="margin-top:24px;">Historial de ventas</h2>
+      <input type="text" class="buscador" id="buscar-venta" placeholder="🔍 Buscar producto, cliente o categoría..." oninput="renderTodo()">
+      <div id="lista-ventas"><div class="vacio">Sin ventas registradas</div></div>
+    </div>
+
+    <!-- INVENTARIO -->
+    <div class="seccion" id="inventario">
+      <h2>Inventario</h2>
+      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Productos disponibles sin vender (stock). Al venderlos desde aquí se descuentan.</p>
+      <div class="fila">
+        <div class="campo">
+          <label>Producto</label>
+          <input type="text" id="i-producto" placeholder="Ej: Camisa roja">
+        </div>
+        <div class="campo">
+          <label>Categoría</label>
+          <input type="text" id="i-categoria" placeholder="Ej: Ropa" list="lista-categorias">
+        </div>
+      </div>
+      <div class="fila">
+        <div class="campo">
+          <label>Costo unitario ($)</label>
+          <input type="number" id="i-costo" step="0.01" placeholder="0.00">
+        </div>
+        <div class="campo">
+          <label>Precio de venta ($)</label>
+          <input type="number" id="i-precio" step="0.01" placeholder="0.00">
+        </div>
+        <div class="campo">
+          <label>Cantidad</label>
+          <input type="number" id="i-cantidad" step="1" min="1" placeholder="1" value="1">
+        </div>
+      </div>
+      <button class="btn verde" onclick="agregarInventario()">➕ Agregar al inventario</button>
+      <h2 style="margin-top:24px;">Productos en stock</h2>
+      <div id="lista-inventario"><div class="vacio">Sin productos en inventario</div></div>
+    </div>
+
+    <!-- CLIENTES -->
+    <div class="seccion" id="clientes">
+      <h2>Clientes</h2>
+      <input type="text" class="buscador" id="buscar-cliente" placeholder="🔍 Buscar cliente..." oninput="renderTodo()">
+      <div id="lista-clientes-view"><div class="vacio">Aún no hay clientes registrados</div></div>
+    </div>
+
+    <!-- QUINCENA -->
+    <div class="seccion" id="quincena">
+      <h2>Cerrar quincena</h2>
+      <div class="fila">
+        <div class="campo">
+          <label>¿Qué quincena cierras?</label>
+          <select id="q-tipo">
+            <option value="15">Día 15</option>
+            <option value="30">Día 30</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label>Sueldo de la quincena ($)</label>
+          <input type="number" id="q-sueldo" step="0.01" placeholder="0.00">
+        </div>
+        <div class="campo">
+          <label>Descuentos de esa quincena ($)</label>
+          <input type="number" id="q-descuentos" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <button class="btn verde" onclick="cerrarQuincena()">✅ Cerrar quincena</button>
+      <h2 style="margin-top:24px;">Historial de quincenas</h2>
+      <div id="lista-quincenas"><div class="vacio">Sin quincenas cerradas</div></div>
+    </div>
+
+    <!-- CALENDARIO -->
+    <div class="seccion" id="calendario">
+      <h2>Calendario de quincenas <span id="anio-cal" style="font-size:1rem;color:var(--text-soft);"></span></h2>
+      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">
+        🟢 Día 15 · 🟠 Día 30 · 🔵 Hoy
+      </p>
+      <div class="calendario" id="calendario-view"></div>
+    </div>
+
+    <!-- RESPONSABILIDADES -->
+    <div class="seccion" id="resp">
+      <h2>Responsabilidades mensuales</h2>
+      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Estos valores se descuentan al cerrar cada quincena.</p>
+      <div class="fila">
+        <div class="campo">
+          <label>Recibos ($)</label>
+          <input type="number" id="res-recibos" step="0.01" placeholder="0.00">
+        </div>
+        <div class="campo">
+          <label>Comida ($)</label>
+          <input type="number" id="res-comida" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <div class="fila">
+        <div class="campo">
+          <label>Arriendo ($)</label>
+          <input type="number" id="res-arriendo" step="0.01" placeholder="0.00">
+        </div>
+        <div class="campo">
+          <label>Otros ($)</label>
+          <input type="number" id="res-otros" step="0.01" placeholder="0.00">
+        </div>
+      </div>
+      <button class="btn verde" onclick="guardarResp()">💾 Guardar responsabilidades</button>
+    </div>
+
+    <!-- NOTAS -->
+    <div class="seccion" id="notas">
+      <h2>Notas y recordatorios</h2>
+      <div class="campo">
+        <textarea id="n-texto" placeholder="Ej: comprar más mercancía el lunes..."></textarea>
+      </div>
+      <button class="btn verde" onclick="agregarNota()">➕ Agregar nota</button>
+      <h2 style="margin-top:24px;">Mis notas</h2>
+      <div id="lista-notas"><div class="vacio">Sin notas</div></div>
+    </div>
+
+    <!-- ESTADÍSTICAS -->
+    <div class="seccion" id="estadisticas">
+      <h2>Estadísticas</h2>
+      <div class="chart-container">
+        <h3 style="margin-bottom:12px;font-size:1rem;">Ventas: contado vs fiado</h3>
+        <canvas id="chart-tipos" height="200"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3 style="margin-bottom:12px;font-size:1rem;">Ganancia últimos 7 días</h3>
+        <canvas id="chart-ganancia" height="200"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3 style="margin-bottom:12px;font-size:1rem;">Ventas por categoría</h3>
+        <canvas id="chart-categorias" height="200"></canvas>
+      </div>
+      <div class="chart-container">
+        <h3 style="margin-bottom:12px;font-size:1rem;">Historial de quincenas (restante)</h3>
+        <canvas id="chart-quincenas" height="200"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL CIERRE QUINCENA -->
+<div class="modal" id="modal-cierre">
+  <div class="modal-contenido">
+    <h3>🧾 Cierre de quincena</h3>
+    <pre id="modal-contenido-texto"></pre>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn gris" onclick="cerrarModal('modal-cierre')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL RECIBO -->
+<div class="modal" id="modal-recibo">
+  <div class="modal-contenido">
+    <h3>🧾 Recibo de venta fiada</h3>
+    <div class="recibo" id="recibo-contenido"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn wsp" id="btn-wsp-recibo">📤 WhatsApp</button>
+      <button class="btn gris" onclick="cerrarModal('modal-recibo')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CLIENTE DETALLE -->
+<div class="modal" id="modal-cliente">
+  <div class="modal-contenido">
+    <h3>👤 Historial del cliente</h3>
+    <div id="cliente-detalle"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn wsp" id="btn-wsp-cliente">📤 Enviar por WhatsApp</button>
+      <button class="btn gris" onclick="cerrarModal('modal-cliente')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- DATOS ----------
+let datos = JSON.parse(localStorage.getItem("negocio")) || {
+  capital: 0,
+  deudas: [],
+  ventas: [],
+  quincenas: [],
+  notas: [],
+  inventario: [],
+  responsabilidades: { recibos:0, comida:0, arriendo:0, otros:0 }
+};
+if (!datos.notas) datos.notas = [];
+if (!datos.inventario) datos.inventario = [];
+
+let charts = { tipos:null, ganancia:null, categorias:null, quincenas:null };
+let clienteActualWsp = "";
+
+function guardar() { localStorage.setItem("negocio", JSON.stringify(datos)); }
+function formato(n) {
+  return "$" + Number(n || 0).toLocaleString("es-CO", {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+// ---------- MODO OSCURO ----------
+function toggleDark() {
+  document.body.classList.toggle("dark");
+  const dark = document.body.classList.contains("dark");
+  document.getElementById("dark-btn").textContent = dark ? "☀️" : "🌙";
+  localStorage.setItem("modoOscuro", dark);
+  if (document.getElementById("estadisticas").classList.contains("active")) renderCharts();
+}
+if (localStorage.getItem("modoOscuro") === "true") {
+  document.body.classList.add("dark");
+  document.getElementById("dark-btn").textContent = "☀️";
+}
+
+// ---------- NAVEGACIÓN ----------
+document.querySelectorAll("nav button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".seccion").forEach(s => s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+    if (btn.dataset.tab === "estadisticas") renderCharts();
+    if (btn.dataset.tab === "calendario") renderCalendario();
+  });
+});
+
+function toggleQuincena() {
+  const tipo = document.getElementById("v-tipo").value;
+  document.getElementById("campo-quincena").style.display = tipo === "quincena" ? "block" : "none";
+}
+function mostrarAlerta(id, msg, tipo="ok") {
+  const el = document.getElementById(id);
+  el.textContent = msg; el.className = "alerta " + tipo;
+  setTimeout(() => { el.className = "alerta"; }, 2500);
+}
+
+// ---------- CAPITAL ----------
+function guardarCapital() {
+  const v = parseFloat(document.getElementById("inp-capital").value);
+  if (isNaN(v) || v < 0) return mostrarAlerta("alerta-capital","Ingresa un valor válido","err");
+  datos.capital = v; guardar(); renderTodo();
+  mostrarAlerta("alerta-capital","✅ Capital guardado");
+  document.getElementById("inp-capital").value = "";
+}
+
+// ---------- DEUDAS ----------
+function agregarDeuda() {
+  const nombre = document.getElementById("d-nombre").value.trim();
+  const monto = parseFloat(document.getElementById("d-monto").value);
+  const nota = document.getElementById("d-nota").value.trim();
+  if (!nombre || isNaN(monto) || monto <= 0) return alert("Completa nombre y monto válido");
+  datos.deudas.push({nombre, monto, nota});
+  guardar();
+  document.getElementById("d-nombre").value = "";
+  document.getElementById("d-monto").value = "";
+  document.getElementById("d-nota").value = "";
+  renderTodo();
+}
+function eliminarDeuda(i) {
+  if (confirm("¿Eliminar esta deuda?")) { datos.deudas.splice(i,1); guardar(); renderTodo(); }
+}
+
+// ---------- VENTAS ----------
+function registrarVenta() {
+  const producto = document.getElementById("v-producto").value.trim();
+  const categoria = document.getElementById("v-categoria").value.trim() || "General";
+  const costo = parseFloat(document.getElementById("v-costo").value) || 0;
+  const precio = parseFloat(document.getElementById("v-precio").value);
+  const tipo = document.getElementById("v-tipo").value;
+  const cliente = document.getElementById("v-cliente").value.trim() || (tipo==="contado"?"Contado":"Cliente");
+  const quincena = tipo === "quincena" ? document.getElementById("v-quincena").value : "";
+  if (!producto || isNaN(precio)) return alert("Completa producto y precio");
+  datos.ventas.push({
+    producto, categoria, costo, precio, tipo, cliente, quincena,
+    fecha: new Date().toLocaleString("es-CO"),
+    fechaISO: new Date().toISOString()
+  });
+  guardar();
+  document.getElementById("v-producto").value = "";
+  document.getElementById("v-categoria").value = "";
+  document.getElementById("v-costo").value = "";
+  document.getElementById("v-precio").value = "";
+  document.getElementById("v-cliente").value = "";
+  renderTodo();
+}
+function eliminarVenta(i) {
+  if (confirm("¿Eliminar esta venta?")) { datos.ventas.splice(i,1); guardar(); renderTodo(); }
+}
+
+// ---------- INVENTARIO ----------
+function agregarInventario() {
+  const producto = document.getElementById("i-producto").value.trim();
+  const categoria = document.getElementById("i-categoria").value.trim() || "General";
+  const costo = parseFloat(document.getElementById("i-costo").value) || 0;
+  const precio = parseFloat(document.getElementById("i-precio").value) || 0;
+  const cantidad = parseInt(document.getElementById("i-cantidad").value) || 1;
+  if (!producto) return alert("Ingresa el nombre del producto");
+  datos.inventario.push({producto, categoria, costo, precio, cantidad});
+  guardar();
+  document.getElementById("i-producto").value = "";
+  document.getElementById("i-categoria").value = "";
+  document.getElementById("i-costo").value = "";
+  document.getElementById("i-precio").value = "";
+  document.getElementById("i-cantidad").value = "1";
+  renderTodo();
+}
+function venderDelInventario(i) {
+  const item = datos.inventario[i];
+  if (item.cantidad <= 0) return alert("No hay stock");
+  const tipo = confirm("¿Venta de contado?\n\nAceptar = Contado\nCancelar = Fiado a quincena");
+  let cliente = "Contado", quincena = "";
+  if (!tipo) {
+    cliente = prompt("Nombre del cliente:");
+    if (!cliente) return;
+    const q = prompt("¿Quincena? Escribe 15 o 30:", "15");
+    if (q !== "15" && q !== "30") return;
+    quincena = q;
+  }
+  datos.ventas.push({
+    producto: item.producto, categoria: item.categoria,
+    costo: item.costo, precio: item.precio,
+    tipo: tipo ? "contado" : "quincena",
+    cliente, quincena,
+    fecha: new Date().toLocaleString("es-CO"),
+    fechaISO: new Date().toISOString()
+  });
+  item.cantidad -= 1;
+  if (item.cantidad <= 0) datos.inventario.splice(i,1);
+  guardar(); renderTodo();
+  alert("✅ Venta registrada desde inventario");
+}
+function eliminarInventario(i) {
+  if (confirm("¿Eliminar este producto del inventario?")) {
+    datos.inventario.splice(i,1); guardar(); renderTodo();
+  }
+}
+
+// ---------- RESPONSABILIDADES ----------
+function guardarResp() {
+  datos.responsabilidades = {
+    recibos: parseFloat(document.getElementById("res-recibos").value) || 0,
+    comida: parseFloat(document.getElementById("res-comida").value) || 0,
+    arriendo: parseFloat(document.getElementById("res-arriendo").value) || 0,
+    otros: parseFloat(document.getElementById("res-otros").value) || 0
+  };
+  guardar(); renderTodo();
+  alert("✅ Responsabilidades guardadas");
+}
+
+// ---------- NOTAS ----------
+function agregarNota() {
+  const texto = document.getElementById("n-texto").value.trim();
+  if (!texto) return alert("Escribe algo");
+  datos.notas.push({texto, fecha: new Date().toLocaleString("es-CO")});
+  guardar();
+  document.getElementById("n-texto").value = "";
+  renderTodo();
+}
+function eliminarNota(i) { if (confirm("¿Eliminar nota?")) { datos.notas.splice(i,1); guardar(); renderTodo(); } }
+
+// ---------- CERRAR QUINCENA ----------
+function cerrarQuincena() {
+  const q = document.getElementById("q-tipo").value;
+  const sueldo = parseFloat(document.getElementById("q-sueldo").value) || 0;
+  const descuentos = parseFloat(document.getElementById("q-descuentos").value) || 0;
+  const neto = sueldo - descuentos;
+  const ventasQ = datos.ventas.filter(v => v.tipo === "quincena" && v.quincena === q);
+  const cobradoFiado = ventasQ.reduce((s,v) => s + v.precio, 0);
+  const gananciaFiado = ventasQ.reduce((s,v) => s + (v.precio - v.costo), 0);
+  const r = datos.responsabilidades;
+  const totalResp = (r.recibos||0) + (r.comida||0) + (r.arriendo||0) + (r.otros||0);
+  const restante = neto + cobradoFiado - totalResp;
+  const hoy = new Date();
+  const resumen = `📅 CIERRE QUINCENA DÍA ${q}
+Fecha: ${hoy.toLocaleDateString("es-CO")} ${hoy.toLocaleTimeString("es-CO")}
+━━━━━━━━━━━━━━━━━━━━━━━━━
+Sueldo:              ${formato(sueldo)}
+Descuentos:         -${formato(descuentos)}
+─────────────────────────
+Neto quincena:       ${formato(neto)}
+
+Fiados cobrados:     ${formato(cobradoFiado)}
+Ganancia fiados:     ${formato(gananciaFiado)} (informativo)
+
+RESPONSABILIDADES:
+  Recibos:          -${formato(r.recibos)}
+  Comida:           -${formato(r.comida)}
+  Arriendo:         -${formato(r.arriendo)}
+  Otros:            -${formato(r.otros)}
+  Total:            -${formato(totalResp)}
+━━━━━━━━━━━━━━━━━━━━━━━━━
+💰 RESTANTE:         ${formato(restante)}`;
+  if (!confirm(resumen + "\n\n¿Cerrar esta quincena?")) return;
+  datos.quincenas.push({
+    fecha: new Date().toLocaleString("es-CO"),
+    quincena: q, sueldo, descuentos, neto,
+    cobradoFiado, gananciaFiado,
+    responsabilidades: {...r}, totalResp, restante
+  });
+  datos.ventas = datos.ventas.filter(v => !(v.tipo==="quincena" && v.quincena===q));
+  guardar();
+  document.getElementById("q-sueldo").value = "";
+  document.getElementById("q-descuentos").value = "";
+  renderTodo();
+  document.getElementById("modal-contenido-texto").textContent = resumen;
+  document.getElementById("modal-cierre").classList.add("active");
+}
+function cerrarModal(id) { document.getElementById(id).classList.remove("active"); }
+
+// ---------- RECIBO + WSP ----------
+let reciboActual = null;
+function verRecibo(idx) {
+  const v = datos.ventas[idx];
+  if (!v) return;
+  reciboActual = v;
+  document.getElementById("recibo-contenido").innerHTML = `
+    <h2>🧾 RECIBO FIADO</h2>
+    <div style="margin-top:10px;">
+      <div><b>Fecha:</b> ${v.fecha}</div>
+      <div><b>Cliente:</b> ${v.cliente}</div>
+      <div><b>Producto:</b> ${v.producto}</div>
+      <div><b>Categoría:</b> ${v.categoria || "General"}</div>
+      <div><b>Precio:</b> ${formato(v.precio)}</div>
+      <hr style="margin:10px 0;border:none;border-top:1px dashed #999;">
+      <div style="font-size:1.2rem;"><b>COBRAR EN QUINCENA DÍA ${v.quincena}</b></div>
+      <div style="font-size:1.4rem;font-weight:bold;margin-top:8px;">TOTAL: ${formato(v.precio)}</div>
+    </div>
+    <div style="margin-top:14px;font-size:0.8rem;text-align:center;opacity:0.7;">Firma: _______________________</div>
+  `;
+  document.getElementById("btn-wsp-recibo").onclick = () => compartirReciboWsp(v);
+  document.getElementById("modal-recibo").classList.add("active");
+}
+function compartirReciboWsp(v) {
+  const msg = `🧾 *RECIBO FIADO*\n\n` +
+              `👤 Cliente: ${v.cliente}\n` +
+              `📦 Producto: ${v.producto}\n` +
+              `💰 Precio: ${formato(v.precio)}\n` +
+              `📅 Cobrar en quincena día ${v.quincena}\n` +
+              `🗓️ Fecha: ${v.fecha}\n\n` +
+              `¡Gracias por su compra!`;
+  const url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+  window.open(url, "_blank");
+}
+
+// ---------- CLIENTES ----------
+function agruparClientes() {
+  const mapa = {};
+  datos.ventas.forEach((v, idx) => {
+    if (v.tipo !== "quincena") return;
+    if (!mapa[v.cliente]) mapa[v.cliente] = { nombre: v.cliente, fiadoPendiente: 0, totalVendido: 0, compras: 0, ventasIdx: [] };
+    mapa[v.cliente].fiadoPendiente += v.precio;
+    mapa[v.cliente].totalVendido += v.precio;
+    mapa[v.cliente].compras += 1;
+    mapa[v.cliente].ventasIdx.push(idx);
+  });
+  datos.deudas.forEach(d => {
+    if (!mapa[d.nombre]) mapa[d.nombre] = { nombre: d.nombre, fiadoPendiente: 0, totalVendido: 0, compras: 0, ventasIdx: [], deudaAparte: 0 };
+    mapa[d.nombre].deudaAparte = (mapa[d.nombre].deudaAparte || 0) + d.monto;
+  });
+  return Object.values(mapa).sort((a,b) => (b.fiadoPendiente||0) - (a.fiadoPendiente||0));
+}
+function verCliente(nombre) {
+  clienteActualWsp = nombre;
+  const ventasC = datos.ventas.map((v,i)=>({...v, idx:i})).filter(v => v.cliente === nombre);
+  const deudasC = datos.deudas.filter(d => d.nombre === nombre);
+  const totalFiado = ventasC.filter(v=>v.tipo==="quincena").reduce((s,v)=>s+v.precio,0);
+  const totalDeuda = deudasC.reduce((s,d)=>s+d.monto,0);
+  document.getElementById("cliente-detalle").innerHTML = `
+    <h2 style="margin-bottom:10px;border-bottom:2px solid #667eea;padding-bottom:6px;">${nombre}</h2>
+    <div style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:12px;">
+      <div><b>Fiado pendiente:</b> ${formato(totalFiado)}</div>
+      <div><b>Deuda aparte:</b> ${formato(totalDeuda)}</div>
+      <div style="color:#e74c3c;font-weight:700;margin-top:6px;">Total debe: ${formato(totalFiado + totalDeuda)}</div>
+    </div>
+    <h3 style="margin-bottom:8px;font-size:1rem;">Compras fiadas</h3>
+    ${ventasC.filter(v=>v.tipo==="quincena").length === 0 ? '<div class="vacio">Sin fiados</div>' :
+      ventasC.filter(v=>v.tipo==="quincena").map(v=>`
+        <div class="card">
+          <div class="info">
+            <div class="titulo">${v.producto}</div>
+            <div class="detalle">Q${v.quincena} · ${v.fecha}</div>
+          </div>
+          <div class="monto">${formato(v.precio)}</div>
+        </div>`).join("")}
+    <h3 style="margin:12px 0 8px;font-size:1rem;">Deudas aparte</h3>
+    ${deudasC.length === 0 ? '<div class="vacio">Sin deudas aparte</div>' :
+      deudasC.map(d=>`
+        <div class="card rojo-l">
+          <div class="info"><div class="titulo">${d.nota || "Préstamo"}</div></div>
+          <div class="monto">${formato(d.monto)}</div>
+        </div>`).join("")}
+  `;
+  document.getElementById("btn-wsp-cliente").onclick = () => compartirClienteWsp(nombre, totalFiado, totalDeuda);
+  document.getElementById("modal-cliente").classList.add("active");
+}
+function compartirClienteWsp(nombre, fiado, deuda) {
+  const msg = `👤 *Estado de cuenta: ${nombre}*\n\n` +
+              `📦 Fiado pendiente: ${formato(fiado)}\n` +
+              `💵 Deuda aparte: ${formato(deuda)}\n` +
+              `━━━━━━━━━━━━━━\n` +
+              `💰 *TOTAL A PAGAR: ${formato(fiado + deuda)}*`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+// ---------- AVISO PRÓXIMA QUINCENA ----------
+function proximaQuincena() {
+  const hoy = new Date();
+  const dia = hoy.getDate();
+  let objetivo;
+  if (dia < 15) objetivo = new Date(hoy.getFullYear(), hoy.getMonth(), 15);
+  else if (dia < 30) objetivo = new Date(hoy.getFullYear(), hoy.getMonth(), 30);
+  else objetivo = new Date(hoy.getFullYear(), hoy.getMonth()+1, 15);
+  const dias = Math.ceil((objetivo - hoy) / (1000*60*60*24));
+  const diaObjetivo = objetivo.getDate();
+  const fiadoQ = datos.ventas.filter(v => v.tipo==="quincena" && v.quincena === String(diaObjetivo))
+                             .reduce((s,v) => s + v.precio, 0);
+  return { dias, diaObjetivo, fiadoQ, fecha: objetivo };
+}
+function renderAviso() {
+  const { dias, diaObjetivo, fiadoQ, fecha } = proximaQuincena();
+  const box = document.getElementById("aviso-quincena");
+  const txtDias = dias === 0 ? "¡HOY!" : (dias === 1 ? "1 día" : `${dias} días`);
+  const colorFondo = dias <= 3 ? "linear-gradient(135deg, #e74c3c, #c0392b)" : "linear-gradient(135deg, #f39c12, #e67e22)";
+  box.innerHTML = `
+    <div class="aviso-quincena" style="background:${colorFondo};">
+      <div>
+        <div style="font-size:0.85rem;opacity:0.9;">Próxima quincena</div>
+        <div style="font-size:1.05rem;">Día ${diaObjetivo} · ${fecha.toLocaleDateString("es-CO", {day:"numeric", month:"long"})}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:0.85rem;opacity:0.9;">Faltan</div>
+        <div class="dias">${txtDias}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:0.85rem;opacity:0.9;">Por cobrar</div>
+        <div style="font-size:1.2rem;font-weight:700;">${formato(fiadoQ)}</div>
+      </div>
+    </div>`;
+}
+
+// ---------- NOTIFICACIONES ----------
+function pedirPermisoNotif() {
+  if (!("Notification" in window)) return;
+  if (Notification.permission === "default") {
+    Notification.requestPermission().then(p => {
+      if (p === "granted") notificar("✅ Notificaciones activadas", "Te avisaré cuando falten 3 días, 1 día o sea el día de la quincena.");
+    });
+  }
+}
+function notificar(titulo, cuerpo) {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+  try {
+    new Notification(titulo, { body: cuerpo, icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%BC%3C/text%3E%3C/svg%3E" });
+  } catch(e) {}
+}
+function chequearNotificaciones() {
+  const { dias, diaObjetivo, fiadoQ } = proximaQuincena();
+  const clave = `notif-${diaObjetivo}-${dias}`;
+  if (localStorage.getItem(clave) === "true") return;
+  if (dias === 3) {
+    notificar(`📅 Faltan 3 días para la quincena (día ${diaObjetivo})`, `Tienes ${formato(fiadoQ)} por cobrar.`);
+    localStorage.setItem(clave, "true");
+  } else if (dias === 1) {
+    notificar(`⏰ ¡Mañana es la quincena!`, `Cobra ${formato(fiadoQ)}.`);
+    localStorage.setItem(clave, "true");
+  } else if (dias === 0) {
+    notificar(`🎉 ¡Hoy es la quincena!`, `Es hora de cobrar ${formato(fiadoQ)}.`);
+    localStorage.setItem(clave, "true");
+  }
+}
+
+// ---------- CALENDARIO ----------
+function renderCalendario() {
+  const anio = new Date().getFullYear();
+  document.getElementById("anio-cal").textContent = anio;
+  const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  const hoy = new Date();
+  let html = "";
+  meses.forEach((mes, idx) => {
+    const q15 = new Date(anio, idx, 15);
+    const q30 = new Date(anio, idx, 30);
+    const q15Pasado = q15 < hoy && !(q15.toDateString() === hoy.toDateString());
+    const q30Pasado = q30 < hoy && !(q30.toDateString() === hoy.toDateString());
+    const esHoy15 = q15.toDateString() === hoy.toDateString();
+    const esHoy30 = q30.toDateString() === hoy.toDateString();
+    html += `<div class="mes-card">
+      <h4>${mes}</h4>
+      <div class="dia q15 ${q15Pasado?'pasado':''} ${esHoy15?'hoy':''}">
+        <span>Día 15</span>
+        <span>${q15.toLocaleDateString("es-CO",{weekday:"short"})}</span>
+      </div>
+      <div class="dia q30 ${q30Pasado?'pasado':''} ${esHoy30?'hoy':''}">
+        <span>Día 30</span>
+        <span>${q30.toLocaleDateString("es-CO",{weekday:"short"})}</span>
+      </div>
+    </div>`;
+  });
+  document.getElementById("calendario-view").innerHTML = html;
+}
+
+// ---------- RENDER ----------
+function renderTodo() {
+  document.getElementById("r-capital").textContent = formato(datos.capital);
+  const totalDeudas = datos.deudas.reduce((s,d)=>s+d.monto,0);
+  document.getElementById("r-deudas").textContent = formato(totalDeudas);
+  const q15 = datos.ventas.filter(v=>v.tipo==="quincena"&&v.quincena==="15").reduce((s,v)=>s+v.precio,0);
+  const q30 = datos.ventas.filter(v=>v.tipo==="quincena"&&v.quincena==="30").reduce((s,v)=>s+v.precio,0);
+  document.getElementById("r-q15").textContent = formato(q15);
+  document.getElementById("r-q30").textContent = formato(q30);
+  const gan = datos.ventas.reduce((s,v)=>s+(v.precio-v.costo),0);
+  document.getElementById("r-gan").textContent = formato(gan);
+  const valorInv = datos.inventario.reduce((s,i)=>s+(i.costo*i.cantidad),0);
+  document.getElementById("r-inv").textContent = formato(valorInv);
+  document.getElementById("r-ventas").textContent = datos.ventas.length;
+
+  // Últimas ventas
+  const ult = document.getElementById("ultimas-ventas");
+  if (datos.ventas.length === 0) ult.innerHTML = '<div class="vacio">Aún no hay ventas</div>';
+  else ult.innerHTML = datos.ventas.slice(-5).reverse().map(v => `
+    <div class="card ${v.tipo==="quincena"?"":"rojo-l"}">
+      <div class="info">
+        <div class="titulo">${v.producto}${v.categoria?`<span class="categoria-tag">${v.categoria}</span>`:""}</div>
+        <div class="detalle">${v.tipo==="contado"?"💵 Contado":`⏳ Fiado Q${v.quincena} - ${v.cliente}`} · ${v.fecha}</div>
+      </div>
+      <div class="monto">${formato(v.precio)}</div>
+    </div>`).join("");
+
+  // Deudas
+  const ld = document.getElementById("lista-deudas");
+  if (datos.deudas.length === 0) ld.innerHTML = '<div class="vacio">Sin deudas registradas</div>';
+  else ld.innerHTML = datos.deudas.map((d,i)=>`
+    <div class="card rojo-l">
+      <div class="info"><div class="titulo">${d.nombre}</div><div class="detalle">${d.nota || "Sin nota"}</div></div>
+      <div class="monto">${formato(d.monto)}</div>
+      <button class="mini-btn" onclick="eliminarDeuda(${i})">✕</button>
+    </div>`).join("");
+
+  // Ventas (con buscador)
+  const busq = (document.getElementById("buscar-venta")?.value || "").toLowerCase();
+  const lv = document.getElementById("lista-ventas");
+  const ventasFiltradas = datos.ventas.map((v,i)=>({...v, realIdx:i}))
+    .filter(v => !busq || v.producto.toLowerCase().includes(busq) || v.cliente.toLowerCase().includes(busq) || (v.categoria||"").toLowerCase().includes(busq));
+  if (ventasFiltradas.length === 0) lv.innerHTML = '<div class="vacio">Sin ventas</div>';
+  else lv.innerHTML = ventasFiltradas.slice().reverse().map(v=>{
+    const g = v.precio - v.costo;
+    const botonRecibo = v.tipo === "quincena" ? `<button class="mini-btn wsp" onclick="compartirReciboWsp(datos.ventas[${v.realIdx}])" title="WhatsApp">📤</button><button class="mini-btn azul" onclick="verRecibo(${v.realIdx})" title="Ver recibo">🧾</button>` : "";
+    return `
+    <div class="card">
+      <div class="info">
+        <div class="titulo">${v.producto}${v.categoria?`<span class="categoria-tag">${v.categoria}</span>`:""} <span style="color:#27ae60;font-size:0.85rem;">(+${formato(g)})</span></div>
+        <div class="detalle">${v.tipo==="contado"?"💵 Contado":`⏳ Fiado Q${v.quincena} - ${v.cliente}`} · Costo ${formato(v.costo)} · ${v.fecha}</div>
+      </div>
+      <div class="monto">${formato(v.precio)}</div>
+      <div class="acciones">${botonRecibo}<button class="mini-btn" onclick="eliminarVenta(${v.realIdx})">✕</button></div>
+    </div>`;
+  }).join("");
+
+  // Inventario
+  const li = document.getElementById("lista-inventario");
+  if (datos.inventario.length === 0) li.innerHTML = '<div class="vacio">Sin productos en inventario</div>';
+  else li.innerHTML = datos.inventario.map((item,i)=>{
+    const gan = item.precio - item.costo;
+    return `
+    <div class="card verde-l">
+      <div class="info">
+        <div class="titulo">${item.producto}${item.categoria?`<span class="categoria-tag">${item.categoria}</span>`:""}</div>
+        <div class="detalle">Costo ${formato(item.costo)} · Precio ${formato(item.precio)} · Ganancia ${formato(gan)} · <b>Stock: ${item.cantidad}</b></div>
+      </div>
+      <div class="acciones">
+        <button class="mini-btn verde" onclick="venderDelInventario(${i})" title="Vender">💵</button>
+        <button class="mini-btn" onclick="eliminarInventario(${i})" title="Eliminar">✕</button>
+      </div>
+    </div>`;
+  }).join("");
+
+  // Clientes
+  const clientes = agruparClientes();
+  const busqC = (document.getElementById("buscar-cliente")?.value || "").toLowerCase();
+  const filtrados = clientes.filter(c => !busqC || c.nombre.toLowerCase().includes(busqC));
+  const lc = document.getElementById("lista-clientes-view");
+  if (filtrados.length === 0) lc.innerHTML = '<div class="vacio">Sin clientes</div>';
+  else lc.innerHTML = filtrados.map(c=>`
+    <div class="cliente-card">
+      <div class="nombre">👤 ${c.nombre}</div>
+      <div class="stats">
+        <span>Fiado: <b class="deuda-actual">${formato(c.fiadoPendiente||0)}</b></span>
+        ${c.deudaAparte ? `<span>Deuda aparte: <b class="deuda-actual">${formato(c.deudaAparte)}</b></span>` : ""}
+        <span>Compras: ${c.compras||0}</span>
+      </div>
+      <div style="margin-top:8px;">
+        <button class="btn azul" style="padding:8px 14px;font-size:0.85rem;" onclick="verCliente('${c.nombre.replace(/'/g,"\\'")}')">Ver detalle</button>
+        <button class="btn wsp" style="padding:8px 14px;font-size:0.85rem;" onclick="compartirClienteWsp('${c.nombre.replace(/'/g,"\\'")}', ${c.fiadoPendiente||0}, ${c.deudaAparte||0})">📤 WhatsApp</button>
+      </div>
+    </div>`).join("");
+
+  // Datalists
+  const nombresUnicos = [...new Set([
+    ...datos.ventas.filter(v=>v.cliente).map(v=>v.cliente),
+    ...datos.deudas.map(d=>d.nombre)
+  ])].filter(n => n && n !== "Contado" && n !== "Cliente");
+  document.getElementById("lista-clientes").innerHTML = nombresUnicos.map(n=>`<option value="${n}">`).join("");
+  const catsUnicas = [...new Set([
+    ...datos.ventas.map(v=>v.categoria).filter(Boolean),
+    ...datos.inventario.map(i=>i.categoria).filter(Boolean)
+  ])];
+  document.getElementById("lista-categorias").innerHTML = catsUnicas.map(c=>`<option value="${c}">`).join("");
+
+  // Quincenas
+  const lq = document.getElementById("lista-quincenas");
+  if (datos.quincenas.length === 0) lq.innerHTML = '<div class="vacio">Sin quincenas cerradas</div>';
+  else lq.innerHTML = datos.quincenas.slice().reverse().map(h=>`
+    <div class="card">
+      <div class="info">
+        <div class="titulo">📅 Quincena día ${h.quincena} · ${h.fecha}</div>
+        <div class="detalle">Sueldo ${formato(h.sueldo)} · Desc ${formato(h.descuentos)} · Neto ${formato(h.neto)}<br>Fiados ${formato(h.cobradoFiado)} · Resp ${formato(h.totalResp)}</div>
+      </div>
+      <div class="monto">${formato(h.restante)}</div>
+    </div>`).join("");
+
+  // Notas
+  const ln = document.getElementById("lista-notas");
+  if (datos.notas.length === 0) ln.innerHTML = '<div class="vacio">Sin notas</div>';
+  else ln.innerHTML = datos.notas.slice().reverse().map((n,idx)=>{
+    const realIdx = datos.notas.length - 1 - idx;
+    return `<div class="nota-item">
+      <div class="texto"><div>${n.texto.replace(/</g,"&lt;")}</div><div class="fecha">${n.fecha}</div></div>
+      <button class="mini-btn" onclick="eliminarNota(${realIdx})">✕</button>
+    </div>`;
+  }).join("");
+
+  const r = datos.responsabilidades;
+  document.getElementById("res-recibos").value = r.recibos || "";
+  document.getElementById("res-comida").value = r.comida || "";
+  document.getElementById("res-arriendo").value = r.arriendo || "";
+  document.getElementById("res-otros").value = r.otros || "";
+
+  renderAviso();
+}
+
+// ---------- GRÁFICOS ----------
+function renderCharts() {
+  const textColor = getComputedStyle(document.body).getPropertyValue("--text").trim() || "#333";
+  const gridColor = getComputedStyle(document.body).getPropertyValue("--border").trim() || "#e0e0e0";
+
+  const contado = datos.ventas.filter(v=>v.tipo==="contado").reduce((s,v)=>s+v.precio,0);
+  const fiado = datos.ventas.filter(v=>v.tipo==="quincena").reduce((s,v)=>s+v.precio,0);
+  if (charts.tipos) charts.tipos.destroy();
+  charts.tipos = new Chart(document.getElementById("chart-tipos"), {
+    type: "doughnut",
+    data: { labels: ["Contado", "Fiado"], datasets: [{ data: [contado, fiado], backgroundColor: ["#27ae60", "#e67e22"] }] },
+    options: { responsive: true, plugins: { legend: { labels: { color: textColor } } } }
+  });
+
+  const dias = {};
+  for (let i=6; i>=0; i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    dias[d.toLocaleDateString("es-CO")] = 0;
+  }
+  datos.ventas.forEach(v => {
+    if (!v.fechaISO) return;
+    const f = new Date(v.fechaISO).toLocaleDateString("es-CO");
+    if (f in dias) dias[f] += (v.precio - v.costo);
+  });
+  if (charts.ganancia) charts.ganancia.destroy();
+  charts.ganancia = new Chart(document.getElementById("chart-ganancia"), {
+    type: "bar",
+    data: { labels: Object.keys(dias), datasets: [{ label: "Ganancia", data: Object.values(dias), backgroundColor: "#667eea" }] },
+    options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
+      scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
+  });
+
+  // Categorías
+  const cats = {};
+  datos.ventas.forEach(v => {
+    const c = v.categoria || "General";
+    cats[c] = (cats[c] || 0) + v.precio;
+  });
+  const catLabels = Object.keys(cats);
+  const catVals = Object.values(cats);
+  const colores = ["#667eea","#27ae60","#e67e22","#e74c3c","#9b59b6","#3498db","#f39c12","#1abc9c","#e91e63","#95a5a6"];
+  if (charts.categorias) charts.categorias.destroy();
+  charts.categorias = new Chart(document.getElementById("chart-categorias"), {
+    type: "pie",
+    data: { labels: catLabels.length ? catLabels : ["Sin datos"], datasets: [{ data: catVals.length ? catVals : [1], backgroundColor: colores }] },
+    options: { responsive: true, plugins: { legend: { labels: { color: textColor } } } }
+  });
+
+  const qLabels = datos.quincenas.map((h,i)=>`Q${h.quincena}-${i+1}`);
+  const qVal = datos.quincenas.map(h=>h.restante);
+  if (charts.quincenas) charts.quincenas.destroy();
+  charts.quincenas = new Chart(document.getElementById("chart-quincenas"), {
+    type: "line",
+    data: { labels: qLabels.length ? qLabels : ["Sin datos"],
+      datasets: [{ label: "Restante", data: qVal.length ? qVal : [0], borderColor: "#27ae60", backgroundColor: "rgba(39,174,96,0.2)", fill: true, tension: 0.3 }] },
+    options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
+      scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
+  });
+}
+
+// ---------- EXPORTAR / IMPORTAR ----------
+function exportar() {
+  const blob = new Blob([JSON.stringify(datos, null, 2)], {type: "application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `respaldo-negocio-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+function importar(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const nuevo = JSON.parse(e.target.result);
+      if (!confirm("⚠️ Esto reemplazará todos los datos actuales. ¿Continuar?")) return;
+      datos = nuevo;
+      if (!datos.notas) datos.notas = [];
+      if (!datos.inventario) datos.inventario = [];
+      guardar(); renderTodo();
+      alert("✅ Respaldo importado");
+    } catch (err) { alert("❌ Archivo inválido"); }
+  };
+  reader.readAsText(file);
+  ev.target.value = "";
+}
+
+// ---------- PWA ----------
+let deferredPrompt = null;
+const manifest = {
+  name: "Mi Negocio", short_name: "Mi Negocio", start_url: ".", display: "standalone",
+  background_color: "#667eea", theme_color: "#667eea",
+  icons: [{
+    src: "data:image/svg+xml;base64," + btoa(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="80" fill="#667eea"/><text x="50%" y="55%" font-size="280" text-anchor="middle" dominant-baseline="middle">💼</text></svg>`),
+    sizes: "512x512", type: "image/svg+xml", purpose: "any maskable"
+  }]
+};
+const manifestBlob = new Blob([JSON.stringify(manifest)], {type: "application/manifest+json"});
+document.getElementById("manifest-placeholder").href = URL.createObjectURL(manifestBlob);
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById("install-btn").style.display = "block";
+});
+function instalarPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      document.getElementById("install-btn").style.display = "none";
+    });
+  } else {
+    alert("Para instalar:\n\n📱 Android/Chrome: menú → 'Instalar app' o 'Agregar a pantalla de inicio'\n🍎 iPhone/Safari: botón compartir → 'Agregar a inicio'");
+  }
+}
+window.addEventListener("appinstalled", () => {
+  document.getElementById("install-btn").style.display = "none";
+});
+
+// ---------- INICIO ----------
+renderTodo();
+document.getElementById("inp-capital").value = datos.capital || "";
+setTimeout(() => { chequearNotificaciones(); pedirPermisoNotif(); }, 1500);
+setInterval(chequearNotificaciones, 60 * 60 * 1000);
+</script>
+</body>
+</html>
