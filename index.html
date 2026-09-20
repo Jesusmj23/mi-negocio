@@ -172,6 +172,7 @@
     justify-content: space-between; align-items: center;
     gap: 10px; flex-wrap: wrap;
   }
+  .card.pagada { opacity: 0.6; border-left-color: #27ae60; }
   .card .info { flex: 1; min-width: 200px; }
   .card .titulo { font-weight: 700; color: var(--text-strong); }
   .card .detalle { font-size: 0.85rem; color: var(--text-soft); margin-top: 3px; }
@@ -188,6 +189,42 @@
   .card .mini-btn.azul { background: #2980b9; }
   .card .mini-btn.wsp { background: #25D366; }
   .card .mini-btn.verde { background: #27ae60; }
+  .card .mini-btn.naranja { background: #e67e22; }
+
+  /* BARRA DE ABONO */
+  .abono-info {
+    font-size: 0.8rem;
+    margin-top: 6px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .abono-info .tag {
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+  .abono-info .tag.original { background: #e3f2fd; color: #1565c0; }
+  .abono-info .tag.abonado { background: #e8f5e9; color: #2e7d32; }
+  .abono-info .tag.saldo { background: #ffebee; color: #c62828; }
+  body.dark .abono-info .tag.original { background: #1a3a5c; color: #90caf9; }
+  body.dark .abono-info .tag.abonado { background: #1b4a1e; color: #81c784; }
+  body.dark .abono-info .tag.saldo { background: #5c1a1a; color: #ef9a9a; }
+  .barra-abono {
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 6px;
+    width: 100%;
+  }
+  body.dark .barra-abono { background: #333; }
+  .barra-abono-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #27ae60, #16a085);
+    transition: width 0.4s;
+  }
+
   .resumen-box {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white; padding: 16px;
@@ -252,6 +289,20 @@
     border: 2px dashed #999; border-radius: 8px; margin-top: 12px;
   }
   .recibo h2 { color: #000; border-bottom: 1px dashed #999; font-size: 1.1rem; }
+  .abono-item {
+    background: var(--card-item-bg);
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    border-left: 3px solid #27ae60;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  .abono-item .fecha-abono { font-size: 0.75rem; color: var(--text-soft); }
+  .abono-item .monto-abono { font-weight: 700; color: #27ae60; }
   .nota-item {
     background: linear-gradient(135deg, #fff9c4, #ffe082);
     color: #333; padding: 12px; border-radius: 8px;
@@ -291,6 +342,12 @@
     display: inline-block; padding: 2px 8px;
     border-radius: 12px; font-size: 0.7rem;
     font-weight: 700; background: #667eea;
+    color: white; margin-left: 6px;
+  }
+  .pagada-tag {
+    display: inline-block; padding: 2px 8px;
+    border-radius: 12px; font-size: 0.7rem;
+    font-weight: 700; background: #27ae60;
     color: white; margin-left: 6px;
   }
   .buscador {
@@ -354,7 +411,6 @@
 </head>
 <body>
 
-<!-- PANTALLA DE LOGIN -->
 <div class="login-screen" id="login-screen">
   <div class="login-box">
     <div class="logo">💼</div>
@@ -410,9 +466,9 @@
         <div class="num" id="r-capital">$0.00</div>
       </div>
       <div class="grid-resumen">
-        <div class="mini-card"><div class="lbl">Me deben (aparte)</div><div class="val" id="r-deudas">$0</div></div>
-        <div class="mini-card"><div class="lbl">Fiado Q15</div><div class="val" id="r-q15">$0</div></div>
-        <div class="mini-card"><div class="lbl">Fiado Q30</div><div class="val" id="r-q30">$0</div></div>
+        <div class="mini-card"><div class="lbl">Saldo me deben</div><div class="val rojo" id="r-deudas">$0</div></div>
+        <div class="mini-card"><div class="lbl">Fiado Q15 (saldo)</div><div class="val" id="r-q15">$0</div></div>
+        <div class="mini-card"><div class="lbl">Fiado Q30 (saldo)</div><div class="val" id="r-q30">$0</div></div>
         <div class="mini-card"><div class="lbl">Ganancia pendiente</div><div class="val verde" id="r-gan">$0</div></div>
         <div class="mini-card"><div class="lbl">Gastos del mes</div><div class="val rojo" id="r-gastos">$0</div></div>
         <div class="mini-card"><div class="lbl">Valor inventario</div><div class="val" id="r-inv">$0</div></div>
@@ -437,7 +493,7 @@
 
     <div class="seccion" id="deudas">
       <h2>Dinero que me deben (aparte)</h2>
-      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Plata que te deben sin relación con productos vendidos.</p>
+      <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Plata que te deben sin relación con productos. Puedes abonar parcialmente.</p>
       <div class="fila">
         <div class="campo"><label>Nombre</label><input type="text" id="d-nombre" placeholder="Ej: Juan"></div>
         <div class="campo"><label>Monto ($)</label><input type="number" id="d-monto" step="0.01" placeholder="0.00"></div>
@@ -615,10 +671,40 @@
   </div>
 </div>
 
+<!-- MODAL ABONO -->
+<div class="modal" id="modal-abono">
+  <div class="modal-contenido">
+    <h3>💵 Registrar abono</h3>
+    <div id="abono-info-original" style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:14px;font-size:0.9rem;"></div>
+    <div class="campo">
+      <label>Monto del abono ($)</label>
+      <input type="number" id="abono-monto" step="0.01" placeholder="0.00">
+    </div>
+    <div class="campo">
+      <label>Nota (opcional)</label>
+      <input type="text" id="abono-nota" placeholder="Ej: pago parcial en efectivo">
+    </div>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn verde" onclick="confirmarAbono()">✅ Registrar abono</button>
+      <button class="btn gris" onclick="cerrarModal('modal-abono')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL HISTORIAL DE ABONOS -->
+<div class="modal" id="modal-historial-abonos">
+  <div class="modal-contenido">
+    <h3>📜 Historial de abonos</h3>
+    <div id="historial-abonos-contenido"></div>
+    <div style="margin-top:16px;">
+      <button class="btn gris" onclick="cerrarModal('modal-historial-abonos')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ═══════════════════════════════════════════════════════════════
 // ⚠️⚠️⚠️  PEGA AQUÍ TUS CLAVES DE FIREBASE  ⚠️⚠️⚠️
-// Las encuentras en: Firebase → Configuración del proyecto → Tus apps
 // ═══════════════════════════════════════════════════════════════
 const firebaseConfig = {
   apiKey: "AIzaSyD4io_lQNJCMR_u-xtFWxlXbWsqyHyD24w",
@@ -645,8 +731,31 @@ let usuarioId = null;
 let sincronizando = false;
 let primeraCarga = true;
 
+// Variable para el abono en curso
+let abonoActual = { tipo: null, indice: null };
+
 function formato(n) {
   return "$" + Number(n || 0).toLocaleString("es-CO", {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+// ---------- HELPERS DE ABONOS ----------
+function calcularSaldo(item) {
+  const abonado = (item.abonos || []).reduce((s,a) => s + a.monto, 0);
+  return Math.max(0, item.monto - abonado);
+}
+function calcularAbonado(item) {
+  return (item.abonos || []).reduce((s,a) => s + a.monto, 0);
+}
+function estaPagada(item) {
+  return calcularSaldo(item) <= 0.01;
+}
+function totalSaldoDeudas() {
+  return datos.deudas.reduce((s,d) => s + calcularSaldo(d), 0);
+}
+function totalSaldoFiadoQ(q) {
+  return datos.ventas
+    .filter(v => v.tipo === "quincena" && v.quincena === q)
+    .reduce((s,v) => s + calcularSaldo(v), 0);
 }
 
 function mostrarEstadoSync(estado, msg) {
@@ -767,6 +876,9 @@ async function cargarDatos() {
       if (!datos.gastos) datos.gastos = [];
       if (!datos.metas) datos.metas = { mensual: 0, quincenal: 0 };
       if (!datos.responsabilidades) datos.responsabilidades = { recibos:0, comida:0, arriendo:0, otros:0 };
+      // Asegurar que cada deuda y venta tenga array de abonos
+      datos.deudas.forEach(d => { if (!d.abonos) d.abonos = []; });
+      datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; });
       mostrarEstadoSync("ok", "Datos cargados");
     } else {
       await guardar();
@@ -780,6 +892,8 @@ async function cargarDatos() {
     const backup = localStorage.getItem("negocio_backup_" + usuarioId);
     if (backup) {
       datos = JSON.parse(backup);
+      datos.deudas.forEach(d => { if (!d.abonos) d.abonos = []; });
+      datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; });
       renderTodo();
     }
   }
@@ -795,6 +909,10 @@ function escucharCambios() {
     const nuevoJSON = JSON.stringify(nuevos);
     if (actualJSON !== nuevoJSON) {
       datos = nuevos;
+      if (!datos.deudas) datos.deudas = [];
+      if (!datos.ventas) datos.ventas = [];
+      datos.deudas.forEach(d => { if (!d.abonos) d.abonos = []; });
+      datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; });
       localStorage.setItem("negocio_backup_" + usuarioId, JSON.stringify(datos));
       renderTodo();
       mostrarEstadoSync("ok", "Actualizado");
@@ -853,7 +971,7 @@ function agregarDeuda() {
   const monto = parseFloat(document.getElementById("d-monto").value);
   const nota = document.getElementById("d-nota").value.trim();
   if (!nombre || isNaN(monto) || monto <= 0) return alert("Completa nombre y monto válido");
-  datos.deudas.push({nombre, monto, nota});
+  datos.deudas.push({nombre, monto, nota, abonos: []});
   guardar();
   document.getElementById("d-nombre").value = "";
   document.getElementById("d-monto").value = "";
@@ -875,6 +993,7 @@ function registrarVenta() {
   if (!producto || isNaN(precio)) return alert("Completa producto y precio");
   datos.ventas.push({
     producto, categoria, costo, precio, tipo, cliente, quincena,
+    abonos: [],
     fecha: new Date().toLocaleString("es-CO"),
     fechaISO: new Date().toISOString()
   });
@@ -943,6 +1062,7 @@ function venderDelInventario(i) {
     costo: item.costo, precio: item.precio,
     tipo: tipo ? "contado" : "quincena",
     cliente, quincena,
+    abonos: [],
     fecha: new Date().toLocaleString("es-CO"),
     fechaISO: new Date().toISOString()
   });
@@ -953,6 +1073,107 @@ function venderDelInventario(i) {
 }
 function eliminarInventario(i) {
   if (confirm("¿Eliminar?")) { datos.inventario.splice(i,1); guardar(); renderTodo(); }
+}
+
+// ---------- ABONOS ----------
+function abrirModalAbono(tipo, indice) {
+  const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
+  if (!item) return;
+  abonoActual = { tipo, indice };
+  const saldo = calcularSaldo(item);
+  const abonado = calcularAbonado(item);
+  const total = item.monto || item.precio;
+
+  document.getElementById("abono-info-original").innerHTML = `
+    <div><b>${tipo === "deuda" ? item.nombre : (item.cliente + " - " + item.producto)}</b></div>
+    <div style="margin-top:6px;">
+      <span style="color:var(--text-soft);">Total:</span> <b>${formato(total)}</b> ·
+      <span style="color:#27ae60;">Abonado:</span> <b>${formato(abonado)}</b> ·
+      <span style="color:#e74c3c;">Saldo:</span> <b>${formato(saldo)}</b>
+    </div>
+    ${tipo === "deuda" && item.nota ? `<div style="font-size:0.8rem;color:var(--text-soft);margin-top:6px;">📝 ${item.nota}</div>` : ""}
+  `;
+  document.getElementById("abono-monto").value = saldo.toFixed(2);
+  document.getElementById("abono-monto").max = saldo.toFixed(2);
+  document.getElementById("abono-nota").value = "";
+  document.getElementById("modal-abono").classList.add("active");
+  setTimeout(() => document.getElementById("abono-monto").focus(), 200);
+}
+
+function confirmarAbono() {
+  const { tipo, indice } = abonoActual;
+  if (!tipo || indice === null) return;
+  const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
+  if (!item) return;
+  const monto = parseFloat(document.getElementById("abono-monto").value);
+  const nota = document.getElementById("abono-nota").value.trim();
+  const saldoActual = calcularSaldo(item);
+
+  if (isNaN(monto) || monto <= 0) return alert("Ingresa un monto válido");
+  if (monto > saldoActual + 0.01) {
+    if (!confirm(`El abono (${formato(monto)}) es mayor que el saldo pendiente (${formato(saldoActual)}).\n\n¿Quieres abonar solo ${formato(saldoActual)}?`)) return;
+    monto = saldoActual;
+  }
+
+  if (!item.abonos) item.abonos = [];
+  item.abonos.push({
+    monto: monto,
+    nota: nota,
+    fecha: new Date().toLocaleString("es-CO"),
+    fechaISO: new Date().toISOString()
+  });
+
+  guardar();
+  renderTodo();
+  cerrarModal("modal-abono");
+  mostrarEstadoSync("ok", "Abono registrado");
+}
+
+function verHistorialAbonos(tipo, indice) {
+  const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
+  if (!item) return;
+  const abonos = item.abonos || [];
+  const total = item.monto || item.precio;
+  const abonado = calcularAbonado(item);
+  const saldo = calcularSaldo(item);
+  const titulo = tipo === "deuda" ? item.nombre : (item.cliente + " - " + item.producto);
+
+  let html = `
+    <div style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:14px;">
+      <div style="font-weight:700;margin-bottom:6px;">${titulo}</div>
+      <div>Total: <b>${formato(total)}</b></div>
+      <div style="color:#27ae60;">Abonado: <b>${formato(abonado)}</b></div>
+      <div style="color:#e74c3c;">Saldo: <b>${formato(saldo)}</b></div>
+    </div>
+    <h3 style="font-size:1rem;margin-bottom:10px;">Abonos (${abonos.length})</h3>
+  `;
+  if (abonos.length === 0) {
+    html += '<div class="vacio">Sin abonos</div>';
+  } else {
+    html += abonos.slice().reverse().map((a,i) => `
+      <div class="abono-item">
+        <div>
+          <div class="monto-abono">${formato(a.monto)}</div>
+          <div class="fecha-abono">${a.fecha}</div>
+          ${a.nota ? `<div style="font-size:0.8rem;color:var(--text-soft);margin-top:3px;">📝 ${a.nota}</div>` : ""}
+        </div>
+        <button class="mini-btn" onclick="eliminarAbono('${tipo}', ${indice}, ${abonos.length - 1 - i})" title="Eliminar abono">✕</button>
+      </div>
+    `).join("");
+  }
+  document.getElementById("historial-abonos-contenido").innerHTML = html;
+  document.getElementById("modal-historial-abonos").classList.add("active");
+}
+
+function eliminarAbono(tipo, itemIdx, abonoIdx) {
+  if (!confirm("¿Eliminar este abono?")) return;
+  const item = tipo === "deuda" ? datos.deudas[itemIdx] : datos.ventas[itemIdx];
+  if (!item || !item.abonos) return;
+  item.abonos.splice(abonoIdx, 1);
+  guardar();
+  renderTodo();
+  cerrarModal("modal-historial-abonos");
+  mostrarEstadoSync("ok", "Abono eliminado");
 }
 
 function guardarMetas() {
@@ -991,8 +1212,10 @@ function cerrarQuincena() {
   const descuentos = parseFloat(document.getElementById("q-descuentos").value) || 0;
   const neto = sueldo - descuentos;
   const ventasQ = datos.ventas.filter(v => v.tipo === "quincena" && v.quincena === q);
-  const cobradoFiado = ventasQ.reduce((s,v) => s + v.precio, 0);
-  const gananciaFiado = ventasQ.reduce((s,v) => s + (v.precio - v.costo), 0);
+  // Cobrado fiado: solo lo efectivamente abonado en ventas fiadas pendientes de esta quincena
+  const cobradoFiado = ventasQ.reduce((s,v) => s + calcularAbonado(v), 0);
+  const gananciaFiado = ventasQ.reduce((s,v) => s + ((v.precio - v.costo) * (calcularAbonado(v) / (v.precio || 1))), 0);
+  const saldoPendienteQ = ventasQ.reduce((s,v) => s + calcularSaldo(v), 0);
   const r = datos.responsabilidades;
   const totalResp = (r.recibos||0) + (r.comida||0) + (r.arriendo||0) + (r.otros||0);
   const restante = neto + cobradoFiado - totalResp;
@@ -1005,8 +1228,8 @@ Descuentos:         -${formato(descuentos)}
 ─────────────────────────
 Neto quincena:       ${formato(neto)}
 
-Fiados cobrados:     ${formato(cobradoFiado)}
-Ganancia fiados:     ${formato(gananciaFiado)}
+Fiados cobrados (abonos): ${formato(cobradoFiado)}
+Saldo fiado pendiente Q${q}: ${formato(saldoPendienteQ)}
 
 RESPONSABILIDADES:
   Recibos:          -${formato(r.recibos)}
@@ -1015,7 +1238,9 @@ RESPONSABILIDADES:
   Otros:            -${formato(r.otros)}
   Total:            -${formato(totalResp)}
 ━━━━━━━━━━━━━━━━━━━━━━━━━
-💰 RESTANTE:         ${formato(restante)}`;
+💰 RESTANTE:         ${formato(restante)}
+
+⚠️ NOTA: Las ventas fiadas con saldo pendiente NO se eliminan.`; 
   if (!confirm(resumen + "\n\n¿Cerrar esta quincena?")) return;
   datos.quincenas.push({
     fecha: new Date().toLocaleString("es-CO"),
@@ -1023,7 +1248,13 @@ RESPONSABILIDADES:
     cobradoFiado, gananciaFiado,
     responsabilidades: {...r}, totalResp, restante
   });
-  datos.ventas = datos.ventas.filter(v => !(v.tipo==="quincena" && v.quincena===q));
+  // Ahora sí: solo eliminar ventas fiadas de esta quincena que estén TOTALMENTE pagadas
+  datos.ventas = datos.ventas.filter(v => {
+    if (v.tipo === "quincena" && v.quincena === q && estaPagada(v)) {
+      return false; // estaba pagada, eliminar
+    }
+    return true;
+  });
   guardar();
   document.getElementById("q-sueldo").value = "";
   document.getElementById("q-descuentos").value = "";
@@ -1036,6 +1267,8 @@ function cerrarModal(id) { document.getElementById(id).classList.remove("active"
 function verRecibo(idx) {
   const v = datos.ventas[idx];
   if (!v) return;
+  const abonado = calcularAbonado(v);
+  const saldo = calcularSaldo(v);
   document.getElementById("recibo-contenido").innerHTML = `
     <h2>🧾 RECIBO FIADO</h2>
     <div style="margin-top:10px;">
@@ -1043,9 +1276,11 @@ function verRecibo(idx) {
       <div><b>Cliente:</b> ${v.cliente}</div>
       <div><b>Producto:</b> ${v.producto}</div>
       <div><b>Precio:</b> ${formato(v.precio)}</div>
+      ${abonado > 0 ? `<div style="color:green;"><b>Abonado:</b> ${formato(abonado)}</div>` : ""}
+      ${saldo > 0 ? `<div style="color:red;"><b>Saldo:</b> ${formato(saldo)}</div>` : `<div style="color:green;"><b>✅ PAGADO</b></div>`}
       <hr style="margin:10px 0;border:none;border-top:1px dashed #999;">
       <div style="font-size:1.2rem;"><b>COBRAR EN QUINCENA DÍA ${v.quincena}</b></div>
-      <div style="font-size:1.4rem;font-weight:bold;margin-top:8px;">TOTAL: ${formato(v.precio)}</div>
+      <div style="font-size:1.4rem;font-weight:bold;margin-top:8px;">${saldo > 0 ? `SALDO: ${formato(saldo)}` : "TOTAL: PAGADO ✅"}</div>
     </div>
     <div style="margin-top:14px;font-size:0.8rem;text-align:center;opacity:0.7;">Firma: _______________________</div>
   `;
@@ -1053,12 +1288,18 @@ function verRecibo(idx) {
   document.getElementById("modal-recibo").classList.add("active");
 }
 function compartirReciboWsp(v) {
-  const msg = `🧾 *RECIBO FIADO*\n\n` +
-              `👤 Cliente: ${v.cliente}\n` +
-              `📦 Producto: ${v.producto}\n` +
-              `💰 Precio: ${formato(v.precio)}\n` +
-              `📅 Cobrar en quincena día ${v.quincena}\n` +
-              `🗓️ Fecha: ${v.fecha}\n\n¡Gracias por su compra!`;
+  const abonado = calcularAbonado(v);
+  const saldo = calcularSaldo(v);
+  let msg = `🧾 *RECIBO FIADO*\n\n` +
+            `👤 Cliente: ${v.cliente}\n` +
+            `📦 Producto: ${v.producto}\n` +
+            `💰 Precio: ${formato(v.precio)}\n`;
+  if (abonado > 0) msg += `💵 Abonado: ${formato(abonado)}\n`;
+  msg += `📅 Cobrar en quincena día ${v.quincena}\n`;
+  msg += `🗓️ Fecha: ${v.fecha}\n`;
+  msg += `━━━━━━━━━━━━━━\n`;
+  if (saldo > 0) msg += `💰 *SALDO: ${formato(saldo)}*`;
+  else msg += `✅ *PAGADO COMPLETO*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
@@ -1067,49 +1308,64 @@ function agruparClientes() {
   datos.ventas.forEach((v, idx) => {
     if (v.tipo !== "quincena") return;
     if (!mapa[v.cliente]) mapa[v.cliente] = { nombre: v.cliente, fiadoPendiente: 0, totalVendido: 0, compras: 0, ventasIdx: [] };
-    mapa[v.cliente].fiadoPendiente += v.precio;
+    mapa[v.cliente].fiadoPendiente += calcularSaldo(v);
     mapa[v.cliente].totalVendido += v.precio;
     mapa[v.cliente].compras += 1;
     mapa[v.cliente].ventasIdx.push(idx);
   });
   datos.deudas.forEach(d => {
     if (!mapa[d.nombre]) mapa[d.nombre] = { nombre: d.nombre, fiadoPendiente: 0, totalVendido: 0, compras: 0, ventasIdx: [], deudaAparte: 0 };
-    mapa[d.nombre].deudaAparte = (mapa[d.nombre].deudaAparte || 0) + d.monto;
+    mapa[d.nombre].deudaAparte = (mapa[d.nombre].deudaAparte || 0) + calcularSaldo(d);
   });
   return Object.values(mapa).sort((a,b) => (b.fiadoPendiente||0) - (a.fiadoPendiente||0));
 }
 function verCliente(nombre) {
   const ventasC = datos.ventas.map((v,i)=>({...v, idx:i})).filter(v => v.cliente === nombre);
-  const deudasC = datos.deudas.filter(d => d.nombre === nombre);
-  const totalFiado = ventasC.filter(v=>v.tipo==="quincena").reduce((s,v)=>s+v.precio,0);
-  const totalDeuda = deudasC.reduce((s,d)=>s+d.monto,0);
+  const deudasC = datos.deudas.map((d,i)=>({...d, idx:i})).filter(d => d.nombre === nombre);
+  const totalFiado = ventasC.filter(v=>v.tipo==="quincena").reduce((s,v)=>s+calcularSaldo(v),0);
+  const totalDeuda = deudasC.reduce((s,d)=>s+calcularSaldo(d),0);
   document.getElementById("cliente-detalle").innerHTML = `
     <h2 style="margin-bottom:10px;border-bottom:2px solid #667eea;padding-bottom:6px;">${nombre}</h2>
     <div style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:12px;">
-      <div><b>Fiado:</b> ${formato(totalFiado)}</div>
-      <div><b>Deuda aparte:</b> ${formato(totalDeuda)}</div>
+      <div><b>Saldo fiado:</b> <span style="color:#e74c3c;">${formato(totalFiado)}</span></div>
+      <div><b>Saldo deuda aparte:</b> <span style="color:#e74c3c;">${formato(totalDeuda)}</span></div>
       <div style="color:#e74c3c;font-weight:700;margin-top:6px;">Total debe: ${formato(totalFiado + totalDeuda)}</div>
     </div>
     <h3 style="margin-bottom:8px;font-size:1rem;">Compras fiadas</h3>
     ${ventasC.filter(v=>v.tipo==="quincena").length === 0 ? '<div class="vacio">Sin fiados</div>' :
-      ventasC.filter(v=>v.tipo==="quincena").map(v=>`
-        <div class="card"><div class="info">
-          <div class="titulo">${v.producto}</div>
+      ventasC.filter(v=>v.tipo==="quincena").map(v=>{
+        const saldo = calcularSaldo(v);
+        return `<div class="card ${estaPagada(v)?'pagada':''}"><div class="info">
+          <div class="titulo">${v.producto}${estaPagada(v)?'<span class="pagada-tag">✅ PAGADA</span>':""}</div>
           <div class="detalle">Q${v.quincena} · ${v.fecha}</div>
-        </div><div class="monto">${formato(v.precio)}</div></div>`).join("")}
+          <div class="abono-info">
+            <span class="tag original">Total: ${formato(v.precio)}</span>
+            <span class="tag abonado">Abonado: ${formato(calcularAbonado(v))}</span>
+            ${saldo > 0 ? `<span class="tag saldo">Saldo: ${formato(saldo)}</span>` : ""}
+          </div>
+        </div><div class="monto">${formato(saldo)}</div></div>`;
+      }).join("")}
     <h3 style="margin:12px 0 8px;font-size:1rem;">Deudas aparte</h3>
     ${deudasC.length === 0 ? '<div class="vacio">Sin deudas</div>' :
-      deudasC.map(d=>`
-        <div class="card rojo-l"><div class="info"><div class="titulo">${d.nota || "Préstamo"}</div></div>
-        <div class="monto">${formato(d.monto)}</div></div>`).join("")}
+      deudasC.map(d=>{
+        const saldo = calcularSaldo(d);
+        return `<div class="card rojo-l ${estaPagada(d)?'pagada':''}"><div class="info">
+          <div class="titulo">${d.nota || "Préstamo"}${estaPagada(d)?'<span class="pagada-tag">✅ PAGADA</span>':""}</div>
+          <div class="abono-info">
+            <span class="tag original">Total: ${formato(d.monto)}</span>
+            <span class="tag abonado">Abonado: ${formato(calcularAbonado(d))}</span>
+            ${saldo > 0 ? `<span class="tag saldo">Saldo: ${formato(saldo)}</span>` : ""}
+          </div>
+        </div><div class="monto">${formato(saldo)}</div></div>`;
+      }).join("")}
   `;
   document.getElementById("btn-wsp-cliente").onclick = () => compartirClienteWsp(nombre, totalFiado, totalDeuda);
   document.getElementById("modal-cliente").classList.add("active");
 }
 function compartirClienteWsp(nombre, fiado, deuda) {
   const msg = `👤 *Estado de cuenta: ${nombre}*\n\n` +
-              `📦 Fiado pendiente: ${formato(fiado)}\n` +
-              `💵 Deuda aparte: ${formato(deuda)}\n` +
+              `📦 Saldo fiado: ${formato(fiado)}\n` +
+              `💵 Saldo deuda aparte: ${formato(deuda)}\n` +
               `━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR: ${formato(fiado + deuda)}*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
@@ -1123,8 +1379,9 @@ function proximaQuincena() {
   else objetivo = new Date(hoy.getFullYear(), hoy.getMonth()+1, 15);
   const dias = Math.ceil((objetivo - hoy) / (1000*60*60*24));
   const diaObjetivo = objetivo.getDate();
-  const fiadoQ = datos.ventas.filter(v => v.tipo==="quincena" && v.quincena === String(diaObjetivo))
-                             .reduce((s,v) => s + v.precio, 0);
+  const fiadoQ = datos.ventas
+    .filter(v => v.tipo==="quincena" && v.quincena === String(diaObjetivo))
+    .reduce((s,v) => s + calcularSaldo(v), 0);
   return { dias, diaObjetivo, fiadoQ, fecha: objetivo };
 }
 function renderAviso() {
@@ -1138,7 +1395,7 @@ function renderAviso() {
         <div style="font-size:1.05rem;">Día ${diaObjetivo} · ${fecha.toLocaleDateString("es-CO", {day:"numeric", month:"long"})}</div></div>
       <div style="text-align:right;"><div style="font-size:0.85rem;opacity:0.9;">Faltan</div>
         <div class="dias">${txtDias}</div></div>
-      <div style="text-align:right;"><div style="font-size:0.85rem;opacity:0.9;">Por cobrar</div>
+      <div style="text-align:right;"><div style="font-size:0.85rem;opacity:0.9;">Saldo por cobrar</div>
         <div style="font-size:1.2rem;font-weight:700;">${formato(fiadoQ)}</div></div>
     </div>`;
 }
@@ -1237,12 +1494,10 @@ function renderMetas() {
 
 function renderTodo() {
   document.getElementById("r-capital").textContent = formato(datos.capital);
-  const totalDeudas = datos.deudas.reduce((s,d)=>s+d.monto,0);
+  const totalDeudas = totalSaldoDeudas();
   document.getElementById("r-deudas").textContent = formato(totalDeudas);
-  const q15 = datos.ventas.filter(v=>v.tipo==="quincena"&&v.quincena==="15").reduce((s,v)=>s+v.precio,0);
-  const q30 = datos.ventas.filter(v=>v.tipo==="quincena"&&v.quincena==="30").reduce((s,v)=>s+v.precio,0);
-  document.getElementById("r-q15").textContent = formato(q15);
-  document.getElementById("r-q30").textContent = formato(q30);
+  document.getElementById("r-q15").textContent = formato(totalSaldoFiadoQ("15"));
+  document.getElementById("r-q30").textContent = formato(totalSaldoFiadoQ("30"));
   const gan = datos.ventas.reduce((s,v)=>s+(v.precio-v.costo),0);
   document.getElementById("r-gan").textContent = formato(gan);
   const valorInv = datos.inventario.reduce((s,i)=>s+(i.costo*i.cantidad),0);
@@ -1270,14 +1525,36 @@ function renderTodo() {
       <div class="monto">${formato(v.precio)}</div>
     </div>`).join("");
 
+  // LISTA DE DEUDAS con abonos
   const ld = document.getElementById("lista-deudas");
   if (datos.deudas.length === 0) ld.innerHTML = '<div class="vacio">Sin deudas</div>';
-  else ld.innerHTML = datos.deudas.map((d,i)=>`
-    <div class="card rojo-l"><div class="info"><div class="titulo">${d.nombre}</div>
-      <div class="detalle">${d.nota || "Sin nota"}</div></div>
-      <div class="monto">${formato(d.monto)}</div>
-      <button class="mini-btn" onclick="eliminarDeuda(${i})">✕</button></div>`).join("");
+  else ld.innerHTML = datos.deudas.map((d,i)=>{
+    const saldo = calcularSaldo(d);
+    const abonado = calcularAbonado(d);
+    const pagada = estaPagada(d);
+    const pct = d.monto > 0 ? Math.min(100, (abonado / d.monto) * 100) : 0;
+    return `
+    <div class="card rojo-l ${pagada?'pagada':''}">
+      <div class="info">
+        <div class="titulo">${d.nombre}${pagada?'<span class="pagada-tag">✅ PAGADA</span>':""}</div>
+        <div class="detalle">${d.nota || "Sin nota"}</div>
+        <div class="abono-info">
+          <span class="tag original">Total: ${formato(d.monto)}</span>
+          <span class="tag abonado">Abonado: ${formato(abonado)}</span>
+          ${saldo > 0 ? `<span class="tag saldo">Saldo: ${formato(saldo)}</span>` : ""}
+        </div>
+        <div class="barra-abono"><div class="barra-abono-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="monto">${formato(saldo)}</div>
+      <div class="acciones">
+        ${!pagada ? `<button class="mini-btn verde" onclick="abrirModalAbono('deuda', ${i})" title="Abonar">💵</button>` : ""}
+        <button class="mini-btn azul" onclick="verHistorialAbonos('deuda', ${i})" title="Historial">📜</button>
+        <button class="mini-btn" onclick="eliminarDeuda(${i})">✕</button>
+      </div>
+    </div>`;
+  }).join("");
 
+  // LISTA DE VENTAS con abonos
   const busq = (document.getElementById("buscar-venta")?.value || "").toLowerCase();
   const lv = document.getElementById("lista-ventas");
   const ventasFiltradas = datos.ventas.map((v,i)=>({...v, realIdx:i}))
@@ -1285,14 +1562,36 @@ function renderTodo() {
   if (ventasFiltradas.length === 0) lv.innerHTML = '<div class="vacio">Sin ventas</div>';
   else lv.innerHTML = ventasFiltradas.slice().reverse().map(v=>{
     const g = v.precio - v.costo;
-    const botonRecibo = v.tipo === "quincena" ? `<button class="mini-btn wsp" onclick="compartirReciboWsp(datos.ventas[${v.realIdx}])">📤</button><button class="mini-btn azul" onclick="verRecibo(${v.realIdx})">🧾</button>` : "";
-    return `<div class="card"><div class="info">
-      <div class="titulo">${v.producto}${v.categoria?`<span class="categoria-tag">${v.categoria}</span>`:""} <span style="color:#27ae60;font-size:0.85rem;">(+${formato(g)})</span></div>
-      <div class="detalle">${v.tipo==="contado"?"💵 Contado":`⏳ Fiado Q${v.quincena} - ${v.cliente}`} · ${v.fecha}</div></div>
-      <div class="monto">${formato(v.precio)}</div>
-      <div class="acciones">${botonRecibo}<button class="mini-btn" onclick="eliminarVenta(${v.realIdx})">✕</button></div></div>`;
+    const pagada = v.tipo === "quincena" && estaPagada(v);
+    const abonado = calcularAbonado(v);
+    const saldo = calcularSaldo(v);
+    const pct = v.precio > 0 ? Math.min(100, (abonado / v.precio) * 100) : 0;
+    const botonesFiado = v.tipo === "quincena" ? `
+      ${!pagada ? `<button class="mini-btn verde" onclick="abrirModalAbono('venta', ${v.realIdx})" title="Abonar">💵</button>` : ""}
+      <button class="mini-btn azul" onclick="verHistorialAbonos('venta', ${v.realIdx})" title="Historial">📜</button>
+      <button class="mini-btn wsp" onclick="compartirReciboWsp(datos.ventas[${v.realIdx}])" title="WhatsApp">📤</button>
+      <button class="mini-btn azul" onclick="verRecibo(${v.realIdx})" title="Ver recibo">🧾</button>
+    ` : "";
+    return `
+    <div class="card ${v.tipo==="quincena"?"":"rojo-l"} ${pagada?'pagada':''}">
+      <div class="info">
+        <div class="titulo">${v.producto}${v.categoria?`<span class="categoria-tag">${v.categoria}</span>`:""} ${v.tipo==="contado"?`<span style="color:#27ae60;font-size:0.85rem;">(+${formato(g)})</span>`:""}${pagada?'<span class="pagada-tag">✅ PAGADA</span>':""}</div>
+        <div class="detalle">${v.tipo==="contado"?"💵 Contado":`⏳ Fiado Q${v.quincena} - ${v.cliente}`} · ${v.fecha}</div>
+        ${v.tipo==="quincena" ? `
+          <div class="abono-info">
+            <span class="tag original">Total: ${formato(v.precio)}</span>
+            <span class="tag abonado">Abonado: ${formato(abonado)}</span>
+            ${saldo > 0 ? `<span class="tag saldo">Saldo: ${formato(saldo)}</span>` : ""}
+          </div>
+          <div class="barra-abono"><div class="barra-abono-fill" style="width:${pct}%"></div></div>
+        ` : ""}
+      </div>
+      <div class="monto">${v.tipo==="quincena" ? formato(saldo) : formato(v.precio)}</div>
+      <div class="acciones">${botonesFiado}<button class="mini-btn" onclick="eliminarVenta(${v.realIdx})">✕</button></div>
+    </div>`;
   }).join("");
 
+  // RESTO IGUAL que antes...
   const busqG = (document.getElementById("buscar-gasto")?.value || "").toLowerCase();
   const lg = document.getElementById("lista-gastos");
   const gastosFiltrados = datos.gastos.map((g,i)=>({...g, realIdx:i}))
@@ -1325,7 +1624,7 @@ function renderTodo() {
   else lc.innerHTML = filtrados.map(c=>`
     <div class="cliente-card"><div class="nombre">👤 ${c.nombre}</div>
       <div class="stats">
-        <span>Fiado: <b class="deuda-actual">${formato(c.fiadoPendiente||0)}</b></span>
+        <span>Saldo fiado: <b class="deuda-actual">${formato(c.fiadoPendiente||0)}</b></span>
         ${c.deudaAparte ? `<span>Deuda aparte: <b class="deuda-actual">${formato(c.deudaAparte)}</b></span>` : ""}
         <span>Compras: ${c.compras||0}</span>
       </div>
@@ -1459,6 +1758,8 @@ function importar(ev) {
       if (!datos.inventario) datos.inventario = [];
       if (!datos.gastos) datos.gastos = [];
       if (!datos.metas) datos.metas = { mensual: 0, quincenal: 0 };
+      datos.deudas.forEach(d => { if (!d.abonos) d.abonos = []; });
+      datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; });
       guardar(); renderTodo();
       alert("✅ Respaldo importado");
     } catch (err) { alert("❌ Archivo inválido"); }
@@ -1533,6 +1834,9 @@ document.getElementById("login-pass").addEventListener("keypress", (e) => {
 });
 document.getElementById("login-email").addEventListener("keypress", (e) => {
   if (e.key === "Enter") document.getElementById("login-pass").focus();
+});
+document.getElementById("abono-monto").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") confirmarAbono();
 });
 </script>
 </body>
