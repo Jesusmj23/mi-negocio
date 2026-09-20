@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mi Negocio</title>
-<meta name="theme-color" content="#667eea">
+<title>Emma Studio · Mi Negocio</title>
+<meta name="theme-color" content="#1a1a1a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Mi Negocio">
+<meta name="apple-mobile-web-app-title" content="Emma Studio">
 <link rel="manifest" id="manifest-placeholder">
 <link rel="icon" id="favicon-link">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -16,192 +16,318 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <style>
   :root {
-    --bg-grad-1: #667eea; --bg-grad-2: #764ba2;
-    --card-bg: #ffffff; --text: #333; --text-soft: #666;
-    --text-strong: #2c3e50; --border: #e0e0e0;
-    --input-bg: #fff; --input-border: #ddd;
-    --nav-bg: #f4f6f9; --nav-hover: #e8ecf1;
-    --card-item-bg: #f8f9fb; --card-item-border: #eef1f5;
-    --header-bg: #2c3e50;
+    --gold: #c9a227;
+    --gold-soft: #e6c76a;
+    --gold-dark: #a68116;
+    --dark: #1a1a1a;
+    --dark-soft: #2c2c2c;
+    --dark-med: #3a3a3a;
+    --cream: #f5f0e8;
+    --pink: #e91e63;
+    --pink-soft: #f8bbd0;
+    --green: #27ae60;
+    --red: #e74c3c;
+    --orange: #e67e22;
+    --blue: #2980b9;
+    --purple: #8e44ad;
+
+    --bg: #f8f9fb;
+    --card-bg: #ffffff;
+    --text: #2c2c2c;
+    --text-soft: #777;
+    --text-strong: #1a1a1a;
+    --border: #e8e8e8;
+    --input-bg: #fff;
+    --input-border: #ddd;
+    --nav-bg: #ffffff;
+    --card-item-bg: #fafbfc;
+    --card-item-border: #eef1f5;
+    --header-bg: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
   }
   body.dark {
-    --bg-grad-1: #1a1a2e; --bg-grad-2: #16213e;
-    --card-bg: #1f2233; --text: #e0e0e0; --text-soft: #a0a0a0;
-    --text-strong: #ffffff; --border: #333;
-    --input-bg: #2a2e44; --input-border: #3a3e54;
-    --nav-bg: #252938; --nav-hover: #2f3448;
-    --card-item-bg: #262a3d; --card-item-border: #333750;
-    --header-bg: #0f1420;
+    --bg: #0f0f14;
+    --card-bg: #1a1a1f;
+    --text: #e0e0e0;
+    --text-soft: #9a9a9a;
+    --text-strong: #ffffff;
+    --border: #2a2a30;
+    --input-bg: #22222a;
+    --input-border: #333340;
+    --nav-bg: #15151a;
+    --card-item-bg: #22222a;
+    --card-item-border: #2f2f3a;
+    --header-bg: linear-gradient(135deg, #0a0a0f 0%, #1a1a1f 100%);
+    --shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 100%);
-    min-height: 100vh; padding: 20px; color: var(--text);
+    font-family: 'Segoe UI', -apple-system, Arial, sans-serif;
+    background: var(--bg);
+    min-height: 100vh; padding: 16px; color: var(--text);
     transition: background 0.3s, color 0.3s;
   }
+
+  /* ══════════════ LOGIN PREMIUM ══════════════ */
   .login-screen {
     position: fixed; inset: 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 40%, #c9a227 150%);
     display: flex; justify-content: center; align-items: center;
-    padding: 20px; z-index: 5000;
+    padding: 20px; z-index: 5000; overflow-y: auto;
+  }
+  .login-screen::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(201,162,39,0.15) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(233,30,99,0.1) 0%, transparent 40%);
+    pointer-events: none;
   }
   .login-box {
-    background: white; border-radius: 20px;
-    padding: 40px 30px; max-width: 400px; width: 100%;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    position: relative;
+    background: white; border-radius: 24px;
+    padding: 40px 32px 32px; max-width: 420px; width: 100%;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,162,39,0.2);
     text-align: center;
   }
-  .login-box .logo { font-size: 4rem; margin-bottom: 10px; }
-  .login-box h1 { color: #2c3e50; font-size: 1.5rem; margin-bottom: 6px; }
-  .login-box p { color: #666; font-size: 0.9rem; margin-bottom: 24px; }
+  .login-box .logo {
+    display: inline-block; padding: 12px 20px; margin-bottom: 8px;
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #fffef8, #fff);
+    box-shadow: 0 4px 16px rgba(201,162,39,0.2);
+  }
+  .login-box .logo .nombre {
+    font-family: Georgia, serif;
+    font-size: 2.4rem; font-weight: 900;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #c9a227 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .login-box .logo .sub {
+    font-size: 0.7rem; letter-spacing: 8px;
+    color: var(--gold); font-weight: 700;
+    margin-top: 2px;
+  }
+  .login-box .lema {
+    font-size: 0.85rem; color: #888;
+    font-style: italic; margin: 12px 0 24px;
+    font-family: Georgia, serif;
+  }
+  .login-box h1 { color: #2c3e50; font-size: 1.15rem; margin-bottom: 6px; font-weight: 700;}
+  .login-box p { color: #888; font-size: 0.85rem; margin-bottom: 20px; }
   .login-box input {
     width: 100%; padding: 14px 16px;
-    border: 2px solid #ddd; border-radius: 10px;
+    border: 2px solid #e8e8e8; border-radius: 12px;
     font-size: 1rem; margin-bottom: 12px;
-    transition: 0.2s;
+    transition: 0.2s; font-family: inherit;
+    background: #fafbfc;
   }
-  .login-box input:focus { border-color: #667eea; outline: none; }
+  .login-box input:focus {
+    border-color: var(--gold); outline: none;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(201,162,39,0.1);
+  }
   .login-box button {
     width: 100%; padding: 14px;
-    background: #667eea; color: white;
-    border: none; border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: white; border: none; border-radius: 12px;
     font-size: 1rem; font-weight: 700;
     cursor: pointer; transition: 0.2s;
     margin-bottom: 10px;
+    box-shadow: 0 4px 16px rgba(201,162,39,0.3);
   }
-  .login-box button:hover { background: #5568d3; transform: translateY(-1px); }
+  .login-box button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,162,39,0.4); }
+  .login-box button:active { transform: translateY(0); }
   .login-box button.sec {
-    background: transparent; color: #667eea;
-    border: 2px solid #667eea;
+    background: transparent; color: var(--gold);
+    border: 2px solid var(--gold); box-shadow: none;
   }
-  .login-box button.sec:hover { background: #667eea; color: white; }
+  .login-box button.sec:hover { background: var(--gold); color: white; }
   .login-box .error {
-    background: #f8d7da; color: #721c24;
-    padding: 10px; border-radius: 8px;
+    background: #ffebee; color: #c62828;
+    padding: 12px; border-radius: 10px;
     font-size: 0.85rem; margin-bottom: 12px;
-    display: none;
+    display: none; text-align: left;
   }
-  .login-box .error.show { display: block; }
-  .login-box .cargando {
-    color: #666; font-size: 0.9rem;
-    display: none; margin-top: 10px;
+  .login-box .error.show { display: block; animation: shake 0.3s; }
+  @keyframes shake {
+    0%,100% {transform:translateX(0);}
+    25% {transform:translateX(-6px);}
+    75% {transform:translateX(6px);}
   }
+  .login-box .cargando { color: #888; font-size: 0.9rem; display: none; margin-top: 10px; }
   .login-box .cargando.show { display: block; }
   .login-box .toggle {
-    color: #667eea; cursor: pointer;
-    font-size: 0.9rem; margin-top: 10px;
-    text-decoration: underline;
+    color: var(--gold); cursor: pointer;
+    font-size: 0.85rem; margin-top: 12px;
+    text-decoration: none; font-weight: 600;
   }
+  .login-box .toggle:hover { text-decoration: underline; }
+
+  /* ══════════════ APP ADMIN ══════════════ */
   .app {
-    max-width: 950px; margin: 0 auto;
-    background: var(--card-bg); border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    max-width: 1100px; margin: 0 auto;
+    background: var(--card-bg); border-radius: 20px;
+    box-shadow: var(--shadow);
     overflow: hidden; transition: background 0.3s;
     display: none;
   }
-  .app.visible { display: block; }
+  .app.visible { display: block; animation: fadeIn 0.4s; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to {opacity:1;} }
+
   header {
     background: var(--header-bg); color: white;
-    padding: 20px; text-align: center; position: relative;
+    padding: 22px 20px 20px; text-align: center; position: relative;
+    border-bottom: 3px solid var(--gold);
   }
-  header h1 { font-size: 1.6rem; }
-  header p { font-size: 0.9rem; opacity: 0.8; margin-top: 4px; }
+  header::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  header h1 {
+    font-family: Georgia, serif;
+    font-size: 1.5rem; letter-spacing: 2px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  header h1 .brand-mini {
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  header p { font-size: 0.85rem; opacity: 0.7; margin-top: 4px; letter-spacing: 1px;}
   .top-actions {
     position: absolute; top: 14px; right: 14px;
     display: flex; gap: 6px; flex-wrap: wrap;
-    justify-content: flex-end; max-width: 60%;
+    justify-content: flex-end; max-width: 65%;
   }
   .icon-btn {
-    background: rgba(255,255,255,0.15); border: none; color: white;
-    padding: 8px 10px; border-radius: 8px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+    color: white; padding: 8px 10px; border-radius: 10px;
     cursor: pointer; font-size: 1rem; transition: 0.2s;
+    backdrop-filter: blur(10px);
   }
-  .icon-btn:hover { background: rgba(255,255,255,0.3); }
+  .icon-btn:hover {
+    background: rgba(201,162,39,0.3);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .icon-btn.pulse { animation: pulseGold 2s infinite; }
+  @keyframes pulseGold {
+    0%,100% { box-shadow: 0 0 0 0 rgba(201,162,39,0.4);}
+    50% { box-shadow: 0 0 0 8px rgba(201,162,39,0);}
+  }
+
   nav {
     display: flex; flex-wrap: wrap;
     background: var(--nav-bg); border-bottom: 2px solid var(--border);
+    padding: 4px 4px 0;
   }
   nav button {
-    flex: 1; min-width: 78px; padding: 12px 4px;
+    flex: 1; min-width: 82px; padding: 12px 4px;
     border: none; background: transparent; cursor: pointer;
-    font-size: 0.7rem; font-weight: 600;
+    font-size: 0.7rem; font-weight: 700;
     color: var(--text-soft); transition: 0.2s;
     border-bottom: 3px solid transparent;
+    border-radius: 8px 8px 0 0;
+    position: relative;
   }
-  nav button:hover { background: var(--nav-hover); }
+  nav button:hover { background: var(--card-item-bg); color: var(--text-strong);}
   nav button.active {
-    color: #667eea; border-bottom-color: #667eea;
-    background: var(--card-bg);
+    color: var(--gold); border-bottom-color: var(--gold);
+    background: var(--card-item-bg);
   }
+  nav button.active::before {
+    content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 2px;
+    background: var(--gold); border-radius: 2px;
+  }
+
   .contenido { padding: 24px; }
   .seccion { display: none; }
   .seccion.active { display: block; animation: fade 0.3s; }
-  @keyframes fade { from { opacity: 0; transform: translateY(5px);} to {opacity:1;} }
-  h2 { margin-bottom: 16px; color: var(--text-strong); font-size: 1.3rem; border-bottom: 2px solid #667eea; padding-bottom: 6px;}
+  @keyframes fade { from { opacity: 0; transform: translateY(6px);} to {opacity:1;} }
+  h2 {
+    margin-bottom: 16px; color: var(--text-strong);
+    font-size: 1.25rem; padding-bottom: 8px;
+    border-bottom: 2px solid var(--gold);
+    display: flex; align-items: center; gap: 8px;
+  }
   h3 { color: var(--text-strong); }
   .campo { margin-bottom: 14px; }
-  label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--text);}
+  label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.85rem; color: var(--text);}
   input, select, textarea {
-    width: 100%; padding: 10px 12px;
+    width: 100%; padding: 11px 14px;
     border: 2px solid var(--input-border);
-    border-radius: 8px; font-size: 1rem;
+    border-radius: 10px; font-size: 1rem;
     background: var(--input-bg); color: var(--text);
     transition: 0.2s; font-family: inherit;
   }
   textarea { resize: vertical; min-height: 60px; }
-  input:focus, select:focus, textarea:focus { border-color: #667eea; outline: none; }
-  .btn {
-    background: #667eea; color: white; border: none;
-    padding: 12px 20px; border-radius: 8px;
-    font-size: 1rem; font-weight: 600; cursor: pointer;
-    transition: 0.2s; margin-right: 8px; margin-top: 4px;
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold); outline: none;
+    box-shadow: 0 0 0 4px rgba(201,162,39,0.1);
   }
-  .btn:hover { background: #5568d3; transform: translateY(-1px); }
-  .btn.verde { background: #27ae60; } .btn.verde:hover { background: #219150; }
-  .btn.rojo { background: #e74c3c; } .btn.rojo:hover { background: #c0392b; }
-  .btn.gris { background: #95a5a6; } .btn.gris:hover { background: #7f8c8d; }
-  .btn.azul { background: #2980b9; } .btn.azul:hover { background: #21618c; }
-  .btn.wsp { background: #25D366; } .btn.wsp:hover { background: #128C7E; }
-  .btn.naranja { background: #e67e22; } .btn.naranja:hover { background: #ca6f1e; }
-  .btn.morado { background: #8e44ad; } .btn.morado:hover { background: #71368a; }
+  .btn {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: white; border: none;
+    padding: 12px 20px; border-radius: 10px;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    transition: 0.2s; margin-right: 8px; margin-top: 4px;
+    box-shadow: 0 3px 10px rgba(201,162,39,0.25);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(201,162,39,0.35);}
+  .btn:active { transform: translateY(0); }
+  .btn.verde { background: linear-gradient(135deg, #2ecc71, var(--green)); box-shadow: 0 3px 10px rgba(39,174,96,0.3);}
+  .btn.rojo { background: linear-gradient(135deg, #ec7063, var(--red)); box-shadow: 0 3px 10px rgba(231,76,60,0.3);}
+  .btn.gris { background: linear-gradient(135deg, #b0b0b0, #95a5a6); box-shadow: 0 3px 10px rgba(149,165,166,0.3);}
+  .btn.azul { background: linear-gradient(135deg, #3498db, var(--blue)); box-shadow: 0 3px 10px rgba(41,128,185,0.3);}
+  .btn.wsp { background: linear-gradient(135deg, #2ecc71, #25D366); box-shadow: 0 3px 10px rgba(37,211,102,0.3);}
+  .btn.naranja { background: linear-gradient(135deg, #f39c12, var(--orange)); box-shadow: 0 3px 10px rgba(230,126,34,0.3);}
+  .btn.morado { background: linear-gradient(135deg, #9b59b6, var(--purple)); box-shadow: 0 3px 10px rgba(142,68,173,0.3);}
   .fila { display: flex; gap: 12px; flex-wrap: wrap; }
   .fila > .campo { flex: 1; min-width: 180px; }
   .card {
-    background: var(--card-item-bg); border-left: 4px solid #667eea;
-    padding: 12px 16px; border-radius: 8px;
+    background: var(--card-item-bg); border-left: 4px solid var(--gold);
+    padding: 14px 16px; border-radius: 12px;
     margin-bottom: 10px; display: flex;
     justify-content: space-between; align-items: center;
     gap: 10px; flex-wrap: wrap;
+    transition: 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
   }
-  .card.pagada { opacity: 0.6; border-left-color: #27ae60; }
-  .card.incobrable { opacity: 0.5; border-left-color: #95a5a6; filter: grayscale(0.5); }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-1px);}
+  .card.pagada { opacity: 0.55; border-left-color: var(--green); }
+  .card.incobrable { opacity: 0.5; border-left-color: #95a5a6; filter: grayscale(0.6); }
   .card .info { flex: 1; min-width: 200px; }
   .card .titulo { font-weight: 700; color: var(--text-strong); }
-  .card .detalle { font-size: 0.85rem; color: var(--text-soft); margin-top: 3px; }
-  .card .monto { font-weight: 700; color: #27ae60; font-size: 1.1rem; white-space: nowrap;}
-  .card.rojo-l { border-left-color: #e74c3c; }
-  .card.rojo-l .monto { color: #e74c3c; }
-  .card.verde-l { border-left-color: #27ae60; }
+  .card .detalle { font-size: 0.83rem; color: var(--text-soft); margin-top: 4px; }
+  .card .monto { font-weight: 800; color: var(--green); font-size: 1.15rem; white-space: nowrap;}
+  .card.rojo-l { border-left-color: var(--red); }
+  .card.rojo-l .monto { color: var(--red); }
+  .card.verde-l { border-left-color: var(--green); }
   .card .acciones { display: flex; gap: 4px; flex-wrap: wrap; }
   .card .mini-btn {
-    background: #e74c3c; color: white; border: none;
-    border-radius: 6px; padding: 5px 9px;
+    background: var(--red); color: white; border: none;
+    border-radius: 8px; padding: 6px 10px;
     cursor: pointer; font-size: 0.8rem;
+    transition: 0.2s; font-weight: 700;
   }
-  .card .mini-btn.azul { background: #2980b9; }
+  .card .mini-btn:hover { transform: scale(1.1); }
+  .card .mini-btn.azul { background: var(--blue); }
   .card .mini-btn.wsp { background: #25D366; }
-  .card .mini-btn.verde { background: #27ae60; }
-  .card .mini-btn.naranja { background: #e67e22; }
+  .card .mini-btn.verde { background: var(--green); }
+  .card .mini-btn.naranja { background: var(--orange); }
   .card .mini-btn.gris { background: #95a5a6; }
-  .card .mini-btn.morado { background: #8e44ad; }
+  .card .mini-btn.morado { background: var(--purple); }
 
   .abono-info {
-    font-size: 0.8rem; margin-top: 6px;
-    display: flex; gap: 12px; flex-wrap: wrap;
+    font-size: 0.78rem; margin-top: 6px;
+    display: flex; gap: 8px; flex-wrap: wrap;
   }
   .abono-info .tag {
-    padding: 2px 8px; border-radius: 10px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px; font-weight: 700;
   }
   .abono-info .tag.original { background: #e3f2fd; color: #1565c0; }
   .abono-info .tag.abonado { background: #e8f5e9; color: #2e7d32; }
@@ -210,245 +336,359 @@
   body.dark .abono-info .tag.abonado { background: #1b4a1e; color: #81c784; }
   body.dark .abono-info .tag.saldo { background: #5c1a1a; color: #ef9a9a; }
   .barra-abono {
-    height: 8px; background: #e0e0e0;
-    border-radius: 4px; overflow: hidden;
-    margin-top: 6px; width: 100%;
+    height: 6px; background: #e0e0e0;
+    border-radius: 3px; overflow: hidden;
+    margin-top: 8px; width: 100%;
   }
   body.dark .barra-abono { background: #333; }
   .barra-abono-fill {
     height: 100%;
-    background: linear-gradient(90deg, #27ae60, #16a085);
-    transition: width 0.4s;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+    transition: width 0.5s;
   }
 
   .resumen-box {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white; padding: 16px;
-    border-radius: 10px; margin-bottom: 16px;
+    background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+    color: white; padding: 20px;
+    border-radius: 14px; margin-bottom: 16px;
+    position: relative; overflow: hidden;
+    border: 1px solid rgba(201,162,39,0.3);
   }
-  .resumen-box h3 { font-size: 1rem; opacity: 0.9; color: white; }
-  .resumen-box .num { font-size: 1.8rem; font-weight: 700; margin-top: 4px; }
+  .resumen-box::before {
+    content: ''; position: absolute; top: -50%; right: -20%; width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(201,162,39,0.2), transparent 70%);
+    border-radius: 50%;
+  }
+  .resumen-box h3 { font-size: 0.9rem; opacity: 0.85; color: var(--gold-soft); letter-spacing: 1px; text-transform: uppercase;}
+  .resumen-box .num { font-size: 2rem; font-weight: 800; margin-top: 6px; position: relative;}
   .grid-resumen {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 12px; margin-bottom: 20px;
   }
   .mini-card {
-    background: var(--card-item-bg); border-radius: 10px;
+    background: var(--card-item-bg); border-radius: 12px;
     padding: 14px; text-align: center;
     border: 2px solid var(--card-item-border);
+    transition: 0.2s;
   }
-  .mini-card .lbl { font-size: 0.8rem; color: var(--text-soft); font-weight: 600;}
-  .mini-card .val { font-size: 1.3rem; font-weight: 700; color: var(--text-strong); margin-top: 4px; }
-  .mini-card .val.rojo { color: #e74c3c; }
-  .mini-card .val.verde { color: #27ae60; }
-  .vacio { text-align: center; color: var(--text-soft); padding: 20px; font-style: italic; }
-  .alerta { padding: 12px; border-radius: 8px; margin-bottom: 12px; font-weight: 600; display: none; }
+  .mini-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.06);}
+  .mini-card .lbl { font-size: 0.75rem; color: var(--text-soft); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
+  .mini-card .val { font-size: 1.3rem; font-weight: 800; color: var(--text-strong); margin-top: 6px; }
+  .mini-card .val.rojo { color: var(--red); }
+  .mini-card .val.verde { color: var(--green); }
+  .vacio { text-align: center; color: var(--text-soft); padding: 24px; font-style: italic; font-size: 0.9rem;}
+  .alerta { padding: 12px; border-radius: 10px; margin-bottom: 12px; font-weight: 700; display: none; }
   .alerta.ok { background: #d4edda; color: #155724; display: block; }
   .alerta.err { background: #f8d7da; color: #721c24; display: block; }
   .aviso-quincena {
-    background: linear-gradient(135deg, #f39c12, #e67e22);
-    color: white; padding: 14px 18px; border-radius: 10px;
-    margin-bottom: 16px; font-weight: 600;
+    background: linear-gradient(135deg, var(--orange), #d35400);
+    color: white; padding: 16px 20px; border-radius: 14px;
+    margin-bottom: 16px; font-weight: 700;
     display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 10px;
+    align-items: center; flex-wrap: wrap; gap: 12px;
+    box-shadow: 0 6px 20px rgba(230,126,34,0.3);
   }
-  .aviso-quincena .dias { font-size: 1.4rem; font-weight: 800; }
+  .aviso-quincena .dias { font-size: 1.5rem; font-weight: 900; }
   .chart-container {
-    background: var(--card-item-bg); border-radius: 10px;
-    padding: 16px; margin-bottom: 20px;
+    background: var(--card-item-bg); border-radius: 14px;
+    padding: 18px; margin-bottom: 20px;
     border: 2px solid var(--card-item-border);
   }
   .modal {
     display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.6); z-index: 4000;
+    background: rgba(0,0,0,0.7); z-index: 4000;
     justify-content: center; align-items: center;
     padding: 20px; overflow-y: auto;
+    backdrop-filter: blur(4px);
   }
-  .modal.active { display: flex; }
+  .modal.active { display: flex; animation: fadeIn 0.2s;}
   .modal-contenido {
     background: var(--card-bg); color: var(--text);
-    border-radius: 12px; padding: 24px;
+    border-radius: 16px; padding: 26px;
     max-width: 520px; width: 100%;
     max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: modalIn 0.3s;
   }
-  .modal-contenido h3 { margin-bottom: 14px; color: var(--text-strong); }
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px);} to {opacity:1; transform:none;} }
+  .modal-contenido h3 {
+    margin-bottom: 16px; color: var(--text-strong);
+    padding-bottom: 10px; border-bottom: 2px solid var(--gold);
+    font-family: Georgia, serif; letter-spacing: 1px;
+  }
   .modal-contenido pre {
-    background: var(--card-item-bg); padding: 12px;
-    border-radius: 8px; font-size: 0.85rem;
+    background: var(--card-item-bg); padding: 14px;
+    border-radius: 10px; font-size: 0.85rem;
     white-space: pre-wrap; color: var(--text);
     font-family: 'Courier New', monospace;
+    line-height: 1.5;
   }
+
+  /* RECIBO BONITO */
   .recibo {
-    background: white; color: #000;
-    padding: 20px; font-family: 'Courier New', monospace;
-    border: 2px dashed #999; border-radius: 8px; margin-top: 12px;
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    margin-top: 12px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1a1a1a;
+    position: relative;
+    border: 2px solid var(--gold);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   }
-  .recibo h2 { color: #000; border-bottom: 1px dashed #999; font-size: 1.1rem; }
+  .recibo::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dark), var(--gold));
+    border-radius: 12px 12px 0 0;
+  }
+  .recibo .recibo-header {
+    text-align: center; padding-bottom: 14px;
+    border-bottom: 2px dashed #ddd; margin-bottom: 14px;
+  }
+  .recibo .recibo-header .logo-recibo {
+    font-family: Georgia, serif;
+    font-size: 1.6rem; font-weight: 900;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #1a1a1a, #c9a227);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .recibo .recibo-header .sub-recibo {
+    font-size: 0.7rem; letter-spacing: 5px;
+    color: #c9a227; font-weight: 700;
+  }
+  .recibo .recibo-tipo {
+    text-align: center; padding: 8px;
+    background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+    color: var(--gold-soft);
+    border-radius: 8px; margin-bottom: 14px;
+    font-weight: 700; letter-spacing: 2px; font-size: 0.85rem;
+  }
+  .recibo .recibo-linea {
+    display: flex; justify-content: space-between;
+    padding: 6px 0; font-size: 0.9rem;
+    border-bottom: 1px dotted #eee;
+  }
+  .recibo .recibo-linea b { color: #1a1a1a; }
+  .recibo .recibo-total {
+    background: linear-gradient(135deg, #fff9e6, #fff);
+    padding: 14px; border-radius: 10px;
+    margin-top: 12px; text-align: center;
+    border: 2px solid var(--gold);
+  }
+  .recibo .recibo-total .lbl { font-size: 0.75rem; color: #666; text-transform: uppercase; letter-spacing: 1px;}
+  .recibo .recibo-total .val {
+    font-size: 1.8rem; font-weight: 900; color: #c9a227;
+    font-family: Georgia, serif;
+  }
+  .recibo .firma {
+    text-align: center; margin-top: 20px; padding-top: 14px;
+    border-top: 1px dashed #ddd; font-size: 0.8rem; color: #999;
+  }
+
   .abono-item {
     background: var(--card-item-bg);
-    padding: 10px 12px; border-radius: 8px;
-    margin-bottom: 6px;
-    border-left: 3px solid #27ae60;
+    padding: 12px 14px; border-radius: 10px;
+    margin-bottom: 8px;
+    border-left: 3px solid var(--green);
     display: flex; justify-content: space-between;
     gap: 10px; align-items: center;
     font-size: 0.9rem;
   }
-  .abono-item .fecha-abono { font-size: 0.75rem; color: var(--text-soft); }
-  .abono-item .monto-abono { font-weight: 700; color: #27ae60; }
+  .abono-item .fecha-abono { font-size: 0.72rem; color: var(--text-soft); }
+  .abono-item .monto-abono { font-weight: 800; color: var(--green); font-size: 1.05rem;}
   .abono-item .comprobante-mini {
     width: 50px; height: 50px;
-    object-fit: cover; border-radius: 6px;
+    object-fit: cover; border-radius: 8px;
     cursor: pointer; border: 2px solid var(--card-item-border);
   }
   .nota-item {
     background: linear-gradient(135deg, #fff9c4, #ffe082);
-    color: #333; padding: 12px; border-radius: 8px;
-    margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    color: #333; padding: 14px; border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     display: flex; justify-content: space-between;
     align-items: flex-start; gap: 10px; flex-wrap: wrap;
   }
   body.dark .nota-item { background: linear-gradient(135deg, #4a4000, #6b5d1f); color: #f0e68c; }
   .nota-item .texto { flex: 1; font-size: 0.95rem; }
-  .nota-item .fecha { font-size: 0.75rem; opacity: 0.7; margin-top: 4px; }
+  .nota-item .fecha { font-size: 0.72rem; opacity: 0.7; margin-top: 6px; }
   .cliente-card {
-    background: var(--card-item-bg); border-radius: 10px;
+    background: var(--card-item-bg); border-radius: 12px;
     padding: 14px; margin-bottom: 10px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--gold);
     display: flex; gap: 12px; align-items: flex-start;
     flex-wrap: wrap;
+    transition: 0.2s;
   }
+  .cliente-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08);}
   .cliente-card .avatar {
     width: 60px; height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
     color: white;
     display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 1.5rem;
-    overflow: hidden;
-    flex-shrink: 0;
+    font-weight: 800; font-size: 1.5rem;
+    overflow: hidden; flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(201,162,39,0.3);
   }
-  .cliente-card .avatar img {
-    width: 100%; height: 100%; object-fit: cover;
-  }
+  .cliente-card .avatar img { width: 100%; height: 100%; object-fit: cover; }
   .cliente-card .cuerpo { flex: 1; min-width: 200px;}
-  .cliente-card .nombre { font-weight: 700; color: var(--text-strong); font-size: 1.05rem; }
-  .cliente-card .stats { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-soft); margin-top: 6px;}
-  .cliente-card .deuda-actual { color: #e74c3c; font-weight: 700; }
-  .calendario {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-  }
+  .cliente-card .nombre { font-weight: 800; color: var(--text-strong); font-size: 1.05rem; }
+  .cliente-card .stats { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.83rem; color: var(--text-soft); margin-top: 6px;}
+  .cliente-card .deuda-actual { color: var(--red); font-weight: 800; }
+  .calendario { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .mes-card {
-    background: var(--card-item-bg); border-radius: 8px;
-    padding: 10px; border: 2px solid var(--card-item-border);
+    background: var(--card-item-bg); border-radius: 10px;
+    padding: 12px; border: 2px solid var(--card-item-border);
   }
-  .mes-card h4 { font-size: 0.85rem; color: var(--text-strong); text-align: center; margin-bottom: 8px; }
+  .mes-card h4 { font-size: 0.85rem; color: var(--text-strong); text-align: center; margin-bottom: 8px; font-weight: 800; letter-spacing: 1px;}
   .mes-card .dia {
     display: flex; justify-content: space-between;
     align-items: center; font-size: 0.75rem;
-    padding: 3px 6px; border-radius: 4px; margin-bottom: 3px;
+    padding: 5px 8px; border-radius: 6px; margin-bottom: 4px;
+    font-weight: 600;
   }
   .mes-card .dia.pasado { opacity: 0.4; }
-  .mes-card .dia.hoy { background: #667eea; color: white; font-weight: 700; }
-  .mes-card .dia.q15 { background: #27ae60; color: white; }
-  .mes-card .dia.q30 { background: #e67e22; color: white; }
+  .mes-card .dia.hoy { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: white; font-weight: 800; box-shadow: 0 3px 10px rgba(201,162,39,0.4);}
+  .mes-card .dia.q15 { background: linear-gradient(135deg, #2ecc71, var(--green)); color: white; }
+  .mes-card .dia.q30 { background: linear-gradient(135deg, #f39c12, var(--orange)); color: white; }
   .categoria-tag {
-    display: inline-block; padding: 2px 8px;
-    border-radius: 12px; font-size: 0.7rem;
-    font-weight: 700; background: #667eea;
+    display: inline-block; padding: 3px 10px;
+    border-radius: 12px; font-size: 0.68rem;
+    font-weight: 800; background: var(--gold);
     color: white; margin-left: 6px;
+    text-transform: uppercase; letter-spacing: 0.5px;
   }
   .pagada-tag {
-    display: inline-block; padding: 2px 8px;
-    border-radius: 12px; font-size: 0.7rem;
-    font-weight: 700; background: #27ae60;
+    display: inline-block; padding: 3px 10px;
+    border-radius: 12px; font-size: 0.68rem;
+    font-weight: 800; background: var(--green);
     color: white; margin-left: 6px;
   }
   .incobrable-tag {
-    display: inline-block; padding: 2px 8px;
-    border-radius: 12px; font-size: 0.7rem;
-    font-weight: 700; background: #95a5a6;
+    display: inline-block; padding: 3px 10px;
+    border-radius: 12px; font-size: 0.68rem;
+    font-weight: 800; background: #95a5a6;
     color: white; margin-left: 6px;
   }
   .buscador {
-    width: 100%; padding: 10px 14px; border-radius: 20px;
+    width: 100%; padding: 12px 16px; border-radius: 24px;
     border: 2px solid var(--input-border);
     background: var(--input-bg); color: var(--text);
-    margin-bottom: 14px; font-size: 1rem;
+    margin-bottom: 14px; font-size: 0.95rem;
+    transition: 0.2s;
   }
+  .buscador:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(201,162,39,0.1); outline: none;}
   .meta-container {
-    background: var(--card-item-bg); border-radius: 10px;
-    padding: 16px; margin-bottom: 16px;
+    background: var(--card-item-bg); border-radius: 12px;
+    padding: 18px; margin-bottom: 16px;
     border: 2px solid var(--card-item-border);
   }
   .meta-titulo {
     display: flex; justify-content: space-between;
-    align-items: center; margin-bottom: 10px;
+    align-items: center; margin-bottom: 12px;
     flex-wrap: wrap; gap: 8px;
   }
   .meta-titulo h3 { font-size: 1rem; }
   .meta-nums { font-size: 0.9rem; color: var(--text-soft); }
   .meta-nums b { color: var(--text-strong); }
-  .barra { height: 24px; background: #e0e0e0; border-radius: 12px; overflow: hidden; position: relative; }
-  body.dark .barra { background: #333; }
+  .barra { height: 26px; background: #e8e8e8; border-radius: 13px; overflow: hidden; position: relative; }
+  body.dark .barra { background: #2a2a30; }
   .barra-fill {
-    height: 100%; background: linear-gradient(90deg, #667eea, #764ba2);
-    transition: width 0.5s;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+    transition: width 0.6s;
     display: flex; align-items: center;
-    justify-content: flex-end; padding-right: 10px;
-    color: white; font-weight: 700; font-size: 0.85rem;
+    justify-content: flex-end; padding-right: 12px;
+    color: white; font-weight: 800; font-size: 0.8rem;
+    box-shadow: inset 0 -3px 8px rgba(0,0,0,0.15);
   }
-  .barra-fill.completa { background: linear-gradient(90deg, #27ae60, #16a085); }
-  .barra-fill.aviso { background: linear-gradient(90deg, #f39c12, #e67e22); }
+  .barra-fill.completa { background: linear-gradient(90deg, #2ecc71, #16a085); }
+  .barra-fill.aviso { background: linear-gradient(90deg, #f39c12, var(--orange)); }
   #sync-indicator {
     position: fixed; bottom: 20px; right: 20px;
-    padding: 8px 14px; border-radius: 20px;
-    font-size: 0.85rem; font-weight: 700;
+    padding: 10px 18px; border-radius: 24px;
+    font-size: 0.85rem; font-weight: 800;
     color: white; z-index: 9999;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     transition: all 0.3s; opacity: 0.3;
   }
   .foto-input-wrapper {
     border: 2px dashed var(--input-border);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.2s;
-    background: var(--card-item-bg);
+    border-radius: 12px; padding: 24px;
+    text-align: center; cursor: pointer;
+    transition: 0.2s; background: var(--card-item-bg);
+    font-weight: 600;
   }
   .foto-input-wrapper:hover {
-    border-color: #667eea;
-    background: var(--nav-hover);
+    border-color: var(--gold);
+    background: rgba(201,162,39,0.05);
   }
   .foto-preview {
     max-width: 100%; max-height: 200px;
-    border-radius: 8px; margin-top: 10px;
-    border: 2px solid var(--input-border);
+    border-radius: 12px; margin-top: 12px;
+    border: 2px solid var(--card-item-border);
   }
   .comprobante-grande {
     max-width: 100%; max-height: 70vh;
-    border-radius: 8px; display: block; margin: 0 auto;
+    border-radius: 12px; display: block; margin: 0 auto;
   }
   .ranking-card {
-    background: var(--card-item-bg); border-radius: 10px;
-    padding: 12px 16px; margin-bottom: 8px;
-    display: flex; align-items: center; gap: 12px;
-    border-left: 4px solid #667eea;
+    background: var(--card-item-bg); border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 14px;
+    border-left: 4px solid var(--gold);
+    transition: 0.2s;
   }
-  .ranking-card.oro { border-left-color: #f39c12; }
-  .ranking-card.plata { border-left-color: #95a5a6; }
-  .ranking-card.bronce { border-left-color: #cd7f32; }
-  .ranking-card.malo { border-left-color: #e74c3c; }
+  .ranking-card:hover { transform: translateX(4px); }
+  .ranking-card.oro { border-left-color: #f1c40f; background: linear-gradient(90deg, rgba(241,196,15,0.08), transparent);}
+  .ranking-card.plata { border-left-color: #bdc3c7; background: linear-gradient(90deg, rgba(189,195,199,0.08), transparent);}
+  .ranking-card.bronce { border-left-color: #cd7f32; background: linear-gradient(90deg, rgba(205,127,50,0.08), transparent);}
+  .ranking-card.malo { border-left-color: var(--red); }
   .ranking-card .pos {
-    font-size: 1.5rem; font-weight: 800;
+    font-size: 1.6rem; font-weight: 900;
     min-width: 40px; text-align: center;
     color: var(--text-strong);
   }
   .ranking-card .info-r { flex: 1; }
-  .ranking-card .nombre-r { font-weight: 700; }
-  .ranking-card .detalle-r { font-size: 0.85rem; color: var(--text-soft); margin-top: 3px;}
-  .ranking-card .monto-r { font-weight: 700; color: #27ae60; }
+  .ranking-card .nombre-r { font-weight: 800; }
+  .ranking-card .detalle-r { font-size: 0.83rem; color: var(--text-soft); margin-top: 3px;}
+  .ranking-card .monto-r { font-weight: 800; color: var(--green); font-size: 1.05rem;}
+
+  /* ALERTAS INTELIGENTES */
+  .alertas-section {
+    background: linear-gradient(135deg, #fff9e6, #fff);
+    border: 2px solid var(--gold);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  body.dark .alertas-section {
+    background: linear-gradient(135deg, #2a2410, #1a1a1f);
+  }
+  .alertas-section h3 {
+    font-size: 0.95rem; color: var(--gold-dark);
+    margin-bottom: 10px; display: flex;
+    align-items: center; gap: 6px;
+  }
+  body.dark .alertas-section h3 { color: var(--gold-soft);}
+  .alerta-item {
+    background: white; border-radius: 10px;
+    padding: 10px 14px; margin-bottom: 8px;
+    font-size: 0.85rem; display: flex;
+    align-items: center; gap: 10px;
+    border-left: 3px solid var(--orange);
+  }
+  body.dark .alerta-item { background: rgba(255,255,255,0.05);}
+  .alerta-item .icono-a { font-size: 1.2rem; }
+  .alerta-item .texto-a { flex: 1; color: var(--text); }
+  .alerta-item.critico { border-left-color: var(--red);}
+  .alerta-item.info { border-left-color: var(--blue);}
+  .alerta-item.exito { border-left-color: var(--green);}
+
   @media print {
     body { background: white; padding: 0; color: black; }
     body.dark { background: white; color: black; }
@@ -457,16 +697,20 @@
     .modal { position: static; background: none; padding: 0; display: block !important; overflow: visible; }
     .modal-contenido { box-shadow: none; max-width: 100%; max-height: none; color: black; background: white;}
     header { background: white; color: black; }
+    .recibo { border: 1px solid #ccc; box-shadow: none; }
   }
   @media (max-width: 600px) {
     .calendario { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 500px) {
     .contenido { padding: 16px; }
-    header h1 { font-size: 1.3rem; }
-    .top-actions { top: 8px; right: 8px; gap: 4px; max-width: 70%;}
+    header h1 { font-size: 1.15rem; }
+    .top-actions { top: 8px; right: 8px; gap: 4px; max-width: 75%;}
     .icon-btn { padding: 6px 8px; font-size: 0.85rem;}
     nav button { font-size: 0.65rem; padding: 10px 3px; min-width: 62px;}
+    .login-box { padding: 30px 22px;}
+    .login-box .logo .nombre { font-size: 1.8rem; }
+    .login-box .logo .sub { font-size: 0.55rem; letter-spacing: 6px; }
   }
 </style>
 </head>
@@ -474,9 +718,13 @@
 
 <div class="login-screen" id="login-screen">
   <div class="login-box">
-    <div class="logo">💼</div>
-    <h1>Mi Negocio</h1>
-    <p id="login-subtitulo">Inicia sesión para sincronizar en todos tus dispositivos</p>
+    <div class="logo">
+      <div class="nombre">EMMA</div>
+      <div class="sub">STUDIO</div>
+    </div>
+    <div class="lema">"Estilo, hogar y detalles para ti"</div>
+    <h1 id="login-titulo">Bienvenido</h1>
+    <p id="login-subtitulo">Inicia sesión para gestionar tu negocio</p>
     <div class="error" id="login-error"></div>
     <input type="email" id="login-email" placeholder="Correo electrónico" autocomplete="email">
     <input type="password" id="login-pass" placeholder="Contraseña" autocomplete="current-password">
@@ -489,14 +737,18 @@
 
 <div class="app" id="app">
   <header>
-    <h1>💼 Mi Negocio</h1>
-    <p id="bienvenida">Control de capital, ventas, gastos, fiados y quincenas</p>
+    <h1>
+      <span class="brand-mini">EMMA STUDIO</span>
+    </h1>
+    <p id="bienvenida">Panel de administración</p>
     <div class="top-actions">
       <button class="icon-btn" title="Instalar app" onclick="instalarPWA()" id="install-btn" style="display:none;">📲</button>
       <button class="icon-btn" title="Modo oscuro" onclick="toggleDark()" id="dark-btn">🌙</button>
+      <button class="icon-btn" title="Buscar en todo" onclick="abrirBusquedaGlobal()">🔍</button>
       <button class="icon-btn" title="Exportar respaldo" onclick="exportar()">⬇️</button>
       <button class="icon-btn" title="Importar respaldo" onclick="document.getElementById('file-import').click()">⬆️</button>
       <button class="icon-btn" title="Reporte mensual" onclick="abrirReporteMensual()">📊</button>
+      <button class="icon-btn" title="Cierre del día" onclick="abrirCierreDia()">🖨️</button>
       <button class="icon-btn" title="Cerrar sesión" onclick="cerrarSesion()">🚪</button>
       <input type="file" id="file-import" accept=".json" style="display:none" onchange="importar(event)">
     </div>
@@ -524,7 +776,8 @@
 
     <div class="seccion active" id="inicio">
       <div id="aviso-quincena"></div>
-      <h2>Resumen general</h2>
+      <div id="alertas-inteligentes"></div>
+      <h2>💼 Resumen general</h2>
       <div class="resumen-box">
         <h3>Capital actual</h3>
         <div class="num" id="r-capital">$0</div>
@@ -539,14 +792,14 @@
         <div class="mini-card"><div class="lbl">Valor inventario</div><div class="val" id="r-inv">$0</div></div>
         <div class="mini-card"><div class="lbl">Balance del mes</div><div class="val" id="r-balance">$0</div></div>
       </div>
-      <h2>Meta del mes</h2>
+      <h2>🎯 Meta del mes</h2>
       <div id="meta-inicio"></div>
-      <h2>Últimas ventas</h2>
+      <h2>🛒 Últimas ventas</h2>
       <div id="ultimas-ventas"><div class="vacio">Aún no hay ventas</div></div>
     </div>
 
     <div class="seccion" id="capital">
-      <h2>Configurar capital</h2>
+      <h2>💰 Configurar capital</h2>
       <div id="alerta-capital" class="alerta"></div>
       <div class="campo">
         <label>Capital actual del negocio ($)</label>
@@ -556,7 +809,7 @@
     </div>
 
     <div class="seccion" id="deudas">
-      <h2>Dinero que me deben (aparte)</h2>
+      <h2>📋 Dinero que me deben (aparte)</h2>
       <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">
         Dinero que NO tiene que ver con tu negocio (préstamos, favores, etc.). Edita, abona, marca incobrable o elimina.
       </p>
@@ -571,7 +824,7 @@
     </div>
 
     <div class="seccion" id="ventas">
-      <h2>Registrar venta</h2>
+      <h2>🛒 Registrar venta</h2>
       <div class="fila">
         <div class="campo"><label>Producto</label><input type="text" id="v-producto" placeholder="Ej: Camisa"></div>
         <div class="campo"><label>Categoría</label><input type="text" id="v-categoria" placeholder="Ej: Ropa" list="lista-categorias"><datalist id="lista-categorias"></datalist></div>
@@ -594,13 +847,13 @@
         </div>
       </div>
       <button class="btn verde" onclick="registrarVenta()">➕ Registrar venta</button>
-      <h2 style="margin-top:24px;">Historial</h2>
+      <h2 style="margin-top:24px;">📜 Historial</h2>
       <input type="text" class="buscador" id="buscar-venta" placeholder="🔍 Buscar..." oninput="renderTodo()">
       <div id="lista-ventas"><div class="vacio">Sin ventas</div></div>
     </div>
 
     <div class="seccion" id="gastos">
-      <h2>Registrar gasto</h2>
+      <h2>💸 Registrar gasto</h2>
       <div class="fila">
         <div class="campo"><label>Descripción</label><input type="text" id="g-desc" placeholder="Ej: Transporte"></div>
         <div class="campo"><label>Categoría</label><input type="text" id="g-cat" placeholder="Ej: Transporte" list="lista-cat-gastos">
@@ -612,13 +865,13 @@
         <div class="campo"><label>Monto ($)</label><input type="number" id="g-monto" step="1000" placeholder="0"></div>
       </div>
       <button class="btn rojo" onclick="agregarGasto()">💸 Registrar gasto</button>
-      <h2 style="margin-top:24px;">Gastos</h2>
+      <h2 style="margin-top:24px;">📜 Gastos</h2>
       <input type="text" class="buscador" id="buscar-gasto" placeholder="🔍 Buscar..." oninput="renderTodo()">
       <div id="lista-gastos"><div class="vacio">Sin gastos</div></div>
     </div>
 
     <div class="seccion" id="inventario">
-      <h2>Inventario</h2>
+      <h2>📦 Inventario</h2>
       <div class="fila">
         <div class="campo"><label>Producto</label><input type="text" id="i-producto" placeholder="Ej: Camisa roja"></div>
         <div class="campo"><label>Categoría</label><input type="text" id="i-categoria" placeholder="Ej: Ropa" list="lista-categorias"></div>
@@ -629,18 +882,18 @@
         <div class="campo"><label>Cantidad</label><input type="number" id="i-cantidad" step="1" min="1" placeholder="1" value="1"></div>
       </div>
       <button class="btn verde" onclick="agregarInventario()">➕ Agregar al inventario</button>
-      <h2 style="margin-top:24px;">Stock</h2>
+      <h2 style="margin-top:24px;">📦 Stock</h2>
       <div id="lista-inventario"><div class="vacio">Sin productos</div></div>
     </div>
 
     <div class="seccion" id="clientes">
-      <h2>Clientes</h2>
+      <h2>👥 Clientes</h2>
       <input type="text" class="buscador" id="buscar-cliente" placeholder="🔍 Buscar cliente..." oninput="renderTodo()">
       <div id="lista-clientes-view"><div class="vacio">Sin clientes</div></div>
     </div>
 
     <div class="seccion" id="abonos">
-      <h2>Historial de abonos</h2>
+      <h2>💵 Historial de abonos</h2>
       <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">Todos los abonos que has recibido, ordenados por fecha.</p>
       <div class="grid-resumen">
         <div class="mini-card"><div class="lbl">Total este mes</div><div class="val verde" id="a-mes">$0</div></div>
@@ -658,22 +911,21 @@
       <div id="ranking-buenos"><div class="vacio">Sin datos</div></div>
       <h3 style="margin:20px 0 12px;font-size:1.05rem;">🚨 Top 5 más morosos</h3>
       <div id="ranking-malos"><div class="vacio">Sin datos</div></div>
-    </section>
-  </div>
+    </div>
 
     <div class="seccion" id="metas">
-      <h2>Metas de venta</h2>
+      <h2>🎯 Metas de venta</h2>
       <div class="fila">
         <div class="campo"><label>Meta mensual ($)</label><input type="number" id="m-mensual" step="1000" placeholder="0"></div>
         <div class="campo"><label>Meta quincenal ($)</label><input type="number" id="m-quincenal" step="1000" placeholder="0"></div>
       </div>
       <button class="btn verde" onclick="guardarMetas()">💾 Guardar metas</button>
-      <h2 style="margin-top:24px;">Progreso</h2>
+      <h2 style="margin-top:24px;">📈 Progreso</h2>
       <div id="metas-view"></div>
     </div>
 
     <div class="seccion" id="quincena">
-      <h2>Cerrar quincena</h2>
+      <h2>📅 Cerrar quincena</h2>
       <div class="fila">
         <div class="campo"><label>Quincena</label>
           <select id="q-tipo"><option value="15">Día 15</option><option value="30">Día 30</option></select>
@@ -682,18 +934,18 @@
         <div class="campo"><label>Descuentos ($)</label><input type="number" id="q-descuentos" step="1000" placeholder="0"></div>
       </div>
       <button class="btn verde" onclick="cerrarQuincena()">✅ Cerrar quincena</button>
-      <h2 style="margin-top:24px;">Historial</h2>
+      <h2 style="margin-top:24px;">📜 Historial</h2>
       <div id="lista-quincenas"><div class="vacio">Sin quincenas cerradas</div></div>
     </div>
 
     <div class="seccion" id="calendario">
-      <h2>Calendario <span id="anio-cal" style="font-size:1rem;color:var(--text-soft);"></span></h2>
+      <h2>🗓️ Calendario <span id="anio-cal" style="font-size:1rem;color:var(--text-soft);"></span></h2>
       <p style="color:var(--text-soft);margin-bottom:14px;font-size:0.9rem;">🟢 Día 15 · 🟠 Día 30 · 🔵 Hoy</p>
       <div class="calendario" id="calendario-view"></div>
     </div>
 
     <div class="seccion" id="resp">
-      <h2>Responsabilidades mensuales</h2>
+      <h2>🏠 Responsabilidades mensuales</h2>
       <div class="fila">
         <div class="campo"><label>Recibos ($)</label><input type="number" id="res-recibos" step="1000" placeholder="0"></div>
         <div class="campo"><label>Comida ($)</label><input type="number" id="res-comida" step="1000" placeholder="0"></div>
@@ -706,19 +958,20 @@
     </div>
 
     <div class="seccion" id="notas">
-      <h2>Notas y recordatorios</h2>
+      <h2>📝 Notas y recordatorios</h2>
       <div class="campo"><textarea id="n-texto" placeholder="Ej: comprar mercancía el lunes..."></textarea></div>
       <button class="btn verde" onclick="agregarNota()">➕ Agregar nota</button>
-      <h2 style="margin-top:24px;">Mis notas</h2>
+      <h2 style="margin-top:24px;">📝 Mis notas</h2>
       <div id="lista-notas"><div class="vacio">Sin notas</div></div>
     </div>
 
     <div class="seccion" id="estadisticas">
-      <h2>Estadísticas</h2>
+      <h2>📊 Estadísticas</h2>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Ventas: contado vs fiado</h3><canvas id="chart-tipos" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Ganancia vs Gastos (7 días)</h3><canvas id="chart-ganancia" height="200"></canvas></div>
+      <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">📈 Tendencia de ganancias (últimos 6 meses)</h3><canvas id="chart-tendencia" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Abonos últimos 7 días</h3><canvas id="chart-abonos" height="200"></canvas></div>
-      <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">📈 Evolución de deudas (original vs abonado vs saldo)</h3><canvas id="chart-deudas" height="200"></canvas></div>
+      <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">📈 Evolución de deudas</h3><canvas id="chart-deudas" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Ventas por categoría</h3><canvas id="chart-categorias" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Gastos por categoría</h3><canvas id="chart-cat-gastos" height="200"></canvas></div>
       <div class="chart-container"><h3 style="margin-bottom:12px;font-size:1rem;">Historial de quincenas</h3><canvas id="chart-quincenas" height="200"></canvas></div>
@@ -734,6 +987,7 @@
     <pre id="modal-contenido-texto"></pre>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn wsp" onclick="compartirCierreWsp()">📤 WhatsApp</button>
       <button class="btn gris" onclick="cerrarModal('modal-cierre')">Cerrar</button>
     </div>
   </div>
@@ -766,7 +1020,7 @@
 <div class="modal" id="modal-abono">
   <div class="modal-contenido">
     <h3>💵 Registrar abono</h3>
-    <div id="abono-info-original" style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:14px;font-size:0.9rem;"></div>
+    <div id="abono-info-original" style="background:var(--card-item-bg);padding:12px;border-radius:10px;margin-bottom:14px;font-size:0.9rem;"></div>
     <div class="campo">
       <label>Monto del abono ($)</label>
       <input type="number" id="abono-monto" step="1000" placeholder="0">
@@ -856,11 +1110,10 @@
   </div>
 </div>
 
-<!-- MODAL FOTO CLIENTE -->
 <div class="modal" id="modal-foto-cliente">
   <div class="modal-contenido">
     <h3>👤 Foto del cliente</h3>
-    <div style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:14px;">
+    <div style="background:var(--card-item-bg);padding:12px;border-radius:10px;margin-bottom:14px;">
       <div id="fc-nombre" style="font-weight:700;"></div>
     </div>
     <div class="foto-input-wrapper" onclick="document.getElementById('fc-foto').click()">
@@ -876,21 +1129,41 @@
   </div>
 </div>
 
-<!-- MODAL REPORTE MENSUAL -->
 <div class="modal" id="modal-reporte">
   <div class="modal-contenido" style="max-width:800px;">
     <h3>📊 Reporte mensual</h3>
     <div id="reporte-contenido"></div>
     <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
       <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn wsp" onclick="compartirReporteWsp()">📤 WhatsApp</button>
       <button class="btn gris" onclick="cerrarModal('modal-reporte')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal-busqueda">
+  <div class="modal-contenido">
+    <h3>🔍 Búsqueda global</h3>
+    <input type="text" class="buscador" id="busqueda-input" placeholder="Busca clientes, productos, ventas..." oninput="ejecutarBusquedaGlobal()" autofocus>
+    <div id="busqueda-resultados"></div>
+  </div>
+</div>
+
+<div class="modal" id="modal-cierre-dia">
+  <div class="modal-contenido">
+    <h3>🖨️ Cierre del día</h3>
+    <div class="recibo" id="cierre-dia-contenido"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn azul" onclick="window.print()">🖨️ Imprimir</button>
+      <button class="btn wsp" onclick="compartirCierreDiaWsp()">📤 WhatsApp</button>
+      <button class="btn gris" onclick="cerrarModal('modal-cierre-dia')">Cerrar</button>
     </div>
   </div>
 </div>
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// ⚠️⚠️⚠️  PEGA AQUÍ TUS CLAVES DE FIREBASE  ⚠️⚠️⚠️
+// ⚠️ TUS CLAVES DE FIREBASE
 // ═══════════════════════════════════════════════════════════════
 const firebaseConfig = {
   apiKey: "AIzaSyD4io_lQNJCMR_u-xtFWxlXbWsqyHyD24w",
@@ -912,29 +1185,26 @@ let datos = {
   metas: { mensual: 0, quincenal: 0 },
   responsabilidades: { recibos:0, comida:0, arriendo:0, otros:0 }
 };
-let charts = { tipos:null, ganancia:null, abonos:null, deudas:null, categorias:null, catGastos:null, quincenas:null };
+let charts = { tipos:null, ganancia:null, tendencia:null, abonos:null, deudas:null, categorias:null, catGastos:null, quincenas:null };
 let usuarioId = null;
 let sincronizando = false;
-let primeraCarga = true;
 let abonoActual = { tipo: null, indice: null };
 let fotoAbonoActual = null;
 let indiceEditando = null;
 let clienteFotoActual = null;
 let fotoClienteTemp = null;
-let ultimoBackup = null;
+let ultimoCierreDia = null;
+let ultimoCierreQuincena = null;
 
-// ---------- FORMATO PESOS COLOMBIANOS ----------
+// ---------- FORMATO ----------
 function formato(n) {
   const num = Math.round(Number(n) || 0);
   return "$" + num.toLocaleString("es-CO");
 }
-
-// ---------- HELPERS ABONOS ----------
 function calcularSaldo(item) {
   if (item.incobrable) return 0;
   const abonado = (item.abonos || []).reduce((s,a) => s + a.monto, 0);
-  const total = item.monto || item.precio || 0;
-  return Math.max(0, total - abonado);
+  return Math.max(0, (item.monto || item.precio || 0) - abonado);
 }
 function calcularAbonado(item) {
   return (item.abonos || []).reduce((s,a) => s + a.monto, 0);
@@ -943,35 +1213,27 @@ function estaPagada(item) {
   if (item.incobrable) return false;
   return calcularSaldo(item) <= 0.01;
 }
-function totalSaldoDeudas() {
-  return datos.deudas.reduce((s,d) => s + calcularSaldo(d), 0);
-}
+function totalSaldoDeudas() { return datos.deudas.reduce((s,d) => s + calcularSaldo(d), 0); }
 function totalSaldoFiadoQ(q) {
-  return datos.ventas
-    .filter(v => v.tipo === "quincena" && v.quincena === q)
-    .reduce((s,v) => s + calcularSaldo(v), 0);
+  return datos.ventas.filter(v => v.tipo === "quincena" && v.quincena === q).reduce((s,v) => s + calcularSaldo(v), 0);
 }
-
+function cerrarModal(id) { document.getElementById(id).classList.remove("active"); }
 function mostrarEstadoSync(estado, msg) {
   let el = document.getElementById("sync-indicator");
-  if (!el) {
-    el = document.createElement("div");
-    el.id = "sync-indicator";
-    document.body.appendChild(el);
-  }
-  const colores = { ok: "#27ae60", guardando: "#f39c12", error: "#e74c3c", cargando: "#3498db", offline: "#95a5a6" };
-  const iconos = { ok: "✅", guardando: "⏳", error: "❌", cargando: "🔄", offline: "📴" };
-  el.style.background = colores[estado] || "#667eea";
-  el.textContent = `${iconos[estado] || "ℹ️"} ${msg}`;
+  if (!el) { el = document.createElement("div"); el.id = "sync-indicator"; document.body.appendChild(el); }
+  const c = { ok: "#27ae60", guardando: "#f39c12", error: "#e74c3c", cargando: "#3498db" };
+  const i = { ok: "✅", guardando: "⏳", error: "❌", cargando: "🔄" };
+  el.style.background = c[estado] || "#c9a227";
+  el.textContent = `${i[estado]} ${msg}`;
   el.style.opacity = "1";
-  if (estado === "ok") setTimeout(() => { el.style.opacity = "0.3"; }, 2000);
+  if (estado === "ok") setTimeout(() => el.style.opacity = "0.3", 2000);
 }
 
+// ---------- LOGIN ----------
 function mostrarErrorLogin(msg) {
   const el = document.getElementById("login-error");
-  el.textContent = msg;
-  el.classList.add("show");
-  setTimeout(() => { el.classList.remove("show"); }, 5000);
+  el.textContent = msg; el.classList.add("show");
+  setTimeout(() => el.classList.remove("show"), 5000);
 }
 function mostrarCargando(show) {
   document.getElementById("login-cargando").classList.toggle("show", show);
@@ -982,90 +1244,71 @@ function obtenerCredenciales() {
   const email = document.getElementById("login-email").value.trim();
   const pass = document.getElementById("login-pass").value;
   if (!email || !pass) { mostrarErrorLogin("Completa correo y contraseña"); return null; }
-  if (pass.length < 6) { mostrarErrorLogin("La contraseña debe tener al menos 6 caracteres"); return null; }
+  if (pass.length < 6) { mostrarErrorLogin("Mínimo 6 caracteres"); return null; }
   return { email, pass };
 }
 async function hacerLogin() {
-  const cred = obtenerCredenciales();
-  if (!cred) return;
+  const c = obtenerCredenciales(); if (!c) return;
   mostrarCargando(true);
-  try {
-    await auth.signInWithEmailAndPassword(cred.email, cred.pass);
-  } catch (e) {
+  try { await auth.signInWithEmailAndPassword(c.email, c.pass); }
+  catch (e) {
     mostrarCargando(false);
-    const errores = {
-      "auth/user-not-found": "No existe una cuenta con ese correo",
+    const errs = {
+      "auth/user-not-found": "No existe la cuenta",
       "auth/wrong-password": "Contraseña incorrecta",
-      "auth/invalid-email": "Correo inválido",
-      "auth/invalid-credential": "Correo o contraseña incorrectos",
-      "auth/too-many-requests": "Demasiados intentos. Espera un momento."
+      "auth/invalid-credential": "Credenciales incorrectas",
+      "auth/invalid-email": "Correo inválido"
     };
-    mostrarErrorLogin(errores[e.code] || e.message);
+    mostrarErrorLogin(errs[e.code] || e.message);
   }
 }
 async function hacerRegistro() {
-  const cred = obtenerCredenciales();
-  if (!cred) return;
+  const c = obtenerCredenciales(); if (!c) return;
   mostrarCargando(true);
-  try {
-    await auth.createUserWithEmailAndPassword(cred.email, cred.pass);
-  } catch (e) {
+  try { await auth.createUserWithEmailAndPassword(c.email, c.pass); }
+  catch (e) {
     mostrarCargando(false);
-    const errores = {
-      "auth/email-already-in-use": "Ya existe una cuenta con ese correo. Inicia sesión.",
-      "auth/invalid-email": "Correo inválido",
-      "auth/weak-password": "Contraseña muy débil (mínimo 6 caracteres)"
-    };
-    mostrarErrorLogin(errores[e.code] || e.message);
+    const errs = { "auth/email-already-in-use": "Ese correo ya tiene cuenta", "auth/weak-password": "Contraseña muy débil" };
+    mostrarErrorLogin(errs[e.code] || e.message);
   }
 }
 async function recuperarClave() {
   const email = document.getElementById("login-email").value.trim();
-  if (!email) { mostrarErrorLogin("Escribe tu correo arriba"); return; }
+  if (!email) return mostrarErrorLogin("Escribe tu correo arriba");
   try {
     await auth.sendPasswordResetEmail(email);
-    mostrarErrorLogin("✅ Revisa tu correo para restablecer la contraseña");
+    mostrarErrorLogin("✅ Revisa tu correo para restablecer");
     document.getElementById("login-error").style.background = "#d4edda";
     document.getElementById("login-error").style.color = "#155724";
     setTimeout(() => {
       document.getElementById("login-error").style.background = "";
       document.getElementById("login-error").style.color = "";
     }, 5000);
-  } catch (e) {
-    mostrarErrorLogin("Error: " + e.message);
-  }
+  } catch (e) { mostrarErrorLogin("Error: " + e.message); }
 }
-function cerrarSesion() {
-  if (confirm("¿Cerrar sesión?")) auth.signOut();
-}
+function cerrarSesion() { if (confirm("¿Cerrar sesión?")) auth.signOut(); }
 
+// ---------- GUARDAR / CARGAR ----------
 async function guardar() {
   if (!usuarioId) return;
   sincronizando = true;
   mostrarEstadoSync("guardando", "Guardando...");
   try {
     await db.collection("negocios").doc(usuarioId).set({
-      datos: datos,
-      actualizado: firebase.firestore.FieldValue.serverTimestamp()
+      datos, actualizado: firebase.firestore.FieldValue.serverTimestamp()
     });
     mostrarEstadoSync("ok", "Guardado");
   } catch (e) {
-    console.error("Error:", e);
     mostrarEstadoSync("error", "Error al guardar");
     localStorage.setItem("negocio_backup_" + usuarioId, JSON.stringify(datos));
-  } finally {
-    setTimeout(() => { sincronizando = false; }, 500);
-  }
+  } finally { setTimeout(() => sincronizando = false, 500); }
 }
-
-// ---------- BACKUP AUTOMÁTICO ----------
 function backupAutomatico() {
   try {
     const hoy = new Date().toISOString().slice(0,10);
     const clave = "backup_" + usuarioId + "_" + hoy;
     if (localStorage.getItem(clave)) return;
     localStorage.setItem(clave, JSON.stringify(datos));
-    // Limpiar backups viejos (más de 7 días)
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
       if (k && k.startsWith("backup_" + usuarioId + "_")) {
@@ -1074,15 +1317,12 @@ function backupAutomatico() {
         if (diff > 7) { localStorage.removeItem(k); i--; }
       }
     }
-    console.log("✅ Backup automático guardado:", clave);
-  } catch(e) { console.error("Error backup:", e); }
+  } catch(e) {}
 }
-
 async function cargarDatos() {
   mostrarEstadoSync("cargando", "Cargando...");
   try {
-    const docRef = db.collection("negocios").doc(usuarioId);
-    const doc = await docRef.get();
+    const doc = await db.collection("negocios").doc(usuarioId).get();
     if (doc.exists && doc.data().datos) {
       datos = doc.data().datos;
       if (!datos.notas) datos.notas = [];
@@ -1095,14 +1335,11 @@ async function cargarDatos() {
       datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; });
       mostrarEstadoSync("ok", "Datos cargados");
       backupAutomatico();
-    } else {
-      await guardar();
-    }
+    } else { await guardar(); }
     localStorage.setItem("negocio_backup_" + usuarioId, JSON.stringify(datos));
     renderTodo();
     document.getElementById("inp-capital").value = datos.capital || "";
   } catch (e) {
-    console.error("Error al cargar:", e);
     mostrarEstadoSync("offline", "Modo offline");
     const backup = localStorage.getItem("negocio_backup_" + usuarioId);
     if (backup) {
@@ -1114,16 +1351,12 @@ async function cargarDatos() {
     }
   }
 }
-
 function escucharCambios() {
   db.collection("negocios").doc(usuarioId).onSnapshot((doc) => {
-    if (!doc.exists) return;
-    if (sincronizando) return;
+    if (!doc.exists || sincronizando) return;
     const nuevos = doc.data().datos;
     if (!nuevos) return;
-    const actualJSON = JSON.stringify(datos);
-    const nuevoJSON = JSON.stringify(nuevos);
-    if (actualJSON !== nuevoJSON) {
+    if (JSON.stringify(datos) !== JSON.stringify(nuevos)) {
       datos = nuevos;
       if (!datos.deudas) datos.deudas = [];
       if (!datos.ventas) datos.ventas = [];
@@ -1134,9 +1367,10 @@ function escucharCambios() {
       renderTodo();
       mostrarEstadoSync("ok", "Actualizado");
     }
-  }, (error) => console.error("Error:", error));
+  });
 }
 
+// ---------- AUTH STATE ----------
 auth.onAuthStateChanged(async (user) => {
   if (user) {
     usuarioId = user.uid;
@@ -1145,7 +1379,6 @@ auth.onAuthStateChanged(async (user) => {
     document.getElementById("bienvenida").textContent = "Conectado: " + (user.email || "");
     await cargarDatos();
     escucharCambios();
-    primeraCarga = false;
     setTimeout(() => { chequearNotificaciones(); pedirPermisoNotif(); }, 2000);
   } else {
     document.getElementById("login-screen").style.display = "flex";
@@ -1154,6 +1387,7 @@ auth.onAuthStateChanged(async (user) => {
   }
 });
 
+// ---------- NAV ----------
 document.querySelectorAll("nav button").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
@@ -1167,15 +1401,14 @@ document.querySelectorAll("nav button").forEach(btn => {
 });
 
 function toggleQuincena() {
-  const tipo = document.getElementById("v-tipo").value;
-  document.getElementById("campo-quincena").style.display = tipo === "quincena" ? "block" : "none";
+  const t = document.getElementById("v-tipo").value;
+  document.getElementById("campo-quincena").style.display = t === "quincena" ? "block" : "none";
 }
 function mostrarAlerta(id, msg, tipo="ok") {
   const el = document.getElementById(id);
   el.textContent = msg; el.className = "alerta " + tipo;
-  setTimeout(() => { el.className = "alerta"; }, 2500);
+  setTimeout(() => el.className = "alerta", 2500);
 }
-function cerrarModal(id) { document.getElementById(id).classList.remove("active"); }
 
 // ---------- CAPITAL ----------
 function guardarCapital() {
@@ -1192,7 +1425,7 @@ function agregarDeuda() {
   const monto = parseFloat(document.getElementById("d-monto").value);
   const nota = document.getElementById("d-nota").value.trim();
   if (!nombre || isNaN(monto) || monto <= 0) return alert("Completa nombre y monto válido");
-  datos.deudas.push({nombre, monto, nota, abonos: [], incobrable: false});
+  datos.deudas.push({nombre, monto, nota, abonos: [], incobrable: false, fechaISO: new Date().toISOString()});
   guardar();
   document.getElementById("d-nombre").value = "";
   document.getElementById("d-monto").value = "";
@@ -1200,18 +1433,12 @@ function agregarDeuda() {
   renderTodo();
 }
 function eliminarDeuda(i) {
-  if (confirm("¿Eliminar esta deuda por completo?\n\nSe perderá el historial de abonos.")) {
-    datos.deudas.splice(i,1); guardar(); renderTodo();
-  }
+  if (confirm("¿Eliminar esta deuda por completo?")) { datos.deudas.splice(i,1); guardar(); renderTodo(); }
 }
 function marcarIncobrableDeuda(i) {
-  const d = datos.deudas[i];
-  if (!d) return;
-  if (d.incobrable) {
-    if (confirm("¿Marcar como activa de nuevo?")) { d.incobrable = false; guardar(); renderTodo(); }
-  } else {
-    if (confirm("¿Marcar como INCOBRABLE?")) { d.incobrable = true; guardar(); renderTodo(); }
-  }
+  const d = datos.deudas[i]; if (!d) return;
+  if (d.incobrable) { if (confirm("¿Marcar como activa?")) { d.incobrable = false; guardar(); renderTodo(); } }
+  else { if (confirm("¿Marcar como INCOBRABLE?")) { d.incobrable = true; guardar(); renderTodo(); } }
 }
 function editarDeuda(i) {
   indiceEditando = i;
@@ -1227,11 +1454,9 @@ function guardarEdicionDeuda() {
   const nombre = document.getElementById("ed-nombre").value.trim();
   const monto = parseFloat(document.getElementById("ed-monto").value);
   const nota = document.getElementById("ed-nota").value.trim();
-  if (!nombre || isNaN(monto) || monto <= 0) return alert("Completa nombre y monto válido");
+  if (!nombre || isNaN(monto) || monto <= 0) return alert("Completa");
   const abonado = calcularAbonado(d);
-  if (monto < abonado) {
-    if (!confirm(`El monto (${formato(monto)}) es menor que lo ya abonado (${formato(abonado)}).\n\n¿Continuar?`)) return;
-  }
+  if (monto < abonado && !confirm(`El monto (${formato(monto)}) es menor que lo abonado (${formato(abonado)}). ¿Continuar?`)) return;
   d.nombre = nombre; d.monto = monto; d.nota = nota;
   guardar(); renderTodo();
   cerrarModal("modal-editar-deuda");
@@ -1266,17 +1491,12 @@ function eliminarVenta(i) {
   if (confirm("¿Eliminar esta venta?")) { datos.ventas.splice(i,1); guardar(); renderTodo(); }
 }
 function marcarIncobrableVenta(i) {
-  const v = datos.ventas[i];
-  if (!v || v.tipo !== "quincena") return;
-  if (v.incobrable) {
-    if (confirm("¿Marcar como activa de nuevo?")) { v.incobrable = false; guardar(); renderTodo(); }
-  } else {
-    if (confirm("¿Marcar como INCOBRABLE?")) { v.incobrable = true; guardar(); renderTodo(); }
-  }
+  const v = datos.ventas[i]; if (!v || v.tipo !== "quincena") return;
+  if (v.incobrable) { if (confirm("¿Marcar como activa?")) { v.incobrable = false; guardar(); renderTodo(); } }
+  else { if (confirm("¿Marcar como INCOBRABLE?")) { v.incobrable = true; guardar(); renderTodo(); } }
 }
 function editarVenta(i) {
-  const v = datos.ventas[i];
-  if (!v || v.tipo !== "quincena") return;
+  const v = datos.ventas[i]; if (!v || v.tipo !== "quincena") return;
   indiceEditando = i;
   document.getElementById("ev-producto").value = v.producto;
   document.getElementById("ev-categoria").value = v.categoria || "";
@@ -1295,11 +1515,9 @@ function guardarEdicionVenta() {
   const precio = parseFloat(document.getElementById("ev-precio").value);
   const cliente = document.getElementById("ev-cliente").value.trim();
   const quincena = document.getElementById("ev-quincena").value;
-  if (!producto || isNaN(precio) || !cliente) return alert("Completa producto, precio y cliente");
+  if (!producto || isNaN(precio) || !cliente) return alert("Completa");
   const abonado = calcularAbonado(v);
-  if (precio < abonado) {
-    if (!confirm(`El precio (${formato(precio)}) es menor que lo abonado (${formato(abonado)}).\n\n¿Continuar?`)) return;
-  }
+  if (precio < abonado && !confirm(`El precio (${formato(precio)}) es menor que lo abonado (${formato(abonado)}). ¿Continuar?`)) return;
   v.producto = producto; v.categoria = categoria; v.costo = costo;
   v.precio = precio; v.cliente = cliente; v.quincena = quincena;
   guardar(); renderTodo();
@@ -1383,16 +1601,13 @@ function abrirModalAbono(tipo, indice) {
   const saldo = calcularSaldo(item);
   const abonado = calcularAbonado(item);
   const total = item.monto || item.precio;
-
   document.getElementById("abono-info-original").innerHTML = `
     <div><b>${tipo === "deuda" ? item.nombre : (item.cliente + " - " + item.producto)}</b></div>
     <div style="margin-top:6px;">
       <span style="color:var(--text-soft);">Total:</span> <b>${formato(total)}</b> ·
       <span style="color:#27ae60;">Abonado:</span> <b>${formato(abonado)}</b> ·
       <span style="color:#e74c3c;">Saldo:</span> <b>${formato(saldo)}</b>
-    </div>
-    ${tipo === "deuda" && item.nota ? `<div style="font-size:0.8rem;color:var(--text-soft);margin-top:6px;">📝 ${item.nota}</div>` : ""}
-  `;
+    </div>`;
   document.getElementById("abono-monto").value = saldo;
   document.getElementById("abono-monto").max = saldo;
   document.getElementById("abono-nota").value = "";
@@ -1400,10 +1615,8 @@ function abrirModalAbono(tipo, indice) {
   document.getElementById("modal-abono").classList.add("active");
   setTimeout(() => document.getElementById("abono-monto").focus(), 200);
 }
-
 function procesarFotoAbono(ev) {
-  const file = ev.target.files[0];
-  if (!file) return;
+  const file = ev.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = (e) => {
     const img = new Image();
@@ -1413,15 +1626,13 @@ function procesarFotoAbono(ev) {
       const scale = Math.min(1, maxW / img.width);
       canvas.width = img.width * scale;
       canvas.height = img.height * scale;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
       fotoAbonoActual = canvas.toDataURL("image/jpeg", 0.7);
       document.getElementById("abono-foto-preview").innerHTML = `
         <img src="${fotoAbonoActual}" class="foto-preview">
         <div style="font-size:0.8rem;color:var(--text-soft);margin-top:5px;text-align:center;">
           📸 Comprobante · <span style="color:#e74c3c;cursor:pointer;" onclick="quitarFotoAbono()">Quitar</span>
-        </div>
-      `;
+        </div>`;
     };
     img.src = e.target.result;
   };
@@ -1432,7 +1643,6 @@ function quitarFotoAbono() {
   document.getElementById("abono-foto-preview").innerHTML = "";
   document.getElementById("abono-foto").value = "";
 }
-
 function confirmarAbono() {
   const { tipo, indice } = abonoActual;
   if (!tipo || indice === null) return;
@@ -1441,10 +1651,9 @@ function confirmarAbono() {
   let monto = parseFloat(document.getElementById("abono-monto").value);
   const nota = document.getElementById("abono-nota").value.trim();
   const saldoActual = calcularSaldo(item);
-
   if (isNaN(monto) || monto <= 0) return alert("Ingresa un monto válido");
   if (monto > saldoActual + 0.01) {
-    if (!confirm(`El abono (${formato(monto)}) es mayor que el saldo (${formato(saldoActual)}).\n\n¿Abonar solo ${formato(saldoActual)}?`)) return;
+    if (!confirm(`El abono (${formato(monto)}) es mayor que el saldo (${formato(saldoActual)}). ¿Abonar solo ${formato(saldoActual)}?`)) return;
     monto = saldoActual;
   }
   if (!item.abonos) item.abonos = [];
@@ -1458,12 +1667,9 @@ function confirmarAbono() {
   cerrarModal("modal-abono");
   mostrarEstadoSync("ok", "Abono registrado");
   setTimeout(() => {
-    if (confirm("¿Generar el recibo del abono?")) {
-      mostrarReciboAbono(tipo, indice, nuevoAbono);
-    }
+    if (confirm("¿Generar el recibo del abono?")) mostrarReciboAbono(tipo, indice, nuevoAbono);
   }, 400);
 }
-
 function verHistorialAbonos(tipo, indice) {
   const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
   if (!item) return;
@@ -1472,19 +1678,16 @@ function verHistorialAbonos(tipo, indice) {
   const abonado = calcularAbonado(item);
   const saldo = calcularSaldo(item);
   const titulo = tipo === "deuda" ? item.nombre : (item.cliente + " - " + item.producto);
-
   let html = `
-    <div style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:14px;">
+    <div style="background:var(--card-item-bg);padding:12px;border-radius:10px;margin-bottom:14px;">
       <div style="font-weight:700;margin-bottom:6px;">${titulo}</div>
       <div>Total: <b>${formato(total)}</b></div>
       <div style="color:#27ae60;">Abonado: <b>${formato(abonado)}</b></div>
       <div style="color:#e74c3c;">Saldo: <b>${formato(saldo)}</b></div>
     </div>
-    <h3 style="font-size:1rem;margin-bottom:10px;">Abonos (${abonos.length})</h3>
-  `;
-  if (abonos.length === 0) {
-    html += '<div class="vacio">Sin abonos</div>';
-  } else {
+    <h3 style="font-size:1rem;margin-bottom:10px;">Abonos (${abonos.length})</h3>`;
+  if (abonos.length === 0) html += '<div class="vacio">Sin abonos</div>';
+  else {
     html += abonos.slice().reverse().map((a,idx) => {
       const realIdx = abonos.length - 1 - idx;
       return `
@@ -1499,18 +1702,16 @@ function verHistorialAbonos(tipo, indice) {
           <button class="mini-btn azul" onclick="reciboDesdeHistorial('${tipo}', ${indice}, ${realIdx})" title="Recibo">🧾</button>
           <button class="mini-btn" onclick="eliminarAbono('${tipo}', ${indice}, ${realIdx})" title="Eliminar">✕</button>
         </div>
-      </div>
-    `}).join("");
+      </div>`;
+    }).join("");
   }
   document.getElementById("historial-abonos-contenido").innerHTML = html;
   document.getElementById("modal-historial-abonos").classList.add("active");
 }
-
 function reciboDesdeHistorial(tipo, indice, abonoIdx) {
   const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
   if (!item || !item.abonos || !item.abonos[abonoIdx]) return;
   const abono = item.abonos[abonoIdx];
-  // Calcular saldo justo después de ese abono
   const abonosHasta = item.abonos.slice(0, abonoIdx + 1);
   const abonadoHasta = abonosHasta.reduce((s,a) => s + a.monto, 0);
   const total = item.monto || item.precio;
@@ -1518,12 +1719,10 @@ function reciboDesdeHistorial(tipo, indice, abonoIdx) {
   mostrarReciboAbonoCon(tipo, indice, abono, abonadoHasta, saldoDespues);
   cerrarModal("modal-historial-abonos");
 }
-
 function verFotoGrande(src) {
   document.getElementById("foto-grande").src = src;
   document.getElementById("modal-foto").classList.add("active");
 }
-
 function eliminarAbono(tipo, itemIdx, abonoIdx) {
   if (!confirm("¿Eliminar este abono?")) return;
   const item = tipo === "deuda" ? datos.deudas[itemIdx] : datos.ventas[itemIdx];
@@ -1533,8 +1732,6 @@ function eliminarAbono(tipo, itemIdx, abonoIdx) {
   cerrarModal("modal-historial-abonos");
   mostrarEstadoSync("ok", "Abono eliminado");
 }
-
-// ---------- RECIBO DE ABONO ----------
 function mostrarReciboAbono(tipo, indice, abono) {
   const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
   if (!item) return;
@@ -1543,7 +1740,6 @@ function mostrarReciboAbono(tipo, indice, abono) {
   const saldo = calcularSaldo(item);
   mostrarReciboAbonoCon(tipo, indice, abono, abonado, saldo);
 }
-
 function mostrarReciboAbonoCon(tipo, indice, abono, abonadoTotal, saldo) {
   const item = tipo === "deuda" ? datos.deudas[indice] : datos.ventas[indice];
   if (!item) return;
@@ -1552,45 +1748,38 @@ function mostrarReciboAbonoCon(tipo, indice, abono, abonadoTotal, saldo) {
   const producto = tipo === "deuda" ? (item.nota || "Préstamo") : item.producto;
 
   document.getElementById("recibo-abono-contenido").innerHTML = `
-    <h2 style="text-align:center;">💵 RECIBO DE ABONO</h2>
-    <div style="margin-top:14px;font-size:0.95rem;">
-      <div><b>Fecha del abono:</b> ${abono.fecha}</div>
-      <div><b>Cliente:</b> ${nombre}</div>
-      <div><b>Concepto:</b> ${producto}</div>
-      ${abono.nota ? `<div><b>Nota:</b> ${abono.nota}</div>` : ""}
-      <hr style="margin:12px 0;border:none;border-top:1px dashed #999;">
-      <div style="font-size:1.1rem;text-align:center;background:#e8f5e9;padding:10px;border-radius:6px;">
-        <b>ABONO RECIBIDO:</b> <span style="color:#27ae60;font-size:1.4rem;">${formato(abono.monto)}</span>
-      </div>
-      <div style="margin-top:12px;">
-        <div>Total de la deuda: <b>${formato(total)}</b></div>
-        <div>Total abonado: <b style="color:#27ae60;">${formato(abonadoTotal)}</b></div>
-        <div style="background:#ffebee;padding:8px;border-radius:6px;margin-top:8px;">
-          <b>SALDO PENDIENTE:</b> <span style="color:#c62828;font-size:1.2rem;font-weight:700;">${formato(saldo)}</span>
-        </div>
+    <div class="recibo-header">
+      <div class="logo-recibo">EMMA</div>
+      <div class="sub-recibo">STUDIO</div>
+    </div>
+    <div class="recibo-tipo">💵 RECIBO DE ABONO</div>
+    <div class="recibo-linea"><span>Fecha:</span><b>${abono.fecha}</b></div>
+    <div class="recibo-linea"><span>Cliente:</span><b>${nombre}</b></div>
+    <div class="recibo-linea"><span>Concepto:</span><b>${producto}</b></div>
+    ${abono.nota ? `<div class="recibo-linea"><span>Nota:</span><b>${abono.nota}</b></div>` : ""}
+    <div class="recibo-total">
+      <div class="lbl">Abono recibido</div>
+      <div class="val">${formato(abono.monto)}</div>
+    </div>
+    <div style="margin-top:14px;">
+      <div class="recibo-linea"><span>Total deuda:</span><b>${formato(total)}</b></div>
+      <div class="recibo-linea"><span>Total abonado:</span><b style="color:#27ae60;">${formato(abonadoTotal)}</b></div>
+      <div class="recibo-linea" style="background:#ffebee;padding:10px;border-radius:8px;margin-top:8px;border:none;">
+        <span style="font-weight:700;">SALDO PENDIENTE:</span>
+        <b style="color:#c62828;font-size:1.2rem;">${formato(saldo)}</b>
       </div>
     </div>
-    <div style="margin-top:18px;font-size:0.8rem;text-align:center;opacity:0.7;">
-      Recibí conforme · Firma: _______________________
-    </div>
+    <div class="firma">Recibí conforme · Firma: _______________________</div>
   `;
   document.getElementById("btn-wsp-recibo-abono").onclick = () => compartirReciboAbonoWsp(nombre, producto, abono, total, abonadoTotal, saldo);
   document.getElementById("modal-recibo-abono").classList.add("active");
 }
-
 function compartirReciboAbonoWsp(nombre, producto, abono, total, abonado, saldo) {
-  const msg = `💵 *RECIBO DE ABONO*\n\n` +
-              `👤 Cliente: ${nombre}\n` +
-              `📦 Concepto: ${producto}\n` +
-              `🗓️ Fecha: ${abono.fecha}\n` +
+  const msg = `💵 *RECIBO DE ABONO*\n🏪 *Emma Studio*\n\n` +
+              `👤 Cliente: ${nombre}\n📦 Concepto: ${producto}\n🗓️ Fecha: ${abono.fecha}\n` +
               `${abono.nota ? `📝 Nota: ${abono.nota}\n` : ""}` +
-              `━━━━━━━━━━━━━━\n` +
-              `💵 *ABONO: ${formato(abono.monto)}*\n` +
-              `━━━━━━━━━━━━━━\n` +
-              `📊 Total: ${formato(total)}\n` +
-              `✅ Abonado: ${formato(abonado)}\n` +
-              `💰 *SALDO: ${formato(saldo)}*\n\n` +
-              `¡Gracias por su pago!`;
+              `━━━━━━━━━━━━━━\n💵 *ABONO: ${formato(abono.monto)}*\n━━━━━━━━━━━━━━\n` +
+              `📊 Total: ${formato(total)}\n✅ Abonado: ${formato(abonado)}\n💰 *SALDO: ${formato(saldo)}*\n\n¡Gracias por su pago!`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
@@ -1603,8 +1792,6 @@ function guardarMetas() {
   guardar(); renderTodo();
   alert("✅ Metas guardadas");
 }
-
-// ---------- RESPONSABILIDADES ----------
 function guardarResp() {
   datos.responsabilidades = {
     recibos: parseFloat(document.getElementById("res-recibos").value) || 0,
@@ -1615,8 +1802,6 @@ function guardarResp() {
   guardar(); renderTodo();
   alert("✅ Guardado");
 }
-
-// ---------- NOTAS ----------
 function agregarNota() {
   const texto = document.getElementById("n-texto").value.trim();
   if (!texto) return alert("Escribe algo");
@@ -1627,7 +1812,7 @@ function agregarNota() {
 }
 function eliminarNota(i) { if (confirm("¿Eliminar?")) { datos.notas.splice(i,1); guardar(); renderTodo(); } }
 
-// ---------- CERRAR QUINCENA ----------
+// ---------- QUINCENA ----------
 function cerrarQuincena() {
   const q = document.getElementById("q-tipo").value;
   const sueldo = parseFloat(document.getElementById("q-sueldo").value) || 0;
@@ -1649,8 +1834,8 @@ Descuentos:         -${formato(descuentos)}
 ─────────────────────────
 Neto quincena:       ${formato(neto)}
 
-Fiados cobrados (abonos): ${formato(cobradoFiado)}
-Saldo fiado pendiente Q${q}: ${formato(saldoPendienteQ)}
+Fiados cobrados:     ${formato(cobradoFiado)}
+Saldo pendiente Q${q}:  ${formato(saldoPendienteQ)}
 
 RESPONSABILIDADES:
   Recibos:          -${formato(r.recibos)}
@@ -1663,6 +1848,7 @@ RESPONSABILIDADES:
   if (!confirm(resumen + "\n\n¿Cerrar esta quincena?")) return;
   datos.quincenas.push({
     fecha: new Date().toLocaleString("es-CO"),
+    fechaISO: new Date().toISOString(),
     quincena: q, sueldo, descuentos, neto,
     cobradoFiado, gananciaFiado,
     responsabilidades: {...r}, totalResp, restante
@@ -1673,29 +1859,40 @@ RESPONSABILIDADES:
   document.getElementById("q-descuentos").value = "";
   renderTodo();
   document.getElementById("modal-contenido-texto").textContent = resumen;
+  ultimoCierreQuincena = resumen;
   document.getElementById("modal-cierre").classList.add("active");
 }
+function compartirCierreWsp() {
+  if (!ultimoCierreQuincena) return;
+  window.open(`https://wa.me/?text=${encodeURIComponent("*CIERRE QUINCENA*\n" + ultimoCierreQuincena)}`, "_blank");
+}
 
-// ---------- RECIBO VENTA ----------
+// ---------- RECIBO VENTA BONITO ----------
 function verRecibo(idx) {
   const v = datos.ventas[idx];
   if (!v) return;
   const abonado = calcularAbonado(v);
   const saldo = calcularSaldo(v);
   document.getElementById("recibo-contenido").innerHTML = `
-    <h2>🧾 RECIBO FIADO</h2>
-    <div style="margin-top:10px;">
-      <div><b>Fecha:</b> ${v.fecha}</div>
-      <div><b>Cliente:</b> ${v.cliente}</div>
-      <div><b>Producto:</b> ${v.producto}</div>
-      <div><b>Precio:</b> ${formato(v.precio)}</div>
-      ${abonado > 0 ? `<div style="color:green;"><b>Abonado:</b> ${formato(abonado)}</div>` : ""}
-      ${saldo > 0 ? `<div style="color:red;"><b>Saldo:</b> ${formato(saldo)}</div>` : `<div style="color:green;"><b>✅ PAGADO</b></div>`}
-      <hr style="margin:10px 0;border:none;border-top:1px dashed #999;">
-      <div style="font-size:1.2rem;"><b>COBRAR EN QUINCENA DÍA ${v.quincena}</b></div>
-      <div style="font-size:1.4rem;font-weight:bold;margin-top:8px;">${saldo > 0 ? `SALDO: ${formato(saldo)}` : "TOTAL: PAGADO ✅"}</div>
+    <div class="recibo-header">
+      <div class="logo-recibo">EMMA</div>
+      <div class="sub-recibo">STUDIO</div>
     </div>
-    <div style="margin-top:14px;font-size:0.8rem;text-align:center;opacity:0.7;">Firma: _______________________</div>
+    <div class="recibo-tipo">🧾 RECIBO FIADO</div>
+    <div class="recibo-linea"><span>Fecha:</span><b>${v.fecha}</b></div>
+    <div class="recibo-linea"><span>Cliente:</span><b>${v.cliente}</b></div>
+    <div class="recibo-linea"><span>Producto:</span><b>${v.producto}</b></div>
+    ${v.categoria ? `<div class="recibo-linea"><span>Categoría:</span><b>${v.categoria}</b></div>` : ""}
+    <div class="recibo-linea"><span>Precio:</span><b>${formato(v.precio)}</b></div>
+    ${abonado > 0 ? `<div class="recibo-linea"><span>Abonado:</span><b style="color:#27ae60;">${formato(abonado)}</b></div>` : ""}
+    <div class="recibo-total">
+      <div class="lbl">${saldo > 0 ? "Saldo pendiente" : "Estado"}</div>
+      <div class="val">${saldo > 0 ? formato(saldo) : "✅ PAGADO"}</div>
+    </div>
+    <div style="text-align:center;margin-top:14px;font-size:1rem;font-weight:700;color:#c9a227;">
+      📅 Cobrar en quincena día ${v.quincena}
+    </div>
+    <div class="firma">Firma: _______________________</div>
   `;
   document.getElementById("btn-wsp-recibo").onclick = () => compartirReciboWsp(v);
   document.getElementById("modal-recibo").classList.add("active");
@@ -1703,14 +1900,10 @@ function verRecibo(idx) {
 function compartirReciboWsp(v) {
   const abonado = calcularAbonado(v);
   const saldo = calcularSaldo(v);
-  let msg = `🧾 *RECIBO FIADO*\n\n` +
-            `👤 Cliente: ${v.cliente}\n` +
-            `📦 Producto: ${v.producto}\n` +
-            `💰 Precio: ${formato(v.precio)}\n`;
+  let msg = `🧾 *RECIBO FIADO*\n🏪 *Emma Studio*\n\n` +
+            `👤 Cliente: ${v.cliente}\n📦 Producto: ${v.producto}\n💰 Precio: ${formato(v.precio)}\n`;
   if (abonado > 0) msg += `💵 Abonado: ${formato(abonado)}\n`;
-  msg += `📅 Cobrar en quincena día ${v.quincena}\n`;
-  msg += `🗓️ Fecha: ${v.fecha}\n`;
-  msg += `━━━━━━━━━━━━━━\n`;
+  msg += `📅 Cobrar en quincena día ${v.quincena}\n🗓️ Fecha: ${v.fecha}\n━━━━━━━━━━━━━━\n`;
   if (saldo > 0) msg += `💰 *SALDO: ${formato(saldo)}*`;
   else msg += `✅ *PAGADO COMPLETO*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
@@ -1733,14 +1926,12 @@ function agruparClientes() {
   });
   return Object.values(mapa).sort((a,b) => (b.fiadoPendiente||0) - (a.fiadoPendiente||0));
 }
-
 function verCliente(nombre) {
   const ventasC = datos.ventas.map((v,i)=>({...v, idx:i})).filter(v => v.cliente === nombre);
   const deudasC = datos.deudas.map((d,i)=>({...d, idx:i})).filter(d => d.nombre === nombre);
   const totalFiado = ventasC.filter(v=>v.tipo==="quincena").reduce((s,v)=>s+calcularSaldo(v),0);
   const totalDeuda = deudasC.reduce((s,d)=>s+calcularSaldo(d),0);
   const foto = datos.fotosClientes[nombre];
-
   document.getElementById("cliente-detalle").innerHTML = `
     <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px;">
       <div class="avatar" style="width:70px;height:70px;font-size:1.8rem;">
@@ -1753,12 +1944,12 @@ function verCliente(nombre) {
         </button>
       </div>
     </div>
-    <div style="background:var(--card-item-bg);padding:12px;border-radius:8px;margin-bottom:12px;">
+    <div style="background:var(--card-item-bg);padding:14px;border-radius:10px;margin-bottom:12px;">
       <div><b>Saldo fiado:</b> <span style="color:#e74c3c;">${formato(totalFiado)}</span></div>
       <div><b>Saldo deuda aparte:</b> <span style="color:#e74c3c;">${formato(totalDeuda)}</span></div>
-      <div style="color:#e74c3c;font-weight:700;margin-top:6px;">Total debe: ${formato(totalFiado + totalDeuda)}</div>
+      <div style="color:#e74c3c;font-weight:800;margin-top:8px;font-size:1.1rem;">Total debe: ${formato(totalFiado + totalDeuda)}</div>
     </div>
-    <h3 style="margin-bottom:8px;font-size:1rem;">Compras fiadas</h3>
+    <h3 style="margin-bottom:10px;font-size:1rem;">Compras fiadas</h3>
     ${ventasC.filter(v=>v.tipo==="quincena").length === 0 ? '<div class="vacio">Sin fiados</div>' :
       ventasC.filter(v=>v.tipo==="quincena").map(v=>{
         const saldo = calcularSaldo(v);
@@ -1772,7 +1963,7 @@ function verCliente(nombre) {
           </div>
         </div><div class="monto">${formato(saldo)}</div></div>`;
       }).join("")}
-    <h3 style="margin:12px 0 8px;font-size:1rem;">Deudas aparte</h3>
+    <h3 style="margin:14px 0 10px;font-size:1rem;">Deudas aparte</h3>
     ${deudasC.length === 0 ? '<div class="vacio">Sin deudas</div>' :
       deudasC.map(d=>{
         const saldo = calcularSaldo(d);
@@ -1790,22 +1981,18 @@ function verCliente(nombre) {
   document.getElementById("btn-recordar-cliente").onclick = () => recordarClienteWsp(nombre, totalFiado, totalDeuda, ventasC.filter(v=>v.tipo==="quincena"));
   document.getElementById("modal-cliente").classList.add("active");
 }
-
 function compartirClienteWsp(nombre, fiado, deuda) {
-  const msg = `👤 *Estado de cuenta: ${nombre}*\n\n` +
-              `📦 Saldo fiado: ${formato(fiado)}\n` +
-              `💵 Saldo deuda aparte: ${formato(deuda)}\n` +
+  const msg = `👤 *Estado de cuenta: ${nombre}*\n🏪 *Emma Studio*\n\n` +
+              `📦 Saldo fiado: ${formato(fiado)}\n💵 Saldo deuda aparte: ${formato(deuda)}\n` +
               `━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR: ${formato(fiado + deuda)}*`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
-
 function recordarClienteWsp(nombre, fiado, deuda, ventas) {
   let msg = `¡Hola ${nombre}! 👋\n\n`;
-  msg += `Te recuerdo amablemente que tienes un saldo pendiente conmigo:\n\n`;
+  msg += `Te recuerdo amablemente que tienes un saldo pendiente con *Emma Studio*:\n\n`;
   if (fiado > 0) msg += `📦 Productos fiados: *${formato(fiado)}*\n`;
   if (deuda > 0) msg += `💵 Préstamo aparte: *${formato(deuda)}*\n`;
-  msg += `━━━━━━━━━━━━━━\n`;
-  msg += `💰 *TOTAL: ${formato(fiado + deuda)}*\n\n`;
+  msg += `━━━━━━━━━━━━━━\n💰 *TOTAL: ${formato(fiado + deuda)}*\n\n`;
   msg += `Cuando puedas, te agradezco mucho el pago. ¡Gracias! 🙏`;
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
@@ -1820,10 +2007,8 @@ function abrirFotoCliente(nombre) {
     : '<div class="vacio">Sin foto</div>';
   document.getElementById("modal-foto-cliente").classList.add("active");
 }
-
 function procesarFotoCliente(ev) {
-  const file = ev.target.files[0];
-  if (!file) return;
+  const file = ev.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = (e) => {
     const img = new Image();
@@ -1833,8 +2018,7 @@ function procesarFotoCliente(ev) {
       const scale = Math.min(1, maxW / img.width);
       canvas.width = img.width * scale;
       canvas.height = img.height * scale;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
       fotoClienteTemp = canvas.toDataURL("image/jpeg", 0.7);
       document.getElementById("fc-preview").innerHTML = `<img src="${fotoClienteTemp}" class="foto-preview">`;
     };
@@ -1842,7 +2026,6 @@ function procesarFotoCliente(ev) {
   };
   reader.readAsDataURL(file);
 }
-
 function guardarFotoCliente() {
   if (!clienteFotoActual || !fotoClienteTemp) return alert("Selecciona una foto primero");
   datos.fotosClientes[clienteFotoActual] = fotoClienteTemp;
@@ -1851,7 +2034,6 @@ function guardarFotoCliente() {
   setTimeout(() => verCliente(clienteFotoActual), 300);
   alert("✅ Foto guardada");
 }
-
 function eliminarFotoCliente() {
   if (!clienteFotoActual) return;
   if (!confirm("¿Quitar la foto de este cliente?")) return;
@@ -1864,9 +2046,7 @@ function eliminarFotoCliente() {
 // ---------- RANKING ----------
 function renderRanking() {
   const clientes = agruparClientes().filter(c => c.nombre && c.nombre !== "Contado" && c.nombre !== "Cliente");
-  // Calcular "cumplimiento": ratio abonado / vendido
   const clientesConDatos = clientes.map(c => {
-    // Buscar todas las ventas de ese cliente
     const ventasC = datos.ventas.filter(v => v.cliente === c.nombre && v.tipo === "quincena");
     const deudasC = datos.deudas.filter(d => d.nombre === c.nombre);
     const totalVendido = ventasC.reduce((s,v) => s + v.precio, 0) + deudasC.reduce((s,d) => s + d.monto, 0);
@@ -1875,19 +2055,8 @@ function renderRanking() {
     const cumplimiento = totalVendido > 0 ? (totalAbonado / totalVendido) * 100 : 0;
     return {...c, totalVendido, totalAbonado, saldoActual, cumplimiento};
   });
-
-  // Top 5 más cumplidos (mayor % y al menos algo de historia)
-  const buenos = clientesConDatos
-    .filter(c => c.totalVendido > 0)
-    .sort((a,b) => b.cumplimiento - a.cumplimiento)
-    .slice(0, 5);
-
-  // Top 5 más morosos (mayor saldo pendiente)
-  const malos = clientesConDatos
-    .filter(c => c.saldoActual > 0)
-    .sort((a,b) => b.saldoActual - a.saldoActual)
-    .slice(0, 5);
-
+  const buenos = clientesConDatos.filter(c => c.totalVendido > 0).sort((a,b) => b.cumplimiento - a.cumplimiento).slice(0, 5);
+  const malos = clientesConDatos.filter(c => c.saldoActual > 0).sort((a,b) => b.saldoActual - a.saldoActual).slice(0, 5);
   const medal = ["🥇","🥈","🥉","4️⃣","5️⃣"];
   const rb = document.getElementById("ranking-buenos");
   if (buenos.length === 0) rb.innerHTML = '<div class="vacio">Sin datos suficientes</div>';
@@ -1901,7 +2070,6 @@ function renderRanking() {
       <div class="monto-r">${c.cumplimiento.toFixed(0)}%</div>
     </div>
   `).join("");
-
   const rm = document.getElementById("ranking-malos");
   if (malos.length === 0) rm.innerHTML = '<div class="vacio">¡Nadie debe! 🎉</div>';
   else rm.innerHTML = malos.map((c,i) => `
@@ -1926,47 +2094,85 @@ function proximaQuincena() {
   else objetivo = new Date(hoy.getFullYear(), hoy.getMonth()+1, 15);
   const dias = Math.ceil((objetivo - hoy) / (1000*60*60*24));
   const diaObjetivo = objetivo.getDate();
-  const fiadoQ = datos.ventas
-    .filter(v => v.tipo==="quincena" && v.quincena === String(diaObjetivo))
-    .reduce((s,v) => s + calcularSaldo(v), 0);
+  const fiadoQ = datos.ventas.filter(v => v.tipo==="quincena" && v.quincena === String(diaObjetivo)).reduce((s,v) => s + calcularSaldo(v), 0);
   return { dias, diaObjetivo, fiadoQ, fecha: objetivo };
 }
 function renderAviso() {
   const { dias, diaObjetivo, fiadoQ, fecha } = proximaQuincena();
   const box = document.getElementById("aviso-quincena");
   const txtDias = dias === 0 ? "¡HOY!" : (dias === 1 ? "1 día" : `${dias} días`);
-  const colorFondo = dias <= 3 ? "linear-gradient(135deg, #e74c3c, #c0392b)" : "linear-gradient(135deg, #f39c12, #e67e22)";
+  const colorFondo = dias <= 3 ? "linear-gradient(135deg, #e74c3c, #c0392b)" : "linear-gradient(135deg, #e67e22, #d35400)";
   box.innerHTML = `
     <div class="aviso-quincena" style="background:${colorFondo};">
-      <div><div style="font-size:0.85rem;opacity:0.9;">Próxima quincena</div>
+      <div><div style="font-size:0.8rem;opacity:0.9;">Próxima quincena</div>
         <div style="font-size:1.05rem;">Día ${diaObjetivo} · ${fecha.toLocaleDateString("es-CO", {day:"numeric", month:"long"})}</div></div>
-      <div style="text-align:right;"><div style="font-size:0.85rem;opacity:0.9;">Faltan</div>
+      <div style="text-align:right;"><div style="font-size:0.8rem;opacity:0.9;">Faltan</div>
         <div class="dias">${txtDias}</div></div>
-      <div style="text-align:right;"><div style="font-size:0.85rem;opacity:0.9;">Saldo por cobrar</div>
-        <div style="font-size:1.2rem;font-weight:700;">${formato(fiadoQ)}</div></div>
+      <div style="text-align:right;"><div style="font-size:0.8rem;opacity:0.9;">Saldo por cobrar</div>
+        <div style="font-size:1.2rem;font-weight:800;">${formato(fiadoQ)}</div></div>
     </div>`;
 }
 
-// ---------- NOTIFICACIONES ----------
-function pedirPermisoNotif() {
-  if (!("Notification" in window)) return;
-  if (Notification.permission === "default") {
-    Notification.requestPermission().then(p => {
-      if (p === "granted") notificar("✅ Notificaciones activadas", "Te avisaré de tus quincenas.");
-    });
+// ---------- ALERTAS INTELIGENTES ----------
+function renderAlertasInteligentes() {
+  const el = document.getElementById("alertas-inteligentes");
+  if (!el) return;
+  const alertas = [];
+
+  // 1. Días sin ventas
+  if (datos.ventas.length > 0) {
+    const ultVenta = [...datos.ventas].sort((a,b) => new Date(b.fechaISO||0) - new Date(a.fechaISO||0))[0];
+    const diasSin = Math.floor((new Date() - new Date(ultVenta.fechaISO)) / (1000*60*60*24));
+    if (diasSin >= 3) {
+      alertas.push({ icono: "⚠️", texto: `Llevas <b>${diasSin} días</b> sin registrar ventas`, tipo: "critico" });
+    }
   }
-}
-function notificar(titulo, cuerpo) {
-  if (!("Notification" in window) || Notification.permission !== "granted") return;
-  try { new Notification(titulo, { body: cuerpo }); } catch(e) {}
-}
-function chequearNotificaciones() {
-  const { dias, diaObjetivo, fiadoQ } = proximaQuincena();
-  const clave = `notif-${diaObjetivo}-${dias}`;
-  if (localStorage.getItem(clave) === "true") return;
-  if (dias === 3) { notificar(`📅 Faltan 3 días (día ${diaObjetivo})`, `${formato(fiadoQ)} por cobrar.`); localStorage.setItem(clave, "true"); }
-  else if (dias === 1) { notificar(`⏰ ¡Mañana es la quincena!`, `Cobra ${formato(fiadoQ)}.`); localStorage.setItem(clave, "true"); }
-  else if (dias === 0) { notificar(`🎉 ¡Hoy es la quincena!`, `Cobra ${formato(fiadoQ)}.`); localStorage.setItem(clave, "true"); }
+
+  // 2. Clientes que deben hace mucho
+  const hoy = new Date();
+  const deudasVencidas = [];
+  datos.ventas.filter(v => v.tipo === "quincena" && calcularSaldo(v) > 0).forEach(v => {
+    const dias = Math.floor((hoy - new Date(v.fechaISO||0)) / (1000*60*60*24));
+    if (dias >= 30) deudasVencidas.push({ cliente: v.cliente, dias, monto: calcularSaldo(v) });
+  });
+  if (deudasVencidas.length > 0) {
+    const total = deudasVencidas.reduce((s,d) => s + d.monto, 0);
+    alertas.push({ icono: "🚨", texto: `<b>${deudasVencidas.length} clientes</b> deben hace más de 30 días (${formato(total)})`, tipo: "critico" });
+  }
+
+  // 3. Meta casi cumplida
+  const hoy2 = new Date();
+  const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy2.getMonth()).reduce((s,v) => s + v.precio, 0);
+  if (datos.metas.mensual > 0) {
+    const pct = (ventasMes / datos.metas.mensual) * 100;
+    if (pct >= 80 && pct < 100) alertas.push({ icono: "🎯", texto: `¡Estás al <b>${pct.toFixed(0)}%</b> de tu meta mensual!`, tipo: "info" });
+    else if (pct >= 100) alertas.push({ icono: "🎉", texto: `¡Felicidades! Superaste tu meta mensual`, tipo: "exito" });
+  }
+
+  // 4. Saldo alto por cobrar
+  const saldoTotal = totalSaldoDeudas() + totalSaldoFiadoQ("15") + totalSaldoFiadoQ("30");
+  if (saldoTotal > 100000) {
+    alertas.push({ icono: "💰", texto: `Tienes <b>${formato(saldoTotal)}</b> por cobrar en total`, tipo: "info" });
+  }
+
+  // 5. Productos con poco stock
+  const pocoStock = datos.inventario.filter(i => i.cantidad <= 2 && i.cantidad > 0);
+  if (pocoStock.length > 0) {
+    alertas.push({ icono: "📦", texto: `<b>${pocoStock.length} productos</b> con stock bajo (≤2)`, tipo: "info" });
+  }
+
+  if (alertas.length === 0) { el.innerHTML = ""; return; }
+
+  el.innerHTML = `
+    <div class="alertas-section">
+      <h3>🔔 Alertas inteligentes</h3>
+      ${alertas.map(a => `
+        <div class="alerta-item ${a.tipo}">
+          <div class="icono-a">${a.icono}</div>
+          <div class="texto-a">${a.texto}</div>
+        </div>
+      `).join("")}
+    </div>`;
 }
 
 // ---------- CALENDARIO ----------
@@ -1996,22 +2202,14 @@ function renderCalendario() {
 // ---------- METAS ----------
 function totalVentasMes() {
   const hoy = new Date();
-  return datos.ventas
-    .filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && new Date(v.fechaISO).getFullYear() === hoy.getFullYear())
-    .reduce((s,v) => s + v.precio, 0);
+  return datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && new Date(v.fechaISO).getFullYear() === hoy.getFullYear()).reduce((s,v) => s + v.precio, 0);
 }
 function totalVentasQuincenaActual() {
   const hoy = new Date();
   const dia = hoy.getDate();
   const quincenaActual = dia < 15 ? "15" : "30";
-  return datos.ventas
-    .filter(v => v.tipo === "quincena" && v.quincena === quincenaActual &&
-                 v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth())
-    .reduce((s,v) => s + v.precio, 0) +
-    datos.ventas
-    .filter(v => v.tipo === "contado" && v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() &&
-                 (dia < 15 ? new Date(v.fechaISO).getDate() < 15 : new Date(v.fechaISO).getDate() >= 15))
-    .reduce((s,v) => s + v.precio, 0);
+  return datos.ventas.filter(v => v.tipo === "quincena" && v.quincena === quincenaActual && v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth()).reduce((s,v) => s + v.precio, 0) +
+         datos.ventas.filter(v => v.tipo === "contado" && v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && (dia < 15 ? new Date(v.fechaISO).getDate() < 15 : new Date(v.fechaISO).getDate() >= 15)).reduce((s,v) => s + v.precio, 0);
 }
 function renderMeta(id, titulo, actual, meta) {
   const el = document.getElementById(id);
@@ -2046,18 +2244,103 @@ function renderMetas() {
 function todosLosAbonos() {
   const lista = [];
   datos.deudas.forEach((d,i) => {
-    (d.abonos || []).forEach((a,j) => {
-      lista.push({...a, tipo: "deuda", nombre: d.nombre, concepto: d.nota || "Préstamo", itemIdx: i, abonoIdx: j});
-    });
+    (d.abonos || []).forEach((a,j) => lista.push({...a, tipo: "deuda", nombre: d.nombre, concepto: d.nota || "Préstamo", itemIdx: i, abonoIdx: j}));
   });
   datos.ventas.forEach((v,i) => {
     if (v.tipo === "quincena") {
-      (v.abonos || []).forEach((a,j) => {
-        lista.push({...a, tipo: "venta", nombre: v.cliente, concepto: v.producto, itemIdx: i, abonoIdx: j});
-      });
+      (v.abonos || []).forEach((a,j) => lista.push({...a, tipo: "venta", nombre: v.cliente, concepto: v.producto, itemIdx: i, abonoIdx: j}));
     }
   });
   return lista.sort((a,b) => new Date(b.fechaISO||0) - new Date(a.fechaISO||0));
+}
+
+// ---------- BÚSQUEDA GLOBAL ----------
+function abrirBusquedaGlobal() {
+  document.getElementById("busqueda-input").value = "";
+  document.getElementById("busqueda-resultados").innerHTML = "";
+  document.getElementById("modal-busqueda").classList.add("active");
+  setTimeout(() => document.getElementById("busqueda-input").focus(), 200);
+}
+function ejecutarBusquedaGlobal() {
+  const q = document.getElementById("busqueda-input").value.toLowerCase().trim();
+  const el = document.getElementById("busqueda-resultados");
+  if (!q) { el.innerHTML = ""; return; }
+  const resultados = [];
+  datos.ventas.forEach(v => {
+    if (v.producto.toLowerCase().includes(q) || v.cliente.toLowerCase().includes(q)) {
+      resultados.push({ icono: "🛒", titulo: v.producto, detalle: `Cliente: ${v.cliente} · ${formato(v.precio)}`, tipo: "Venta" });
+    }
+  });
+  datos.deudas.forEach(d => {
+    if (d.nombre.toLowerCase().includes(q)) resultados.push({ icono: "📋", titulo: d.nombre, detalle: `Debe: ${formato(calcularSaldo(d))}`, tipo: "Deuda" });
+  });
+  datos.inventario.forEach(i => {
+    if (i.producto.toLowerCase().includes(q)) resultados.push({ icono: "📦", titulo: i.producto, detalle: `Precio: ${formato(i.precio)} · Stock: ${i.cantidad}`, tipo: "Inventario" });
+  });
+  datos.gastos.forEach(g => {
+    if (g.descripcion.toLowerCase().includes(q)) resultados.push({ icono: "💸", titulo: g.descripcion, detalle: `${formato(g.monto)} · ${g.fecha}`, tipo: "Gasto" });
+  });
+  if (resultados.length === 0) el.innerHTML = '<div class="vacio">Sin resultados</div>';
+  else el.innerHTML = resultados.slice(0, 30).map(r => `
+    <div class="card" style="border-left-color:var(--gold);margin-bottom:8px;">
+      <div class="info">
+        <div class="titulo">${r.icono} ${r.titulo} <span class="categoria-tag">${r.tipo}</span></div>
+        <div class="detalle">${r.detalle}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+// ---------- CIERRE DEL DÍA ----------
+function abrirCierreDia() {
+  const hoy = new Date();
+  const hoyStr = hoy.toLocaleDateString("es-CO");
+  const ventasHoy = datos.ventas.filter(v => v.fecha && v.fecha.startsWith(hoyStr));
+  const gastosHoy = datos.gastos.filter(g => g.fecha && g.fecha.startsWith(hoyStr));
+  const abonosHoy = todosLosAbonos().filter(a => a.fecha && a.fecha.startsWith(hoyStr));
+
+  const totalVentas = ventasHoy.reduce((s,v) => s + v.precio, 0);
+  const totalContado = ventasHoy.filter(v => v.tipo==="contado").reduce((s,v) => s + v.precio, 0);
+  const totalFiado = ventasHoy.filter(v => v.tipo==="quincena").reduce((s,v) => s + v.precio, 0);
+  const ganancia = ventasHoy.reduce((s,v) => s + (v.precio - v.costo), 0);
+  const totalGastos = gastosHoy.reduce((s,g) => s + g.monto, 0);
+  const totalAbonos = abonosHoy.reduce((s,a) => s + a.monto, 0);
+  const balance = ganancia - totalGastos;
+
+  document.getElementById("cierre-dia-contenido").innerHTML = `
+    <div class="recibo-header">
+      <div class="logo-recibo">EMMA</div>
+      <div class="sub-recibo">STUDIO</div>
+    </div>
+    <div class="recibo-tipo">📊 CIERRE DEL DÍA</div>
+    <div class="recibo-linea"><span>Fecha:</span><b>${hoyStr}</b></div>
+    <div class="recibo-linea"><span>Hora:</span><b>${hoy.toLocaleTimeString("es-CO")}</b></div>
+    <div style="margin-top:14px;">
+      <div class="recibo-linea"><span>Número de ventas:</span><b>${ventasHoy.length}</b></div>
+      <div class="recibo-linea"><span>Total ventas:</span><b>${formato(totalVentas)}</b></div>
+      <div class="recibo-linea" style="padding-left:20px;"><span>💵 Contado:</span><b>${formato(totalContado)}</b></div>
+      <div class="recibo-linea" style="padding-left:20px;"><span>⏳ Fiado:</span><b>${formato(totalFiado)}</b></div>
+      <div class="recibo-linea"><span>Ganancia:</span><b style="color:#27ae60;">${formato(ganancia)}</b></div>
+      <div class="recibo-linea"><span>Gastos del día:</span><b style="color:#e74c3c;">-${formato(totalGastos)}</b></div>
+      <div class="recibo-linea"><span>Abonos recibidos:</span><b style="color:#27ae60;">${formato(totalAbonos)}</b></div>
+    </div>
+    <div class="recibo-total">
+      <div class="lbl">Balance del día</div>
+      <div class="val" style="color:${balance >= 0 ? '#27ae60' : '#e74c3c'};">${formato(balance)}</div>
+    </div>
+    <div class="firma">Generado por Emma Studio</div>
+  `;
+  ultimoCierreDia = { fecha: hoyStr, totalVentas, totalContado, totalFiado, ganancia, totalGastos, totalAbonos, balance };
+  document.getElementById("modal-cierre-dia").classList.add("active");
+}
+function compartirCierreDiaWsp() {
+  if (!ultimoCierreDia) return;
+  const c = ultimoCierreDia;
+  const msg = `📊 *CIERRE DEL DÍA*\n🏪 *Emma Studio*\n🗓️ ${c.fecha}\n━━━━━━━━━━━━━━\n` +
+              `Ventas: ${formato(c.totalVentas)}\n💵 Contado: ${formato(c.totalContado)}\n⏳ Fiado: ${formato(c.totalFiado)}\n` +
+              `💰 Ganancia: ${formato(c.ganancia)}\n💸 Gastos: ${formato(c.totalGastos)}\n💵 Abonos: ${formato(c.totalAbonos)}\n` +
+              `━━━━━━━━━━━━━━\n📈 *Balance: ${formato(c.balance)}*`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
 // ---------- REPORTE MENSUAL ----------
@@ -2066,12 +2349,9 @@ function abrirReporteMensual() {
   const mesActual = hoy.getMonth();
   const anioActual = hoy.getFullYear();
   const nombreMes = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"][mesActual];
-
   const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === mesActual && new Date(v.fechaISO).getFullYear() === anioActual);
   const gastosMes = datos.gastos.filter(g => g.fechaISO && new Date(g.fechaISO).getMonth() === mesActual && new Date(g.fechaISO).getFullYear() === anioActual);
   const abonosMes = todosLosAbonos().filter(a => a.fechaISO && new Date(a.fechaISO).getMonth() === mesActual && new Date(a.fechaISO).getFullYear() === anioActual);
-  const quincenasMes = datos.quincenas.filter(h => new Date(h.fecha.split(",")[0].split("/").reverse().join("-")).getMonth() === mesActual);
-
   const totalVentas = ventasMes.reduce((s,v) => s + v.precio, 0);
   const totalContado = ventasMes.filter(v => v.tipo==="contado").reduce((s,v) => s + v.precio, 0);
   const totalFiado = ventasMes.filter(v => v.tipo==="quincena").reduce((s,v) => s + v.precio, 0);
@@ -2079,12 +2359,9 @@ function abrirReporteMensual() {
   const totalGastos = gastosMes.reduce((s,g) => s + g.monto, 0);
   const totalAbonos = abonosMes.reduce((s,a) => s + a.monto, 0);
   const balance = gananciaTotal - totalGastos;
-
-  // Top categorías
   const catVentas = {};
   ventasMes.forEach(v => { const c = v.categoria || "General"; catVentas[c] = (catVentas[c] || 0) + v.precio; });
   const topCat = Object.entries(catVentas).sort((a,b) => b[1]-a[1]).slice(0,5);
-
   const catGastos = {};
   gastosMes.forEach(g => { const c = g.categoria || "Otros"; catGastos[c] = (catGastos[c] || 0) + g.monto; });
   const topCatG = Object.entries(catGastos).sort((a,b) => b[1]-a[1]).slice(0,5);
@@ -2094,13 +2371,11 @@ function abrirReporteMensual() {
       <h2 style="margin:0;border:none;font-size:1.5rem;">📊 Reporte de ${nombreMes} ${anioActual}</h2>
       <div style="color:var(--text-soft);font-size:0.9rem;">Generado: ${new Date().toLocaleString("es-CO")}</div>
     </div>
-
-    <div style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:16px;border-radius:10px;margin-bottom:16px;text-align:center;">
-      <div style="font-size:0.9rem;opacity:0.9;">BALANCE DEL MES</div>
+    <div style="background:linear-gradient(135deg,#1a1a1a,#2c2c2c);color:white;padding:18px;border-radius:14px;margin-bottom:16px;text-align:center;border:2px solid var(--gold);">
+      <div style="font-size:0.85rem;opacity:0.9;color:var(--gold-soft);letter-spacing:1px;">BALANCE DEL MES</div>
       <div style="font-size:2rem;font-weight:800;">${formato(balance)}</div>
       <div style="font-size:0.85rem;opacity:0.9;margin-top:4px;">${balance >= 0 ? "🎉 Positivo" : "⚠️ Negativo"}</div>
     </div>
-
     <h3 style="font-size:1rem;margin:16px 0 8px;">💰 Ventas</h3>
     <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
       <tr><td style="padding:6px 0;">Total ventas</td><td style="text-align:right;font-weight:700;">${formato(totalVentas)}</td></tr>
@@ -2109,33 +2384,20 @@ function abrirReporteMensual() {
       <tr><td style="padding:6px 0;">Número de ventas</td><td style="text-align:right;">${ventasMes.length}</td></tr>
       <tr style="border-top:1px solid var(--border);"><td style="padding:8px 0;font-weight:700;">Ganancia</td><td style="text-align:right;color:#27ae60;font-weight:700;">${formato(gananciaTotal)}</td></tr>
     </table>
-
     <h3 style="font-size:1rem;margin:16px 0 8px;">💵 Abonos recibidos</h3>
     <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
       <tr><td style="padding:6px 0;">Total abonado</td><td style="text-align:right;color:#27ae60;font-weight:700;">${formato(totalAbonos)}</td></tr>
       <tr><td style="padding:6px 0;">Número de abonos</td><td style="text-align:right;">${abonosMes.length}</td></tr>
     </table>
-
     <h3 style="font-size:1rem;margin:16px 0 8px;">💸 Gastos</h3>
     <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
       <tr><td style="padding:6px 0;">Total gastos</td><td style="text-align:right;color:#e74c3c;font-weight:700;">${formato(totalGastos)}</td></tr>
       <tr><td style="padding:6px 0;">Número de gastos</td><td style="text-align:right;">${gastosMes.length}</td></tr>
     </table>
-
-    ${topCat.length > 0 ? `
-      <h3 style="font-size:1rem;margin:16px 0 8px;">🏆 Top categorías vendidas</h3>
-      ${topCat.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;">
-        <span>${c}</span><span style="font-weight:700;">${formato(v)}</span>
-      </div>`).join("")}
-    ` : ""}
-
-    ${topCatG.length > 0 ? `
-      <h3 style="font-size:1rem;margin:16px 0 8px;">🏷️ Top categorías de gastos</h3>
-      ${topCatG.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;">
-        <span>${c}</span><span style="font-weight:700;color:#e74c3c;">${formato(v)}</span>
-      </div>`).join("")}
-    ` : ""}
-
+    ${topCat.length > 0 ? `<h3 style="font-size:1rem;margin:16px 0 8px;">🏆 Top categorías vendidas</h3>
+      ${topCat.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;"><span>${c}</span><span style="font-weight:700;">${formato(v)}</span></div>`).join("")}` : ""}
+    ${topCatG.length > 0 ? `<h3 style="font-size:1rem;margin:16px 0 8px;">🏷️ Top categorías de gastos</h3>
+      ${topCatG.map(([c,v]) => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.9rem;"><span>${c}</span><span style="font-weight:700;color:#e74c3c;">${formato(v)}</span></div>`).join("")}` : ""}
     <h3 style="font-size:1rem;margin:16px 0 8px;">📋 Situación actual</h3>
     <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
       <tr><td style="padding:6px 0;">Saldo por cobrar (deudas)</td><td style="text-align:right;color:#e74c3c;font-weight:700;">${formato(totalSaldoDeudas())}</td></tr>
@@ -2144,12 +2406,19 @@ function abrirReporteMensual() {
       <tr><td style="padding:6px 0;">Valor inventario</td><td style="text-align:right;font-weight:700;">${formato(datos.inventario.reduce((s,i)=>s+(i.costo*i.cantidad),0))}</td></tr>
       <tr><td style="padding:6px 0;">Capital actual</td><td style="text-align:right;font-weight:700;">${formato(datos.capital)}</td></tr>
     </table>
-
-    <div style="margin-top:24px;text-align:center;color:var(--text-soft);font-size:0.8rem;">
-      Mi Negocio · Reporte generado automáticamente
-    </div>
+    <div style="margin-top:24px;text-align:center;color:var(--text-soft);font-size:0.8rem;">Emma Studio · Reporte generado automáticamente</div>
   `;
+  window._ultimoReporte = { nombreMes, anioActual, balance, totalVentas, gananciaTotal, totalGastos, totalAbonos };
   document.getElementById("modal-reporte").classList.add("active");
+}
+function compartirReporteWsp() {
+  if (!window._ultimoReporte) return;
+  const r = window._ultimoReporte;
+  const msg = `📊 *REPORTE ${r.nombreMes.toUpperCase()} ${r.anioActual}*\n🏪 *Emma Studio*\n━━━━━━━━━━━━━━\n` +
+              `💰 Ventas: ${formato(r.totalVentas)}\n📈 Ganancia: ${formato(r.gananciaTotal)}\n` +
+              `💸 Gastos: ${formato(r.totalGastos)}\n💵 Abonos: ${formato(r.totalAbonos)}\n` +
+              `━━━━━━━━━━━━━━\n📊 *Balance: ${formato(r.balance)}*`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
 
 // ---------- RENDER ----------
@@ -2167,13 +2436,11 @@ function renderTodo() {
     .filter(g => g.fechaISO && new Date(g.fechaISO).getMonth() === hoy.getMonth() && new Date(g.fechaISO).getFullYear() === hoy.getFullYear())
     .reduce((s,g) => s + g.monto, 0);
   document.getElementById("r-gastos").textContent = formato(gastosMes);
-
   const abonos = todosLosAbonos();
   const abonadoMes = abonos
     .filter(a => a.fechaISO && new Date(a.fechaISO).getMonth() === hoy.getMonth() && new Date(a.fechaISO).getFullYear() === hoy.getFullYear())
     .reduce((s,a) => s + a.monto, 0);
   document.getElementById("r-abonado").textContent = formato(abonadoMes);
-
   const ventasMes = datos.ventas
     .filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth())
     .reduce((s,v) => s + (v.precio - v.costo), 0);
@@ -2182,7 +2449,6 @@ function renderTodo() {
   elBal.textContent = formato(balance);
   elBal.className = "val " + (balance >= 0 ? "verde" : "rojo");
 
-  // Últimas ventas
   const ult = document.getElementById("ultimas-ventas");
   if (datos.ventas.length === 0) ult.innerHTML = '<div class="vacio">Aún no hay ventas</div>';
   else ult.innerHTML = datos.ventas.slice(-5).reverse().map(v => `
@@ -2326,7 +2592,6 @@ function renderTodo() {
   document.getElementById("a-mes").textContent = formato(abonadoMes);
   document.getElementById("a-anio").textContent = formato(abonadoAnio);
   document.getElementById("a-count").textContent = abonos.length;
-
   const la = document.getElementById("lista-abonos-todos");
   if (abonosFiltrados.length === 0) la.innerHTML = '<div class="vacio">Sin abonos</div>';
   else la.innerHTML = abonosFiltrados.slice(0, 100).map(a => `
@@ -2381,6 +2646,7 @@ function renderTodo() {
 
   renderAviso();
   renderMetas();
+  renderAlertasInteligentes();
 }
 
 // ---------- GRÁFICOS ----------
@@ -2419,7 +2685,27 @@ function renderCharts() {
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
 
-  // Abonos
+  // Tendencia 6 meses
+  const meses = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+  const hoy = new Date();
+  const datosMeses = [];
+  const labelsMeses = [];
+  for (let i=5; i>=0; i--) {
+    const d = new Date(hoy.getFullYear(), hoy.getMonth()-i, 1);
+    labelsMeses.push(meses[d.getMonth()]);
+    const total = datos.ventas
+      .filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === d.getMonth() && new Date(v.fechaISO).getFullYear() === d.getFullYear())
+      .reduce((s,v) => s + (v.precio - v.costo), 0);
+    datosMeses.push(total);
+  }
+  if (charts.tendencia) charts.tendencia.destroy();
+  charts.tendencia = new Chart(document.getElementById("chart-tendencia"), {
+    type: "line",
+    data: { labels: labelsMeses, datasets: [{ label: "Ganancia", data: datosMeses, borderColor: "#c9a227", backgroundColor: "rgba(201,162,39,0.2)", fill: true, tension: 0.4 }] },
+    options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
+      scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
+  });
+
   const diasAbonos = {};
   for (let i=6; i>=0; i--) { const d = new Date(); d.setDate(d.getDate()-i); diasAbonos[d.toLocaleDateString("es-CO")] = 0; }
   todosLosAbonos().forEach(a => {
@@ -2430,38 +2716,26 @@ function renderCharts() {
   if (charts.abonos) charts.abonos.destroy();
   charts.abonos = new Chart(document.getElementById("chart-abonos"), {
     type: "bar",
-    data: { labels: Object.keys(diasAbonos), datasets: [{ label: "Abonos", data: Object.values(diasAbonos), backgroundColor: "#667eea" }] },
+    data: { labels: Object.keys(diasAbonos), datasets: [{ label: "Abonos", data: Object.values(diasAbonos), backgroundColor: "#c9a227" }] },
     options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
 
-  // Evolución de deudas
-  const totalOriginal = datos.deudas.reduce((s,d) => s + d.monto, 0) +
-                        datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + v.precio, 0);
-  const totalAbonado = datos.deudas.reduce((s,d) => s + calcularAbonado(d), 0) +
-                       datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + calcularAbonado(v), 0);
-  const totalSaldo = datos.deudas.reduce((s,d) => s + calcularSaldo(d), 0) +
-                     datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + calcularSaldo(v), 0);
+  const totalOriginal = datos.deudas.reduce((s,d) => s + d.monto, 0) + datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + v.precio, 0);
+  const totalAbonado = datos.deudas.reduce((s,d) => s + calcularAbonado(d), 0) + datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + calcularAbonado(v), 0);
+  const totalSaldo = datos.deudas.reduce((s,d) => s + calcularSaldo(d), 0) + datos.ventas.filter(v => v.tipo==="quincena").reduce((s,v) => s + calcularSaldo(v), 0);
   if (charts.deudas) charts.deudas.destroy();
   charts.deudas = new Chart(document.getElementById("chart-deudas"), {
     type: "bar",
-    data: {
-      labels: ["Deuda original", "Abonado", "Saldo pendiente"],
-      datasets: [{
-        data: [totalOriginal, totalAbonado, totalSaldo],
-        backgroundColor: ["#667eea", "#27ae60", "#e74c3c"]
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { display: false } },
-      scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } }
-    }
+    data: { labels: ["Deuda original", "Abonado", "Saldo pendiente"],
+      datasets: [{ data: [totalOriginal, totalAbonado, totalSaldo], backgroundColor: ["#c9a227", "#27ae60", "#e74c3c"] }] },
+    options: { responsive: true, plugins: { legend: { display: false } },
+      scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
 
   const cats = {};
   datos.ventas.forEach(v => { const c = v.categoria || "General"; cats[c] = (cats[c] || 0) + v.precio; });
-  const colores = ["#667eea","#27ae60","#e67e22","#e74c3c","#9b59b6","#3498db","#f39c12","#1abc9c","#e91e63","#95a5a6"];
+  const colores = ["#c9a227","#27ae60","#e67e22","#e74c3c","#9b59b6","#3498db","#f39c12","#1abc9c","#e91e63","#95a5a6"];
   if (charts.categorias) charts.categorias.destroy();
   charts.categorias = new Chart(document.getElementById("chart-categorias"), {
     type: "pie",
@@ -2482,7 +2756,7 @@ function renderCharts() {
   charts.quincenas = new Chart(document.getElementById("chart-quincenas"), {
     type: "line",
     data: { labels: qLabels.length ? qLabels : ["Sin datos"],
-      datasets: [{ label: "Restante", data: qVal.length ? qVal : [0], borderColor: "#27ae60", backgroundColor: "rgba(39,174,96,0.2)", fill: true, tension: 0.3 }] },
+      datasets: [{ label: "Restante", data: qVal.length ? qVal : [0], borderColor: "#c9a227", backgroundColor: "rgba(201,162,39,0.2)", fill: true, tension: 0.3 }] },
     options: { responsive: true, plugins: { legend: { labels: { color: textColor } } },
       scales: { y: { ticks: { color: textColor }, grid: { color: gridColor } }, x: { ticks: { color: textColor }, grid: { color: gridColor } } } }
   });
@@ -2494,13 +2768,12 @@ function exportar() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `respaldo-negocio-${new Date().toISOString().slice(0,10)}.json`;
+  a.download = `respaldo-emma-${new Date().toISOString().slice(0,10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }
 function importar(ev) {
-  const file = ev.target.files[0];
-  if (!file) return;
+  const file = ev.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = (e) => {
     try {
@@ -2535,27 +2808,44 @@ if (localStorage.getItem("modoOscuro") === "true") {
   document.getElementById("dark-btn").textContent = "☀️";
 }
 
+// ---------- NOTIFICACIONES ----------
+function pedirPermisoNotif() {
+  if (!("Notification" in window)) return;
+  if (Notification.permission === "default") {
+    Notification.requestPermission().then(p => {
+      if (p === "granted") notificar("✅ Notificaciones activadas", "Te avisaré de tus quincenas.");
+    });
+  }
+}
+function notificar(titulo, cuerpo) {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+  try { new Notification(titulo, { body: cuerpo }); } catch(e) {}
+}
+function chequearNotificaciones() {
+  const { dias, diaObjetivo, fiadoQ } = proximaQuincena();
+  const clave = `notif-${diaObjetivo}-${dias}`;
+  if (localStorage.getItem(clave) === "true") return;
+  if (dias === 3) { notificar(`📅 Faltan 3 días (día ${diaObjetivo})`, `${formato(fiadoQ)} por cobrar.`); localStorage.setItem(clave, "true"); }
+  else if (dias === 1) { notificar(`⏰ ¡Mañana es la quincena!`, `Cobra ${formato(fiadoQ)}.`); localStorage.setItem(clave, "true"); }
+  else if (dias === 0) { notificar(`🎉 ¡Hoy es la quincena!`, `Cobra ${formato(fiadoQ)}.`); localStorage.setItem(clave, "true"); }
+}
+
 // ---------- PWA ----------
 function generarIconoSVG() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#667eea"/><stop offset="100%" stop-color="#764ba2"/>
+      <stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#c9a227"/>
     </linearGradient></defs>
     <rect width="512" height="512" rx="100" fill="url(#g)"/>
-    <g transform="translate(256,240)">
-      <path d="M -100 -40 Q -120 100 -80 140 Q -40 170 0 170 Q 40 170 80 140 Q 120 100 100 -40 Z" fill="#ffffff" opacity="0.95"/>
-      <path d="M -60 -40 Q -50 -100 -30 -110 L -10 -110 Q -30 -60 -30 -40 Z" fill="#f39c12"/>
-      <path d="M 60 -40 Q 50 -100 30 -110 L 10 -110 Q 30 -60 30 -40 Z" fill="#f39c12"/>
-      <circle cx="0" cy="40" r="55" fill="#f39c12"/>
-      <text x="0" y="65" font-size="90" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">$</text>
-    </g></svg>`;
+    <text x="50%" y="58%" font-size="220" font-weight="900" fill="#fff" text-anchor="middle" dominant-baseline="middle" font-family="Georgia">E</text>
+  </svg>`;
 }
 const iconoBase64 = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(generarIconoSVG())));
 document.getElementById("favicon-link").href = iconoBase64;
 const manifest = {
-  name: "Mi Negocio", short_name: "Mi Negocio",
+  name: "Emma Studio", short_name: "Emma Studio",
   start_url: ".", display: "standalone",
-  background_color: "#667eea", theme_color: "#667eea",
+  background_color: "#1a1a1a", theme_color: "#1a1a1a",
   icons: [
     { src: iconoBase64, sizes: "192x192", type: "image/svg+xml", purpose: "any" },
     { src: iconoBase64, sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
@@ -2568,7 +2858,8 @@ let deferredPrompt = null;
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  document.getElementById("install-btn").style.display = "block";
+  const btn = document.getElementById("install-btn");
+  if (btn) { btn.style.display = "block"; btn.classList.add("pulse"); }
 });
 function instalarPWA() {
   if (deferredPrompt) {
@@ -2582,18 +2873,15 @@ function instalarPWA() {
   }
 }
 window.addEventListener("appinstalled", () => {
-  document.getElementById("install-btn").style.display = "none";
+  const btn = document.getElementById("install-btn");
+  if (btn) btn.style.display = "none";
 });
 
-document.getElementById("login-pass").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") hacerLogin();
-});
-document.getElementById("login-email").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") document.getElementById("login-pass").focus();
-});
-document.getElementById("abono-monto").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") confirmarAbono();
-});
+// ---------- EVENTOS ----------
+document.getElementById("login-pass").addEventListener("keypress", (e) => { if (e.key === "Enter") hacerLogin(); });
+document.getElementById("login-email").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("login-pass").focus(); });
+const abonoMonto = document.getElementById("abono-monto");
+if (abonoMonto) abonoMonto.addEventListener("keypress", (e) => { if (e.key === "Enter") confirmarAbono(); });
 </script>
 </body>
 </html>
