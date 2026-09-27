@@ -522,7 +522,9 @@
   }
 </style>
 </head>
-  
+<body>
+
+
 <div class="toast-container" id="toast-container"></div>
 
 <div class="login-screen" id="login-screen">
@@ -1017,8 +1019,8 @@
 <div class="modal" id="modal-notif"><div class="modal-contenido"><h3>🔔 Notificaciones</h3><div id="notif-contenido"></div><div style="margin-top:16px;"><button class="btn gris" onclick="cerrarModal('modal-notif')">Cerrar</button></div></div></div>
 
 <script>
-<body>
-  function mostrarToast(mensaje, tipo = "info", titulo = null) {
+
+function mostrarToast(mensaje, tipo = "info", titulo = null) {
   const config = { exito: { icono: "✅" }, error: { icono: "❌" }, info: { icono: "ℹ️" }, warn: { icono: "⚠️" } };
   const { icono } = config[tipo] || config.info;
   const cont = document.getElementById("toast-container");
