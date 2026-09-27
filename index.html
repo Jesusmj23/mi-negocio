@@ -1461,8 +1461,8 @@ let datos = {
   responsabilidades: { recibos:0, comida:0, arriendo:0, otros:0 },
   eventos: [],
   pagosPendientes: [],
-  llavesPago: { nequi: "", daviplata: "", bancolombia: "", otro: "" },
-  qrRealBanco: null
+ llavesPago: { nequi: "", daviplata: "", bancolombia: "", otro: "" },
+qrsBancos: {}
 };
 let charts = { tipos:null, ganancia:null, tendencia:null, abonos:null, deudas:null, categorias:null, catGastos:null, quincenas:null };
 let usuarioId = null;
@@ -1708,6 +1708,7 @@ function migrarDatos() {
   if (!datos.responsabilidades) datos.responsabilidades = { recibos:0, comida:0, arriendo:0, otros:0 };
   if (!datos.pagosPendientes) datos.pagosPendientes = [];
   if (!datos.llavesPago) datos.llavesPago = { nequi: "", daviplata: "", bancolombia: "", otro: "" };
+if (!datos.qrsBancos) datos.qrsBancos = {};
   datos.deudas.forEach(d => { if (!d.abonos) d.abonos = []; });
   datos.ventas.forEach(v => { if (!v.abonos) v.abonos = []; if (!v.metodoPago) v.metodoPago = "efectivo"; });
 }
