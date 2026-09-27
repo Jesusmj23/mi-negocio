@@ -677,6 +677,150 @@ body.dark .qr-entity-preview {
   color: var(--orange);
   font-weight: 600;
 }
+    /* ═══ PANEL DE ENVÍO PEGADO AL QR ═══ */
+.qr-enviar-panel {
+  margin-top: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fb, #fff);
+  border-radius: 16px;
+  border: 2px solid var(--gold);
+  box-shadow: 0 4px 20px rgba(201,162,39,0.1);
+}
+body.dark .qr-enviar-panel {
+  background: linear-gradient(135deg, #1a1a1f, #22222a);
+}
+
+.qr-enviar-titulo {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--text-strong);
+  margin-bottom: 14px;
+  text-align: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: 0.5px;
+}
+
+.qr-enviar-botones {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 640px) {
+  .qr-enviar-botones {
+    grid-template-columns: 1fr 1fr;
+  }
+  .btn-enviar-qr.wsp-principal {
+    grid-column: 1 / -1;
+  }
+}
+
+.btn-enviar-qr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.btn-enviar-qr:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.btn-enviar-qr:active {
+  transform: scale(0.98);
+}
+
+.btn-enviar-qr .btn-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.btn-enviar-qr .btn-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.btn-enviar-qr .btn-text b {
+  font-size: 0.92rem;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-enviar-qr .btn-text small {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botón principal (imagen por WhatsApp) */
+.btn-enviar-qr.wsp-principal {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  padding: 18px 20px;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+}
+.btn-enviar-qr.wsp-principal:hover {
+  box-shadow: 0 8px 24px rgba(37,211,102,0.5);
+}
+.btn-enviar-qr.wsp-principal .btn-icon {
+  font-size: 2rem;
+}
+.btn-enviar-qr.wsp-principal .btn-text b {
+  font-size: 1rem;
+}
+
+/* Botón secundario (solo texto) */
+.btn-enviar-qr.wsp-texto {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  color: #0d47a1;
+}
+body.dark .btn-enviar-qr.wsp-texto {
+  background: linear-gradient(135deg, #1a3a5c, #0d2a45);
+  color: #90caf9;
+}
+
+/* Botón descarga */
+.btn-enviar-qr.descarga {
+  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+  color: #555;
+}
+body.dark .btn-enviar-qr.descarga {
+  background: linear-gradient(135deg, #2a2a30, #1a1a1f);
+  color: #ccc;
+}
+
+/* Nota importante que aparece debajo del QR */
+.qr-enviar-nota {
+  margin-top: 14px;
+  padding: 12px;
+  background: #fff9e6;
+  border-left: 4px solid var(--gold);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+body.dark .qr-enviar-nota {
+  background: #2a2410;
+}
 
 /* Responsive: 2 columnas en móvil */
 @media (max-width: 700px) {
@@ -1168,9 +1312,6 @@ body.dark .qr-entity-preview {
   </div>
 
   <button class="btn verde" onclick="generarQRPago()">🔲 Generar cobro</button>
-  <button class="btn azul" onclick="compartirQRWsp()" id="btn-qr-wsp" style="display:none;">📤 Enviar por WhatsApp</button>
-  <button class="btn morado" onclick="compartirQRImagenWsp()" id="btn-qr-img-wsp" style="display:none;">🖼️ Enviar imagen por WhatsApp</button>
-  <button class="btn gris" onclick="descargarQRImagen()" id="btn-qr-descargar" style="display:none;">⬇️ Descargar imagen</button>
 
   <div id="qr-preview"></div>
 
@@ -2472,29 +2613,40 @@ function generarQRPago() {
   }
 
   const L = datos.llavesPago || {};
+  const info = ENTIDADES[entidad];
   const referencia = generarReferencia();
+  const llaveEntidad = L[entidad] || "";
 
   // Texto del QR referencial
   let textoQR = `🏪 EMMA STUDIO\n👤 Cliente: ${cliente}\n💵 Monto: ${formato(monto)}\n📝 ${concepto}\n🔖 Ref: ${referencia}\n\n💰 PAGAR A:\n`;
-  const llaveEntidad = L[entidad] || "";
-  textoQR += `${ENTIDADES[entidad].icono} ${ENTIDADES[entidad].nombre}: ${llaveEntidad || "Ver QR"}\n`;
+  textoQR += `${info.icono} ${info.nombre}: ${llaveEntidad || "Ver QR"}\n`;
   textoQR += `\n⚠️ Envía el comprobante a Emma Studio`;
 
-  // Renderizar QR (solo el de la entidad elegida + referencial)
+  // Guardar cobro en pendientes
+  datos.pagosPendientes = datos.pagosPendientes || [];
+  datos.pagosPendientes.push({
+    id: referencia, cliente, monto, concepto,
+    referencia, textoQR, entidad,
+    fecha: new Date().toISOString(),
+    estado: "pendiente"
+  });
+  ultimoQRGenerado = { referencia, cliente, monto, textoQR, concepto, entidad };
+
+  // Renderizar QR + botones de envío pegados
   const contenedor = document.getElementById("qr-preview");
   contenedor.innerHTML = `
     <div class="entidad-badge" style="margin-top:16px;">
-      ${ENTIDADES[entidad].icono} Cobrando por ${ENTIDADES[entidad].nombre}
+      ${info.icono} Cobrando por ${info.nombre}
     </div>
-    <div class="qr-dual-box">
+    <div class="qr-dual-box" id="qr-dual-para-imagen">
       <div>
         <div class="qr-dual-title principal">💳 ESCANEA Y PAGA</div>
         <div class="qr-real-container">
-          <div class="qr-real-badge">${ENTIDADES[entidad].icono} ${ENTIDADES[entidad].nombre.toUpperCase()}</div>
-          <img src="${datos.qrsBancos[entidad]}" alt="QR ${ENTIDADES[entidad].nombre}">
+          <div class="qr-real-badge">${info.icono} ${info.nombre.toUpperCase()}</div>
+          <img src="${datos.qrsBancos[entidad]}" alt="QR ${info.nombre}">
         </div>
         <div class="qr-dual-note">
-          <b>QR real de ${ENTIDADES[entidad].nombre}.</b><br>
+          <b>QR real de ${info.nombre}.</b><br>
           El cliente lo escanea desde su app bancaria.
         </div>
       </div>
@@ -2508,6 +2660,34 @@ function generarQRPago() {
         </div>
       </div>
     </div>
+
+    <!-- ═══ BOTONES DE ENVÍO PEGADOS AL QR ═══ -->
+    <div class="qr-enviar-panel">
+      <div class="qr-enviar-titulo">📤 Enviar este cobro a ${cliente}</div>
+      <div class="qr-enviar-botones">
+        <button class="btn-enviar-qr wsp-principal" onclick="enviarQRImagenCliente()">
+          <span class="btn-icon">🖼️</span>
+          <span class="btn-text">
+            <b>Enviar imagen por WhatsApp</b>
+            <small>Con el QR y la referencia</small>
+          </span>
+        </button>
+        <button class="btn-enviar-qr wsp-texto" onclick="compartirQRWsp()">
+          <span class="btn-icon">💬</span>
+          <span class="btn-text">
+            <b>Solo texto por WhatsApp</b>
+            <small>Datos para transferir sin imagen</small>
+          </span>
+        </button>
+        <button class="btn-enviar-qr descarga" onclick="descargarQRImagen()">
+          <span class="btn-icon">⬇️</span>
+          <span class="btn-text">
+            <b>Descargar imagen</b>
+            <small>Guardar en tu galería</small>
+          </span>
+        </button>
+      </div>
+    </div>
   `;
 
   QRCode.toCanvas(document.getElementById("qr-canvas"), textoQR, {
@@ -2515,24 +2695,9 @@ function generarQRPago() {
     color: { dark: "#1a1a1a", light: "#ffffff" }
   }, (err) => {
     if (err) { console.error(err); return mostrarToast("Error al generar el QR", "error"); }
-
-    datos.pagosPendientes = datos.pagosPendientes || [];
-    datos.pagosPendientes.push({
-      id: referencia, cliente, monto, concepto,
-      referencia, textoQR, entidad,
-      fecha: new Date().toISOString(),
-      estado: "pendiente"
-    });
-
-    ultimoQRGenerado = { referencia, cliente, monto, textoQR, concepto, entidad };
-
     guardar();
     renderPagosPendientes();
-    document.getElementById("btn-qr-wsp").style.display = "inline-block";
-    document.getElementById("btn-qr-img-wsp").style.display = "inline-block";
-    document.getElementById("btn-qr-descargar").style.display = "inline-block";
-
-    mostrarToast(`Cobro generado para ${cliente}\nVía ${ENTIDADES[entidad].nombre}\nRef: ${referencia}`, "exito");
+    mostrarToast(`Cobro generado para ${cliente}\nVía ${info.nombre}`, "exito");
   });
 }
 
@@ -2561,7 +2726,165 @@ function compartirQRWsp() {
 
   window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
 }
+/* ────────── ENVIAR QR COMO IMAGEN AL CLIENTE ────────── */
+async function enviarQRImagenCliente() {
+  if (!ultimoQRGenerado) return mostrarToast("Genera primero un cobro", "warn");
+  
+  const dualBox = document.getElementById("qr-dual-para-imagen");
+  if (!dualBox) return mostrarToast("No se encontró el QR para generar imagen", "error");
 
+  const { cliente, monto, referencia, entidad, concepto } = ultimoQRGenerado;
+  const info = ENTIDADES[entidad];
+  const L = datos.llavesPago || {};
+  const llave = L[entidad] || "";
+
+  try {
+    mostrarEstadoSync("cargando", "Generando imagen...");
+    
+    // 1. Capturar el QR dual
+    await cargarHtml2Canvas();
+    const canvasQR = await html2canvas(dualBox, {
+      backgroundColor: "#ffffff",
+      scale: 2,
+      useCORS: true,
+      logging: false
+    });
+    const qrDataUrl = canvasQR.toDataURL("image/png");
+
+    // 2. Crear un contenedor temporal con el QR + info completa
+    const temp = document.createElement("div");
+    temp.style.cssText = "position:fixed;left:-9999px;top:0;width:520px;background:white;font-family:'Inter',Arial,sans-serif;color:#1a1a1a;padding:0;";
+    temp.innerHTML = `
+      <div style="background:linear-gradient(135deg,#1a1a1a,#2c2c2c);padding:24px;text-align:center;">
+        <div style="font-family:Georgia,serif;font-size:2rem;font-weight:900;letter-spacing:3px;color:#c9a227;">EMMA STUDIO</div>
+        <div style="font-size:0.75rem;letter-spacing:5px;color:#e6c76a;font-weight:700;margin-top:4px;">COBRO POR ${info.nombre.toUpperCase()}</div>
+      </div>
+
+      <div style="padding:24px;">
+        <div style="background:#fff9e6;padding:14px;border-radius:10px;border:2px solid #c9a227;margin-bottom:16px;text-align:center;">
+          <div style="font-size:0.8rem;color:#666;text-transform:uppercase;letter-spacing:1px;font-weight:700;">CLIENTE</div>
+          <div style="font-size:1.4rem;font-weight:900;color:#1a1a1a;margin-top:4px;">${cliente}</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:#e8f5e9;padding:12px;border-radius:10px;text-align:center;">
+            <div style="font-size:0.7rem;color:#2e7d32;text-transform:uppercase;font-weight:700;">MONTO</div>
+            <div style="font-size:1.3rem;font-weight:900;color:#1b5e20;margin-top:4px;">${formato(monto)}</div>
+          </div>
+          <div style="background:#e3f2fd;padding:12px;border-radius:10px;text-align:center;">
+            <div style="font-size:0.7rem;color:#1565c0;text-transform:uppercase;font-weight:700;">MÉTODO</div>
+            <div style="font-size:1rem;font-weight:900;color:#0d47a1;margin-top:4px;">${info.icono} ${info.nombre}</div>
+          </div>
+        </div>
+
+        ${llave ? `
+        <div style="background:#f8f9fb;padding:12px;border-radius:10px;margin-bottom:16px;text-align:center;border-left:4px solid ${entidad === "nequi" ? "#8e44ad" : entidad === "daviplata" ? "#e74c3c" : entidad === "bancolombia" ? "#f39c12" : "#c9a227"};">
+          <div style="font-size:0.7rem;color:#666;text-transform:uppercase;font-weight:700;">LLAVE PARA TRANSFERIR</div>
+          <div style="font-size:1.1rem;font-weight:800;font-family:'Courier New',monospace;margin-top:4px;">${llave}</div>
+        </div>
+        ` : ""}
+
+        <div style="text-align:center;background:#fff9e6;padding:12px;border-radius:10px;border:2px dashed #c9a227;margin-bottom:16px;">
+          <div style="font-size:0.7rem;color:#666;text-transform:uppercase;font-weight:700;">REFERENCIA</div>
+          <div style="font-size:1.3rem;font-weight:900;color:#c9a227;font-family:'Courier New',monospace;letter-spacing:2px;margin-top:4px;">${referencia}</div>
+        </div>
+
+        <div style="text-align:center;font-size:0.9rem;font-weight:700;color:#1a1a1a;margin-bottom:12px;">
+          📸 Escanea el QR para pagar
+        </div>
+
+        <img src="${qrDataUrl}" style="width:100%;border-radius:12px;display:block;">
+
+        <div style="margin-top:16px;padding:12px;background:#fff3cd;border-radius:10px;border-left:4px solid #f39c12;font-size:0.85rem;color:#856404;">
+          <b>📌 Importante:</b><br>
+          1. Paga el monto exacto: <b>${formato(monto)}</b><br>
+          2. Envía el comprobante a este chat<br>
+          3. Recibirás confirmación cuando llegue el pago
+        </div>
+
+        <div style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px dashed #ddd;font-size:0.75rem;color:#999;">
+          Emma Studio · ${new Date().toLocaleDateString("es-CO")}
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(temp);
+
+    // 3. Capturar el contenedor completo
+    const canvasFinal = await html2canvas(temp, {
+      backgroundColor: "#ffffff",
+      scale: 2,
+      useCORS: true,
+      logging: false
+    });
+    document.body.removeChild(temp);
+
+    const dataUrl = canvasFinal.toDataURL("image/png");
+    const blob = await (await fetch(dataUrl)).blob();
+    const file = new File([blob], `Cobro-Emma-${referencia}.png`, { type: "image/png" });
+
+    // 4. Texto del mensaje
+    let texto = `🔲 *COBRO EMMA STUDIO*\n\n`;
+    texto += `👤 Hola *${cliente}*\n`;
+    texto += `💵 Monto: *${formato(monto)}*\n`;
+    texto += `🏦 Vía: ${info.icono} ${info.nombre}\n`;
+    texto += `🔖 Referencia: *${referencia}*\n`;
+    if (llave) texto += `\n💰 *Llave:* ${llave}\n`;
+    texto += `\n📸 Escanea el QR de la imagen para pagar el monto exacto.\n`;
+    texto += `\n⚠️ Envía el comprobante por este chat.\n\n`;
+    texto += `¡Gracias! 💐`;
+
+    // 5. Compartir (Web Share API en móvil, fallback en desktop)
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: `Cobro ${referencia}`,
+          text: texto
+        });
+        mostrarEstadoSync("ok", "Enviado");
+        mostrarToast("Imagen enviada correctamente", "exito");
+        return;
+      } catch (err) {
+        if (err.name === "AbortError") {
+          mostrarEstadoSync("ok", "Cancelado");
+          return;
+        }
+        console.log("Share falló, usando fallback:", err);
+      }
+    }
+
+    // Fallback: descargar imagen + abrir WhatsApp
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = `Cobro-Emma-${referencia}.png`;
+    link.click();
+
+    setTimeout(() => {
+      // Buscar teléfono del cliente si existe
+      const telCliente = buscarTelefonoCliente(cliente);
+      const url = telCliente 
+        ? `https://wa.me/${telCliente}?text=${encodeURIComponent(texto)}`
+        : `https://wa.me/?text=${encodeURIComponent(texto)}`;
+      window.open(url, "_blank");
+    }, 800);
+
+    mostrarEstadoSync("ok", "Imagen descargada");
+    mostrarToast("Imagen descargada. Adjúntala en el WhatsApp que se abrirá.", "info", "Listo");
+
+  } catch (e) {
+    console.error(e);
+    mostrarEstadoSync("error", "Error al generar imagen");
+    mostrarToast("No se pudo generar la imagen. Intenta de nuevo.", "error");
+  }
+}
+
+/* ────────── BUSCAR TELÉFONO DEL CLIENTE ────────── */
+function buscarTelefonoCliente(nombre) {
+  // Busca en los datos de ventas fiadas si hay un teléfono guardado
+  // (por ahora retorna null porque no guardamos teléfonos, pero queda listo para futuro)
+  return null;
+}
 function descargarQRImagen() {
   const dualBox = document.querySelector(".qr-dual-box");
   if (!dualBox) return mostrarToast("Genera primero un cobro", "warn");
