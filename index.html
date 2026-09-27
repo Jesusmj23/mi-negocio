@@ -523,8 +523,6 @@
 </style>
 </head>
 <body>
-
-
 <div class="toast-container" id="toast-container"></div>
 
 <div class="login-screen" id="login-screen">
@@ -1018,9 +1016,7 @@
 <div class="modal" id="modal-imagen"><div class="modal-contenido" style="text-align:center;"><h3>🖼️ Imagen lista</h3><p style="color:var(--text-soft);font-size:0.85rem;margin-bottom:10px;">Mantén presionada para guardar o compartir</p><img id="imagen-generada" class="comprobante-grande" alt="Imagen"><div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;"><button class="btn verde" onclick="descargarImagenGenerada()">⬇️ Descargar</button><button class="btn gris" onclick="cerrarModal('modal-imagen')">Cerrar</button></div></div></div>
 <div class="modal" id="modal-notif"><div class="modal-contenido"><h3>🔔 Notificaciones</h3><div id="notif-contenido"></div><div style="margin-top:16px;"><button class="btn gris" onclick="cerrarModal('modal-notif')">Cerrar</button></div></div></div>
 
-<script>
-
-function mostrarToast(mensaje, tipo = "info", titulo = null) {
+<script>function mostrarToast(mensaje, tipo = "info", titulo = null) {
   const config = { exito: { icono: "✅" }, error: { icono: "❌" }, info: { icono: "ℹ️" }, warn: { icono: "⚠️" } };
   const { icono } = config[tipo] || config.info;
   const cont = document.getElementById("toast-container");
