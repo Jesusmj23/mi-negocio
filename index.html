@@ -116,6 +116,62 @@
   .pin-btn.vacio { background: transparent; border-color: transparent; cursor: default; }
   .pin-error { color: #e74c3c; font-size: 0.9rem; height: 20px; }
 
+/* ═══ BOTÓN DE HUELLA ═══ */
+.btn-huella {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 40px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 700;
+  box-shadow: 0 8px 30px rgba(201,162,39,0.4);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 10px;
+  min-width: 220px;
+}
+.btn-huella:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(201,162,39,0.55); }
+.btn-huella:active { transform: scale(0.96); }
+.btn-huella.autenticando { opacity: 0.6; pointer-events: none; animation: pulseHuella 1.2s infinite; }
+@keyframes pulseHuella {
+  0%, 100% { box-shadow: 0 8px 30px rgba(201,162,39,0.4); }
+  50% { box-shadow: 0 8px 50px rgba(201,162,39,0.9); }
+}
+.pin-alternar {
+  color: var(--gold);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  margin-top: 16px;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+.pin-alternar:hover { opacity: 1; }
+
+/* ═══ CONFIGURACIÓN DE HUELLA ═══ */
+.huella-config-card {
+  background: var(--card-item-bg);
+  border-left: 4px solid var(--green);
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.huella-config-card .info-huella { flex: 1; min-width: 200px; }
+.huella-config-card .info-huella .titulo-huella { font-weight: 700; color: var(--text-strong); margin-bottom: 4px; }
+.huella-config-card .info-huella .estado-huella { font-size: 0.85rem; color: var(--text-soft); }
+.huella-config-card .info-huella .estado-huella.activo { color: var(--green); font-weight: 700; }
+
   /* APP */
   .app { max-width: 1200px; margin: 0 auto; background: var(--card-bg); border-radius: 20px; box-shadow: var(--shadow); overflow: hidden; display: none; }
   .app.visible { display: block; }
@@ -545,10 +601,15 @@ body.dark .alerta-item .texto-a { color: #e0e0e0; }
 
 <div class="pin-screen" id="pin-screen">
   <div class="titulo-pin">🔐 EMMA STUDIO</div>
-  <div class="sub-pin">Ingresa tu PIN de 4 dígitos</div>
-  <div class="pin-dots"><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div></div>
+  <div class="sub-pin" id="pin-sub-titulo">Ingresa tu PIN de 4 dígitos</div>
+  <div class="pin-dots" id="pin-dots-container">
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+    <div class="pin-dot"></div>
+  </div>
   <div class="pin-error" id="pin-error"></div>
-  <div class="pin-pad">
+  <div class="pin-pad" id="pin-pad-container">
     <button class="pin-btn" onclick="pinPress(1)">1</button>
     <button class="pin-btn" onclick="pinPress(2)">2</button>
     <button class="pin-btn" onclick="pinPress(3)">3</button>
@@ -561,6 +622,13 @@ body.dark .alerta-item .texto-a { color: #e0e0e0; }
     <button class="pin-btn vacio"></button>
     <button class="pin-btn" onclick="pinPress(0)">0</button>
     <button class="pin-btn" onclick="pinPress('del')">⌫</button>
+  </div>
+  <button class="btn-huella" id="btn-huella" onclick="autenticarConHuella()" style="display:none;">
+    <span style="font-size:2.5rem;">👆</span>
+    <span style="font-size:0.9rem;margin-top:6px;font-weight:700;">Usar huella / Face ID</span>
+  </button>
+  <div class="pin-alternar" id="pin-alternar" onclick="alternarMetodoAuth()" style="display:none;">
+    Usar PIN en su lugar
   </div>
 </div>
 
@@ -966,6 +1034,8 @@ body.dark .alerta-item .texto-a { color: #e0e0e0; }
           <button class="btn gris" onclick="probarNotificacion()">🧪 Probar (5 seg)</button>
         </div>
       </div>
+      <h3 style="margin:20px 0 12px;font-size:1rem;">👆 Acceso con huella</h3>
+<div id="config-huella-container"></div>
       <h3 style="margin:20px 0 12px;font-size:1rem;">🎵 Sonido</h3>
       <div class="card">
         <div><div style="font-weight:700;">Sonido al registrar venta</div><div style="font-size:0.85rem;color:var(--text-soft);">Reproduce un "cha-ching" al guardar</div></div>
@@ -1135,9 +1205,277 @@ async function hacerRegistro() { const c = obtenerCredenciales(); if (!c) return
 async function recuperarClave() { const email = document.getElementById("login-email").value.trim(); if (!email) return mostrarErrorLogin("Escribe tu correo arriba"); try { await auth.sendPasswordResetEmail(email); mostrarToast("Revisa tu correo para restablecer la contraseña", "exito", "Correo enviado"); } catch (e) { mostrarErrorLogin("Error: " + e.message); } }
 function cerrarSesion() { mostrarConfirmacion("¿Cerrar sesión de Emma Studio?", () => auth.signOut(), { icono: "🚪", textoAceptar: "Cerrar sesión", peligro: true }); }
 
-function pedirPin(modo) { modoPin = modo; pinIngresado = ""; document.getElementById("pin-error").textContent = ""; document.querySelector(".sub-pin").textContent = modo === "verificar" ? "Ingresa tu PIN de 4 dígitos" : "Crea tu PIN de 4 dígitos"; actualizarPinDots(); document.getElementById("pin-screen").classList.add("active"); }
+function pedirPin(modo) {
+  modoPin = modo;
+  pinIngresado = "";
+  document.getElementById("pin-error").textContent = "";
+  
+  if (modo === "verificar") {
+    // Verificar si tiene huella configurada
+    if (tieneHuellaConfigurada()) {
+      modoAuthActual = "huella";
+    } else {
+      modoAuthActual = "pin";
+    }
+    actualizarUIauth();
+  } else {
+    // Modo crear/confirmar PIN → siempre mostrar pinPad
+    const btnH = document.getElementById("btn-huella");
+    const padH = document.getElementById("pin-pad-container");
+    const dotsH = document.getElementById("pin-dots-container");
+    const altH = document.getElementById("pin-alternar");
+    const subH = document.getElementById("pin-sub-titulo");
+    if (btnH) btnH.style.display = "none";
+    if (padH) padH.style.display = "grid";
+    if (dotsH) dotsH.style.display = "flex";
+    if (altH) altH.style.display = "none";
+    if (subH) subH.textContent = modo === "crear" ? "Crea tu PIN de 4 dígitos" : "Confirma tu PIN";
+  }
+  
+  actualizarPinDots();
+  document.getElementById("pin-screen").classList.add("active");
+}
 function pinPress(num) { if (num === "del") pinIngresado = pinIngresado.slice(0, -1); else if (pinIngresado.length < 4) pinIngresado += num; actualizarPinDots(); if (pinIngresado.length === 4) setTimeout(validarPin, 200); }
 function actualizarPinDots() { document.querySelectorAll(".pin-dot").forEach((d, i) => d.classList.toggle("lleno", i < pinIngresado.length)); }
+  /* ═══════════════════════════════════════════════════════════════
+   AUTENTICACIÓN CON HUELLA / FACE ID (WebAuthn)
+   ═══════════════════════════════════════════════════════════════ */
+
+let modoAuthActual = "pin";
+
+async function dispositivoSoportaHuella() {
+  if (!window.PublicKeyCredential) return false;
+  try {
+    if (PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
+      return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+    }
+  } catch (e) {
+    console.warn("Error detectando WebAuthn:", e);
+  }
+  return false;
+}
+
+function tieneHuellaConfigurada() {
+  if (!usuarioId) return false;
+  return localStorage.getItem("huella_" + usuarioId) === "true";
+}
+
+function base64ToUint8Array(base64) {
+  const binary = atob(base64.replace(/-/g, "+").replace(/_/g, "/"));
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+function uint8ArrayToBase64(arr) {
+  return btoa(String.fromCharCode(...new Uint8Array(arr)))
+    .replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+}
+
+async function registrarHuella() {
+  if (!usuarioId) return mostrarToast("Primero inicia sesión", "warn");
+  if (!window.PublicKeyCredential) {
+    return mostrarToast("Tu navegador no soporta huella dactilar", "error");
+  }
+  
+  const soportado = await dispositivoSoportaHuella();
+  if (!soportado) {
+    return mostrarToast("Este dispositivo no tiene sensor de huella disponible", "warn");
+  }
+  
+  try {
+    const challenge = new Uint8Array(32);
+    crypto.getRandomValues(challenge);
+    
+    const userIdBytes = new TextEncoder().encode(usuarioId);
+    
+    const publicKeyCredentialCreationOptions = {
+      challenge: challenge,
+      rp: {
+        name: "Emma Studio",
+        id: window.location.hostname
+      },
+      user: {
+        id: userIdBytes,
+        name: usuarioId.substring(0, 20),
+        displayName: "Usuario Emma Studio"
+      },
+      pubKeyCredParams: [
+        { alg: -7, type: "public-key" },
+        { alg: -257, type: "public-key" }
+      ],
+      authenticatorSelection: {
+        authenticatorAttachment: "platform",
+        userVerification: "required",
+        residentKey: "preferred"
+      },
+      timeout: 60000,
+      attestation: "none"
+    };
+    
+    const credential = await navigator.credentials.create({
+      publicKey: publicKeyCredentialCreationOptions
+    });
+    
+    if (credential) {
+      const credId = uint8ArrayToBase64(credential.rawId);
+      localStorage.setItem("huella_" + usuarioId, "true");
+      localStorage.setItem("huella_credId_" + usuarioId, credId);
+      mostrarToast("¡Huella registrada!\nAhora puedes entrar con tu dedo 👆", "exito", "✅ Huella activada");
+      renderConfigHuella();
+      return true;
+    }
+  } catch (e) {
+    console.error("Error registrando huella:", e);
+    if (e.name === "NotAllowedError") {
+      mostrarToast("Cancelaste el registro o el sensor no detectó tu huella", "warn");
+    } else if (e.name === "InvalidStateError") {
+      mostrarToast("Esta huella ya está registrada", "info");
+    } else {
+      mostrarToast("No se pudo registrar la huella: " + e.message, "error");
+    }
+    return false;
+  }
+}
+
+async function autenticarConHuella() {
+  if (!usuarioId) return;
+  const credIdGuardado = localStorage.getItem("huella_credId_" + usuarioId);
+  if (!credIdGuardado) {
+    return mostrarToast("Primero debes registrar tu huella", "warn");
+  }
+  
+  const btn = document.getElementById("btn-huella");
+  if (btn) btn.classList.add("autenticando");
+  
+  try {
+    const challenge = new Uint8Array(32);
+    crypto.getRandomValues(challenge);
+    
+    const publicKeyCredentialRequestOptions = {
+      challenge: challenge,
+      timeout: 60000,
+      rpId: window.location.hostname,
+      userVerification: "required",
+      allowCredentials: [{
+        id: base64ToUint8Array(credIdGuardado),
+        type: "public-key",
+        transports: ["internal"]
+      }]
+    };
+    
+    const assertion = await navigator.credentials.get({
+      publicKey: publicKeyCredentialRequestOptions
+    });
+    
+    if (assertion) {
+      if (btn) btn.classList.remove("autenticando");
+      document.getElementById("pin-screen").classList.remove("active");
+      pinIngresado = "";
+      mostrarToast("Acceso concedido", "exito", "👆 Huella verificada");
+    }
+  } catch (e) {
+    if (btn) btn.classList.remove("autenticando");
+    console.error("Error autenticando:", e);
+    if (e.name === "NotAllowedError") {
+      document.getElementById("pin-error").textContent = "❌ Huella no reconocida";
+      setTimeout(() => document.getElementById("pin-error").textContent = "", 2500);
+    } else {
+      document.getElementById("pin-error").textContent = "❌ Error: " + e.message;
+      setTimeout(() => document.getElementById("pin-error").textContent = "", 3000);
+    }
+  }
+}
+
+async function eliminarHuella() {
+  if (!usuarioId) return;
+  mostrarConfirmacion(
+    "¿Desactivar el acceso con huella?\n\nTendrás que usar PIN de nuevo.",
+    () => {
+      localStorage.removeItem("huella_" + usuarioId);
+      localStorage.removeItem("huella_credId_" + usuarioId);
+      mostrarToast("Huella desactivada", "exito");
+      renderConfigHuella();
+      actualizarUIauth();
+    },
+    { icono: "🔓", titulo: "Desactivar huella", textoAceptar: "Desactivar", peligro: true }
+  );
+}
+
+function alternarMetodoAuth() {
+  modoAuthActual = modoAuthActual === "pin" ? "huella" : "pin";
+  actualizarUIauth();
+}
+
+function actualizarUIauth() {
+  const btnHuella = document.getElementById("btn-huella");
+  const pinPad = document.getElementById("pin-pad-container");
+  const pinDots = document.getElementById("pin-dots-container");
+  const pinSub = document.getElementById("pin-sub-titulo");
+  const pinAlternar = document.getElementById("pin-alternar");
+  
+  if (!btnHuella || !pinPad) return;
+  
+  const huellaDisponible = tieneHuellaConfigurada();
+  
+  if (!huellaDisponible) {
+    btnHuella.style.display = "none";
+    pinPad.style.display = "grid";
+    pinDots.style.display = "flex";
+    if (pinAlternar) pinAlternar.style.display = "none";
+    if (pinSub) pinSub.textContent = "Ingresa tu PIN de 4 dígitos";
+    return;
+  }
+  
+  if (modoAuthActual === "huella") {
+    btnHuella.style.display = "flex";
+    pinPad.style.display = "none";
+    pinDots.style.display = "none";
+    if (pinAlternar) pinAlternar.style.display = "block";
+    if (pinSub) pinSub.textContent = "Usa tu huella o Face ID";
+  } else {
+    btnHuella.style.display = "none";
+    pinPad.style.display = "grid";
+    pinDots.style.display = "flex";
+    if (pinAlternar) pinAlternar.style.display = "block";
+    if (pinSub) pinSub.textContent = "Ingresa tu PIN de 4 dígitos";
+  }
+}
+
+async function renderConfigHuella() {
+  const contenedor = document.getElementById("config-huella-container");
+  if (!contenedor) return;
+  
+  const huellaActiva = tieneHuellaConfigurada();
+  const soportado = await dispositivoSoportaHuella();
+  
+  if (!soportado) {
+    contenedor.innerHTML = `
+      <div class="huella-config-card" style="border-left-color:#95a5a6;opacity:0.7;">
+        <div class="info-huella">
+          <div class="titulo-huella">👆 Acceso con huella dactilar</div>
+          <div class="estado-huella">No disponible en este dispositivo o navegador</div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  
+  contenedor.innerHTML = `
+    <div class="huella-config-card">
+      <div class="info-huella">
+        <div class="titulo-huella">👆 Acceso con huella dactilar / Face ID</div>
+        <div class="estado-huella ${huellaActiva ? 'activo' : ''}">
+          ${huellaActiva ? "✅ Activado - Puedes entrar con tu huella" : "Sin configurar - Solo PIN disponible"}
+        </div>
+      </div>
+      ${huellaActiva 
+        ? `<button class="btn rojo pequeno" onclick="eliminarHuella()">🗑️ Desactivar</button>`
+        : `<button class="btn verde pequeno" onclick="registrarHuella()">👆 Activar huella</button>`
+      }
+    </div>
+  `;
+}
 function validarPin() {
   if (modoPin === "verificar") {
     if (pinIngresado === pinCorrecto) { document.getElementById("pin-screen").classList.remove("active"); pinIngresado = ""; }
@@ -1222,7 +1560,24 @@ auth.onAuthStateChanged(async (user) => {
     await cargarDatos();
     escucharCambios();
     aplicarTemaGuardado();
-    if (pinCorrecto) { pedirPin("verificar"); }
+     if (pinCorrecto) {
+      // Si no tiene huella configurada, ofrecer activarla
+      if (!tieneHuellaConfigurada()) {
+        setTimeout(async () => {
+          const soporta = await dispositivoSoportaHuella();
+          if (soporta) {
+            setTimeout(() => {
+              mostrarConfirmacion(
+                "¿Quieres activar el acceso con huella dactilar?\n\nLa próxima vez podrás entrar con tu dedo sin escribir el PIN 👆",
+                () => registrarHuella(),
+                { icono: "👆", titulo: "Activar huella", textoAceptar: "Activar" }
+              );
+            }, 500);
+          }
+        }, 300);
+      }
+      setTimeout(() => pedirPin("verificar"), 100);
+    }
     else { setTimeout(() => { mostrarConfirmacion("¿Quieres configurar un PIN de 4 dígitos para proteger tu panel?", () => pedirPin("crear"), { icono: "🔐", titulo: "Seguridad adicional", textoAceptar: "Configurar PIN" }); }, 1000); }
     setTimeout(() => { chequearNotificaciones(); pedirPermisoNotif(); actualizarBadgeNotif(); }, 2000);
     setTimeout(() => { hacerBackupNubeAuto(); }, 5000);
@@ -1245,6 +1600,7 @@ document.querySelectorAll("nav button").forEach(btn => {
     if (btn.dataset.tab === "ranking") renderRanking();
     if (btn.dataset.tab === "plantillas") cargarPlantillas();
     if (btn.dataset.tab === "cobrar-qr") { renderPagosPendientes(); renderHistorialQR(); renderQrsBancarios(); actualizarSelectorEntidades(); }
+        if (btn.dataset.tab === "config") { renderConfigHuella(); }
   });
 });
 
