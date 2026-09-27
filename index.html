@@ -941,80 +941,163 @@
       <div id="lista-abonos-todos"><div class="vacio">Sin abonos registrados</div></div>
     </div>
 
-    <!-- ═══ SECCIÓN COBRAR QR ═══ -->
-    <div class="seccion" id="cobrar-qr">
-      <h2>📱 Cobrar por QR / Transferencia</h2>
+<!-- ═══ SECCIÓN COBRAR QR (multi-entidad) ═══ -->
+<div class="seccion" id="cobrar-qr">
+  <h2>📱 Cobrar por QR / Transferencia</h2>
 
-      <!-- PASO 1: LLAVES -->
-      <div class="qr-info-llave">
-        <div style="font-weight:800;margin-bottom:8px;">⚙️ Paso 1: Configura tus llaves de pago</div>
-        <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:10px;">
-          Estas llaves aparecerán en el texto que compartas con tus clientes.
-        </p>
-        <div class="fila">
-          <div class="campo"><label>💜 Nequi (celular o @usuario)</label><input type="text" id="llave-nequi" placeholder="3001234567"></div>
-          <div class="campo"><label>🔴 Daviplata</label><input type="text" id="llave-daviplata" placeholder="3001234567"></div>
-        </div>
-        <div class="fila">
-          <div class="campo"><label>🏦 Bancolombia (cuenta)</label><input type="text" id="llave-bancolombia" placeholder="1234567890"></div>
-          <div class="campo"><label>💳 Otro (Banco/Nequi)</label><input type="text" id="llave-otro" placeholder="Ej: Banco X 0011223344"></div>
-        </div>
-        <button class="btn pequeno" onclick="guardarLlavesPago()">💾 Guardar llaves</button>
-      </div>
-
-      <!-- PASO 2: QR REAL DEL BANCO -->
-      <div class="qr-info-llave" style="border-left:4px solid var(--green);">
-        <div style="font-weight:800;margin-bottom:8px;">🖼️ Paso 2: Sube tu QR REAL del banco (recomendado)</div>
-        <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:10px;">
-          Este QR lo generas <b>desde tu app Nequi/Daviplata/Bancolombia</b> (el que SÍ hace la transferencia automática).<br>
-          ⚠️ Se guardará y aparecerá con cada cobro que generes.
-        </p>
-        <div id="qr-real-preview" style="text-align:center;margin-bottom:12px;"></div>
-        <div class="foto-input-wrapper" onclick="document.getElementById('qr-real-input').click()">
-          📸 Subir imagen de mi QR bancario
-        </div>
-        <input type="file" id="qr-real-input" accept="image/*" style="display:none" onchange="procesarQRReal(event)">
-        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap;">
-          <button class="btn verde pequeno" onclick="guardarQRReal()">💾 Guardar QR</button>
-          <button class="btn rojo pequeno" onclick="eliminarQRReal()">🗑️ Eliminar QR</button>
-        </div>
-      </div>
-
-      <!-- PASO 3: GENERAR COBRO -->
-      <h3 style="margin:24px 0 12px;font-size:1.05rem;">🔲 Paso 3: Generar QR de cobro</h3>
-      <div class="fila">
-        <div class="campo">
-          <label>Cliente</label>
-          <input type="text" id="qr-cliente" list="lista-clientes" placeholder="Nombre">
-        </div>
-        <div class="campo">
-          <label>Monto a cobrar ($)</label>
-          <input type="number" id="qr-monto" step="1000" placeholder="0">
-        </div>
-        <div class="campo">
-          <label>Concepto</label>
-          <input type="text" id="qr-concepto" placeholder="Ej: Pago de fiado">
-        </div>
-      </div>
-      <button class="btn verde" onclick="generarQRPago()">🔲 Generar QR de cobro</button>
-      <button class="btn azul" onclick="compartirQRWsp()" id="btn-qr-wsp" style="display:none;">📤 Enviar por WhatsApp</button>
-      <button class="btn gris" onclick="descargarQRImagen()" id="btn-qr-descargar" style="display:none;">⬇️ Descargar imagen</button>
-      <button class="btn morado" onclick="compartirQRImagenWsp()" id="btn-qr-img-wsp" style="display:none;">🖼️ Enviar imagen por WhatsApp</button>
-
-      <div id="qr-preview"></div>
-
-      <!-- PASO 4: PENDIENTES -->
-      <h3 style="margin:24px 0 12px;font-size:1.05rem;">⏳ Pagos pendientes de confirmar</h3>
-      <p style="color:var(--text-soft);font-size:0.85rem;margin-bottom:12px;">
-        Cuando el dinero llegue a tu cuenta, confirma el pago aquí para registrarlo como abono.
-      </p>
-      <div id="pagos-pendientes"></div>
-
-      <!-- PASO 5: HISTORIAL -->
-      <h3 style="margin:24px 0 12px;font-size:1.05rem;">✅ Historial de pagos QR confirmados</h3>
-      <input type="text" class="buscador" id="buscar-qr-hist" placeholder="🔍 Buscar..." oninput="renderHistorialQR()">
-      <div id="qr-historial"></div>
+  <!-- PASO 1: LLAVES -->
+  <div class="qr-info-llave">
+    <div style="font-weight:800;margin-bottom:8px;">⚙️ Paso 1: Configura tus llaves de pago</div>
+    <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:10px;">
+      Estas llaves aparecerán en el texto que compartas con tus clientes.
+    </p>
+    <div class="fila">
+      <div class="campo"><label>💜 Nequi (celular o @usuario)</label><input type="text" id="llave-nequi" placeholder="3001234567"></div>
+      <div class="campo"><label>🔴 Daviplata</label><input type="text" id="llave-daviplata" placeholder="3001234567"></div>
     </div>
+    <div class="fila">
+      <div class="campo"><label>🏦 Bancolombia (cuenta)</label><input type="text" id="llave-bancolombia" placeholder="1234567890"></div>
+      <div class="campo"><label>💳 Otro (Banco/Nequi)</label><input type="text" id="llave-otro" placeholder="Ej: Banco X 0011223344"></div>
+    </div>
+    <button class="btn pequeno" onclick="guardarLlavesPago()">💾 Guardar llaves</button>
+  </div>
+
+  <!-- PASO 2: MULTI-QR BANCARIO -->
+  <div class="qr-info-llave" style="border-left:4px solid var(--green);">
+    <div style="font-weight:800;margin-bottom:8px;">🖼️ Paso 2: Sube los QRs reales de tus entidades bancarias</div>
+    <p style="font-size:0.85rem;color:var(--text-soft);margin-bottom:16px;">
+      Genera cada QR <b>desde la app de tu banco</b> y súbelo aquí.<br>
+      Al cobrar, eliges cuál mostrar según lo que use el cliente.
+    </p>
+
+    <div class="qr-multi-grid">
+      <!-- NEQUI -->
+      <div class="qr-entity-card" data-entidad="nequi">
+        <div class="qr-entity-header">
+          <span class="qr-entity-icon">💜</span>
+          <span class="qr-entity-name">Nequi</span>
+          <span class="qr-entity-status" id="status-nequi">Sin QR</span>
+        </div>
+        <div class="qr-entity-preview" id="preview-nequi">
+          <div class="vacio" style="padding:20px;">Sin imagen</div>
+        </div>
+        <div class="qr-entity-actions">
+          <button class="btn verde pequeno" onclick="document.getElementById('qr-input-nequi').click()">📸 Subir</button>
+          <button class="btn rojo pequeno" onclick="eliminarQRBanco('nequi')">🗑️</button>
+        </div>
+        <input type="file" id="qr-input-nequi" accept="image/*" style="display:none" onchange="procesarQRBanco(event, 'nequi')">
+      </div>
+
+      <!-- DAVIPLATA -->
+      <div class="qr-entity-card" data-entidad="daviplata">
+        <div class="qr-entity-header">
+          <span class="qr-entity-icon">🔴</span>
+          <span class="qr-entity-name">Daviplata</span>
+          <span class="qr-entity-status" id="status-daviplata">Sin QR</span>
+        </div>
+        <div class="qr-entity-preview" id="preview-daviplata">
+          <div class="vacio" style="padding:20px;">Sin imagen</div>
+        </div>
+        <div class="qr-entity-actions">
+          <button class="btn verde pequeno" onclick="document.getElementById('qr-input-daviplata').click()">📸 Subir</button>
+          <button class="btn rojo pequeno" onclick="eliminarQRBanco('daviplata')">🗑️</button>
+        </div>
+        <input type="file" id="qr-input-daviplata" accept="image/*" style="display:none" onchange="procesarQRBanco(event, 'daviplata')">
+      </div>
+
+      <!-- BANCOLOMBIA -->
+      <div class="qr-entity-card" data-entidad="bancolombia">
+        <div class="qr-entity-header">
+          <span class="qr-entity-icon">🏦</span>
+          <span class="qr-entity-name">Bancolombia</span>
+          <span class="qr-entity-status" id="status-bancolombia">Sin QR</span>
+        </div>
+        <div class="qr-entity-preview" id="preview-bancolombia">
+          <div class="vacio" style="padding:20px;">Sin imagen</div>
+        </div>
+        <div class="qr-entity-actions">
+          <button class="btn verde pequeno" onclick="document.getElementById('qr-input-bancolombia').click()">📸 Subir</button>
+          <button class="btn rojo pequeno" onclick="eliminarQRBanco('bancolombia')">🗑️</button>
+        </div>
+        <input type="file" id="qr-input-bancolombia" accept="image/*" style="display:none" onchange="procesarQRBanco(event, 'bancolombia')">
+      </div>
+
+      <!-- OTRO -->
+      <div class="qr-entity-card" data-entidad="otro">
+        <div class="qr-entity-header">
+          <span class="qr-entity-icon">💳</span>
+          <span class="qr-entity-name">Otro banco</span>
+          <span class="qr-entity-status" id="status-otro">Sin QR</span>
+        </div>
+        <div class="qr-entity-preview" id="preview-otro">
+          <div class="vacio" style="padding:20px;">Sin imagen</div>
+        </div>
+        <div class="qr-entity-actions">
+          <button class="btn verde pequeno" onclick="document.getElementById('qr-input-otro').click()">📸 Subir</button>
+          <button class="btn rojo pequeno" onclick="eliminarQRBanco('otro')">🗑️</button>
+        </div>
+        <input type="file" id="qr-input-otro" accept="image/*" style="display:none" onchange="procesarQRBanco(event, 'otro')">
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 3: GENERAR COBRO -->
+  <h3 style="margin:24px 0 12px;font-size:1.05rem;">🔲 Paso 3: Generar cobro</h3>
+  <div class="fila">
+    <div class="campo">
+      <label>Cliente</label>
+      <input type="text" id="qr-cliente" list="lista-clientes" placeholder="Nombre">
+    </div>
+    <div class="campo">
+      <label>Monto a cobrar ($)</label>
+      <input type="number" id="qr-monto" step="1000" placeholder="0">
+    </div>
+    <div class="campo">
+      <label>Concepto</label>
+      <input type="text" id="qr-concepto" placeholder="Ej: Pago de fiado">
+    </div>
+  </div>
+
+  <div class="campo">
+    <label>🏦 ¿Con qué banco/app te va a pagar el cliente?</label>
+    <div class="medios-pago" id="qr-entidades-selector">
+      <div class="medio-pago selected" data-entidad="nequi" onclick="seleccionarEntidadQR(this)">
+        <span>💜 Nequi</span>
+      </div>
+      <div class="medio-pago" data-entidad="daviplata" onclick="seleccionarEntidadQR(this)">
+        <span>🔴 Daviplata</span>
+      </div>
+      <div class="medio-pago" data-entidad="bancolombia" onclick="seleccionarEntidadQR(this)">
+        <span>🏦 Bancolombia</span>
+      </div>
+      <div class="medio-pago" data-entidad="otro" onclick="seleccionarEntidadQR(this)">
+        <span>💳 Otro banco</span>
+      </div>
+    </div>
+    <p style="font-size:0.8rem;color:var(--text-soft);margin-top:8px;">
+      ⚠️ Solo podrás elegir bancos donde hayas subido un QR arriba.
+    </p>
+  </div>
+
+  <button class="btn verde" onclick="generarQRPago()">🔲 Generar cobro</button>
+  <button class="btn azul" onclick="compartirQRWsp()" id="btn-qr-wsp" style="display:none;">📤 Enviar por WhatsApp</button>
+  <button class="btn morado" onclick="compartirQRImagenWsp()" id="btn-qr-img-wsp" style="display:none;">🖼️ Enviar imagen por WhatsApp</button>
+  <button class="btn gris" onclick="descargarQRImagen()" id="btn-qr-descargar" style="display:none;">⬇️ Descargar imagen</button>
+
+  <div id="qr-preview"></div>
+
+  <!-- PASO 4: PENDIENTES -->
+  <h3 style="margin:24px 0 12px;font-size:1.05rem;">⏳ Pagos pendientes de confirmar</h3>
+  <p style="color:var(--text-soft);font-size:0.85rem;margin-bottom:12px;">
+    Cuando el dinero llegue a tu cuenta, confirma el pago aquí para registrarlo como abono.
+  </p>
+  <div id="pagos-pendientes"></div>
+
+  <!-- PASO 5: HISTORIAL -->
+  <h3 style="margin:24px 0 12px;font-size:1.05rem;">✅ Historial de pagos QR confirmados</h3>
+  <input type="text" class="buscador" id="buscar-qr-hist" placeholder="🔍 Buscar..." oninput="renderHistorialQR()">
+  <div id="qr-historial"></div>
+</div>
 
     <div class="seccion" id="movimientos">
       <h2>🏦 Libro de movimientos
