@@ -298,10 +298,12 @@
   .ranking-card .monto-r { font-weight: 800; color: var(--green); font-size: 1.05rem; }
 
  .alertas-section { background: var(--card-item-bg); border: 2px solid var(--gold); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
-  .alertas-section h3 { font-size: 0.95rem; color: var(--gold-dark); margin-bottom: 10px; }
-  .alerta-item { background: white; border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 8px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; border-left: 3px solid var(--orange); cursor: pointer; }
+  .alertas-section h3 { font-size: 0.95rem; color: var(--gold-dark); margin-bottom: 10px; font-weight: 800; }
+body.dark .alertas-section h3 { color: var(--gold-soft); }
+  .alerta-item { background: var(--card-bg); color: var(--text-strong); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 8px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; border-left: 3px solid var(--orange); cursor: pointer; }
   .alerta-item .icono-a { font-size: 1.2rem; }
-  .alerta-item .texto-a { flex: 1; color: var(--text); }
+  .alerta-item .texto-a { flex: 1; color: var(--text-strong); font-weight: 500; }
+body.dark .alerta-item .texto-a { color: #e0e0e0; }
   .alerta-item.critico { border-left-color: var(--red); }
   .alerta-item.info { border-left-color: var(--blue); }
   .alerta-item.exito { border-left-color: var(--green); }
@@ -1484,7 +1486,7 @@ function generarQRPago() {
         </button>
         <button class="btn-enviar-qr descarga" onclick="descargarQRImagen()">
           <span class="btn-icon">⬇️</span>
-          <span class="btn-text"><b>Descargar imagen</b><small>Guardar en tu galería</small></span>
+          <span class="btn-text"><b>Descargar QR</b><small>Alta calidad, sin pérdida</small></span>
         </button>
       </div>
     </div>
@@ -1551,11 +1553,12 @@ async function enviarQRImagenCliente() {
           <div style="font-size:0.68rem;color:#666;text-transform:uppercase;font-weight:700;">REFERENCIA</div>
           <div style="font-size:1.2rem;font-weight:900;color:#c9a227;font-family:'Courier New',monospace;letter-spacing:2px;margin-top:4px;">${referencia}</div>
         </div>
-        <div style="margin-top:14px;padding:12px;background:#fff3cd;border-radius:10px;border-left:4px solid #f39c12;font-size:0.82rem;color:#856404;">
+  <div style="margin-top:14px;padding:12px;background:#fff3cd;border-radius:10px;border-left:4px solid #f39c12;font-size:0.82rem;color:#856404;">
           <b>📌 Importante:</b><br>
           1. Paga el monto exacto: <b>${formato(monto)}</b><br>
-          2. En el QR que te envié aparte, guárdalo y súbelo a tu app bancaria<br>
-          3. Envía el comprobante a este chat
+          2. En el QR que te envié aparte, <b>tómale captura de pantalla</b> (no lo descargues)<br>
+          3. En tu app bancaria elige <b>"Pagar con QR"</b> → <b>"Desde galería"</b> y selecciona la captura<br>
+          4. Envía el comprobante a este chat
         </div>
         <div style="text-align:center;margin-top:16px;padding-top:12px;border-top:1px dashed #ddd;font-size:0.72rem;color:#999;">Emma Studio · ${new Date().toLocaleDateString("es-CO")}</div>
       </div>
@@ -1582,7 +1585,11 @@ async function enviarQRImagenCliente() {
     if (llave) texto += `\n💰 *Llave:* ${llave}\n`;
     texto += `\n📸 Te envío 2 imágenes:\n`;
     texto += `1️⃣ La info del cobro\n`;
-    texto += `2️⃣ El QR (guárdalo y súbelo a tu app bancaria)\n\n`;
+    texto += `2️⃣ El QR\n\n`;
+    texto += `📱 *CÓMO PAGAR:*\n`;
+    texto += `1. Toma *captura de pantalla* al QR (no lo descargues)\n`;
+    texto += `2. Abre tu app bancaria → "Pagar con QR" → "Desde galería"\n`;
+    texto += `3. Selecciona la captura y paga el monto exacto\n\n`;
     texto += `⚠️ Envía el comprobante por este chat.\n\n¡Gracias! 💐`;
 
     // Intentar compartir AMBAS imágenes juntas
