@@ -297,7 +297,7 @@
   .ranking-card .detalle-r { font-size: 0.83rem; color: var(--text-soft); margin-top: 3px; }
   .ranking-card .monto-r { font-weight: 800; color: var(--green); font-size: 1.05rem; }
 
-  .alertas-section { background: linear-gradient(135deg, #fff9e6, #fff); border: 2px solid var(--gold); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+ .alertas-section { background: var(--card-item-bg); border: 2px solid var(--gold); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
   .alertas-section h3 { font-size: 0.95rem; color: var(--gold-dark); margin-bottom: 10px; }
   .alerta-item { background: white; border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 8px; font-size: 0.85rem; display: flex; align-items: center; gap: 10px; border-left: 3px solid var(--orange); cursor: pointer; }
   .alerta-item .icono-a { font-size: 1.2rem; }
@@ -316,7 +316,7 @@
   .movimiento.egreso .monto-mov { color: var(--red); }
 
   .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 20px; }
-  .dash-card { background: linear-gradient(135deg, var(--card-item-bg), white); border-radius: var(--radius); padding: 18px; border: 2px solid var(--card-item-border); cursor: pointer; }
+  .dash-card { background: var(--card-item-bg); border-radius: var(--radius); padding: 18px; border: 2px solid var(--card-item-border); cursor: pointer; }
   .dash-card .dc-icono { font-size: 2rem; margin-bottom: 8px; display: block; }
   .dash-card .dc-lbl { font-size: 0.75rem; text-transform: uppercase; color: var(--text-soft); font-weight: 700; }
   .dash-card .dc-val { font-size: 1.6rem; font-weight: 900; color: var(--text-strong); margin-top: 6px; font-family: 'Playfair Display', Georgia, serif; }
@@ -1512,79 +1512,113 @@ function compartirQRWsp() {
 
 async function enviarQRImagenCliente() {
   if (!ultimoQRGenerado) return mostrarToast("Genera primero un cobro", "warn");
-  const dualBox = document.getElementById("qr-dual-para-imagen");
-  if (!dualBox) return mostrarToast("No se encontró el QR", "error");
   const { cliente, monto, referencia, entidad, concepto } = ultimoQRGenerado;
   const info = ENTIDADES[entidad];
   const L = datos.llavesPago || {};
   const llave = L[entidad] || "";
+  const qrReal = datos.qrsBancos[entidad];
+
   try {
-    mostrarEstadoSync("cargando", "Generando imagen...");
-    await cargarHtml2Canvas();
-    const canvasQR = await html2canvas(dualBox, { backgroundColor: "#ffffff", scale: 2, useCORS: true, logging: false });
-    const qrDataUrl = canvasQR.toDataURL("image/png");
-    const temp = document.createElement("div");
-    temp.style.cssText = "position:fixed;left:-9999px;top:0;width:520px;background:white;font-family:'Inter',Arial,sans-serif;color:#1a1a1a;";
-    temp.innerHTML = `
-      <div style="background:linear-gradient(135deg,#1a1a1a,#2c2c2c);padding:24px;text-align:center;">
-        <div style="font-family:Georgia,serif;font-size:2rem;font-weight:900;letter-spacing:3px;color:#c9a227;">EMMA STUDIO</div>
-        <div style="font-size:0.75rem;letter-spacing:5px;color:#e6c76a;font-weight:700;margin-top:4px;">COBRO POR ${info.nombre.toUpperCase()}</div>
+    mostrarEstadoSync("cargando", "Preparando QR...");
+
+    // ═══ GENERAR 2 IMÁGENES: LA INFO + EL QR PURO ═══
+    
+    // IMAGEN 1: INFO DEL COBRO (sin el QR)
+    const tempInfo = document.createElement("div");
+    tempInfo.style.cssText = "position:fixed;left:-9999px;top:0;width:480px;background:white;font-family:'Inter',Arial,sans-serif;color:#1a1a1a;";
+    tempInfo.innerHTML = `
+      <div style="background:linear-gradient(135deg,#1a1a1a,#2c2c2c);padding:22px;text-align:center;">
+        <div style="font-family:Georgia,serif;font-size:1.8rem;font-weight:900;letter-spacing:3px;color:#c9a227;">EMMA STUDIO</div>
+        <div style="font-size:0.72rem;letter-spacing:5px;color:#e6c76a;font-weight:700;margin-top:4px;">COBRO POR ${info.nombre.toUpperCase()}</div>
       </div>
-      <div style="padding:24px;">
-        <div style="background:#fff9e6;padding:14px;border-radius:10px;border:2px solid #c9a227;margin-bottom:16px;text-align:center;">
-          <div style="font-size:0.8rem;color:#666;text-transform:uppercase;font-weight:700;">CLIENTE</div>
-          <div style="font-size:1.4rem;font-weight:900;color:#1a1a1a;margin-top:4px;">${cliente}</div>
+      <div style="padding:20px;">
+        <div style="background:#fff9e6;padding:14px;border-radius:10px;border:2px solid #c9a227;margin-bottom:14px;text-align:center;">
+          <div style="font-size:0.75rem;color:#666;text-transform:uppercase;font-weight:700;">CLIENTE</div>
+          <div style="font-size:1.3rem;font-weight:900;color:#1a1a1a;margin-top:4px;">${cliente}</div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
           <div style="background:#e8f5e9;padding:12px;border-radius:10px;text-align:center;">
-            <div style="font-size:0.7rem;color:#2e7d32;text-transform:uppercase;font-weight:700;">MONTO</div>
-            <div style="font-size:1.3rem;font-weight:900;color:#1b5e20;margin-top:4px;">${formato(monto)}</div>
+            <div style="font-size:0.68rem;color:#2e7d32;text-transform:uppercase;font-weight:700;">MONTO</div>
+            <div style="font-size:1.2rem;font-weight:900;color:#1b5e20;margin-top:4px;">${formato(monto)}</div>
           </div>
           <div style="background:#e3f2fd;padding:12px;border-radius:10px;text-align:center;">
-            <div style="font-size:0.7rem;color:#1565c0;text-transform:uppercase;font-weight:700;">MÉTODO</div>
+            <div style="font-size:0.68rem;color:#1565c0;text-transform:uppercase;font-weight:700;">MÉTODO</div>
             <div style="font-size:1rem;font-weight:900;color:#0d47a1;margin-top:4px;">${info.icono} ${info.nombre}</div>
           </div>
         </div>
-        ${llave ? `<div style="background:#f8f9fb;padding:12px;border-radius:10px;margin-bottom:16px;text-align:center;border-left:4px solid #c9a227;"><div style="font-size:0.7rem;color:#666;text-transform:uppercase;font-weight:700;">LLAVE PARA TRANSFERIR</div><div style="font-size:1.1rem;font-weight:800;font-family:'Courier New',monospace;margin-top:4px;">${llave}</div></div>` : ""}
-        <div style="text-align:center;background:#fff9e6;padding:12px;border-radius:10px;border:2px dashed #c9a227;margin-bottom:16px;">
-          <div style="font-size:0.7rem;color:#666;text-transform:uppercase;font-weight:700;">REFERENCIA</div>
-          <div style="font-size:1.3rem;font-weight:900;color:#c9a227;font-family:'Courier New',monospace;letter-spacing:2px;margin-top:4px;">${referencia}</div>
+        ${llave ? `<div style="background:#f8f9fb;padding:12px;border-radius:10px;margin-bottom:14px;text-align:center;border-left:4px solid #c9a227;"><div style="font-size:0.68rem;color:#666;text-transform:uppercase;font-weight:700;">LLAVE PARA TRANSFERIR</div><div style="font-size:1.05rem;font-weight:800;font-family:'Courier New',monospace;margin-top:4px;">${llave}</div></div>` : ""}
+        <div style="text-align:center;background:#fff9e6;padding:12px;border-radius:10px;border:2px dashed #c9a227;margin-bottom:14px;">
+          <div style="font-size:0.68rem;color:#666;text-transform:uppercase;font-weight:700;">REFERENCIA</div>
+          <div style="font-size:1.2rem;font-weight:900;color:#c9a227;font-family:'Courier New',monospace;letter-spacing:2px;margin-top:4px;">${referencia}</div>
         </div>
-        <div style="text-align:center;font-size:0.9rem;font-weight:700;color:#1a1a1a;margin-bottom:12px;">📸 Escanea el QR para pagar</div>
-        <img src="${qrDataUrl}" style="width:100%;border-radius:12px;display:block;">
-        <div style="margin-top:16px;padding:12px;background:#fff3cd;border-radius:10px;border-left:4px solid #f39c12;font-size:0.85rem;color:#856404;">
+        <div style="margin-top:14px;padding:12px;background:#fff3cd;border-radius:10px;border-left:4px solid #f39c12;font-size:0.82rem;color:#856404;">
           <b>📌 Importante:</b><br>
           1. Paga el monto exacto: <b>${formato(monto)}</b><br>
-          2. Envía el comprobante a este chat<br>
-          3. Recibirás confirmación cuando llegue el pago
+          2. En el QR que te envié aparte, guárdalo y súbelo a tu app bancaria<br>
+          3. Envía el comprobante a este chat
         </div>
-        <div style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px dashed #ddd;font-size:0.75rem;color:#999;">Emma Studio · ${new Date().toLocaleDateString("es-CO")}</div>
+        <div style="text-align:center;margin-top:16px;padding-top:12px;border-top:1px dashed #ddd;font-size:0.72rem;color:#999;">Emma Studio · ${new Date().toLocaleDateString("es-CO")}</div>
       </div>
     `;
-    document.body.appendChild(temp);
-    const canvasFinal = await html2canvas(temp, { backgroundColor: "#ffffff", scale: 2, useCORS: true, logging: false });
-    document.body.removeChild(temp);
-    const dataUrl = canvasFinal.toDataURL("image/png");
-    const blob = await (await fetch(dataUrl)).blob();
-    const file = new File([blob], `Cobro-Emma-${referencia}.png`, { type: "image/png" });
+    document.body.appendChild(tempInfo);
+    await cargarHtml2Canvas();
+    const canvasInfo = await html2canvas(tempInfo, { backgroundColor: "#ffffff", scale: 2, useCORS: true, logging: false });
+    document.body.removeChild(tempInfo);
+    const infoDataUrl = canvasInfo.toDataURL("image/png");
+
+    // IMAGEN 2: QR PURO DE ALTA CALIDAD
+    // Vamos a dibujar el QR original en un canvas nuevo SIN recomprimir
+    const qrFinalDataUrl = await generarQRAltaCalidad(qrReal, cliente, monto);
+
+    // ═══ DESCARGAR Y COMPARTIR ═══
+    const blobInfo = await (await fetch(infoDataUrl)).blob();
+    const fileInfo = new File([blobInfo], `Info-Cobro-${referencia}.png`, { type: "image/png" });
+
+    const blobQR = await (await fetch(qrFinalDataUrl)).blob();
+    const fileQR = new File([blobQR], `QR-${info.nombre}-${referencia}.png`, { type: "image/png" });
+
+    // Texto del mensaje
     let texto = `🔲 *COBRO EMMA STUDIO*\n\n👤 Hola *${cliente}*\n💵 Monto: *${formato(monto)}*\n🏦 Vía: ${info.icono} ${info.nombre}\n🔖 Referencia: *${referencia}*\n`;
     if (llave) texto += `\n💰 *Llave:* ${llave}\n`;
-    texto += `\n📸 Escanea el QR de la imagen para pagar el monto exacto.\n\n⚠️ Envía el comprobante por este chat.\n\n¡Gracias! 💐`;
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    texto += `\n📸 Te envío 2 imágenes:\n`;
+    texto += `1️⃣ La info del cobro\n`;
+    texto += `2️⃣ El QR (guárdalo y súbelo a tu app bancaria)\n\n`;
+    texto += `⚠️ Envía el comprobante por este chat.\n\n¡Gracias! 💐`;
+
+    // Intentar compartir AMBAS imágenes juntas
+    if (navigator.canShare && navigator.canShare({ files: [fileInfo, fileQR] })) {
       try {
-        await navigator.share({ files: [file], title: `Cobro ${referencia}`, text: texto });
+        await navigator.share({
+          files: [fileInfo, fileQR],
+          title: `Cobro ${referencia}`,
+          text: texto
+        });
         mostrarEstadoSync("ok", "Enviado");
-        mostrarToast("Imagen enviada correctamente", "exito");
+        mostrarToast("Imágenes enviadas correctamente", "exito");
         return;
-      } catch (err) { if (err.name === "AbortError") { mostrarEstadoSync("ok", "Cancelado"); return; } }
+      } catch (err) {
+        if (err.name === "AbortError") { mostrarEstadoSync("ok", "Cancelado"); return; }
+      }
     }
-    const link = document.createElement("a");
-    link.href = dataUrl;
-    link.download = `Cobro-Emma-${referencia}.png`;
-    link.click();
-    setTimeout(() => { window.open(`https://wa.me/?text=${encodeURIComponent(texto + "\n\n📸 Adjunta la imagen descargada")}`, "_blank"); }, 800);
-    mostrarEstadoSync("ok", "Imagen descargada");
-    mostrarToast("Imagen descargada. Adjúntala en WhatsApp.", "info");
+
+    // Fallback: descargar ambas
+    const link1 = document.createElement("a");
+    link1.href = infoDataUrl;
+    link1.download = fileInfo.name;
+    link1.click();
+    await new Promise(r => setTimeout(r, 400));
+    const link2 = document.createElement("a");
+    link2.href = qrFinalDataUrl;
+    link2.download = fileQR.name;
+    link2.click();
+
+    setTimeout(() => {
+      window.open(`https://wa.me/?text=${encodeURIComponent(texto + "\n\n📸 Adjunta las 2 imágenes descargadas")}`, "_blank");
+    }, 900);
+
+    mostrarEstadoSync("ok", "Imágenes descargadas");
+    mostrarToast("2 imágenes descargadas. Adjúntalas en WhatsApp.", "info");
+
   } catch (e) {
     console.error(e);
     mostrarEstadoSync("error", "Error al generar imagen");
@@ -1592,10 +1626,51 @@ async function enviarQRImagenCliente() {
   }
 }
 
-function descargarQRImagen() {
-  const dualBox = document.getElementById("qr-dual-para-imagen");
-  if (!dualBox) return mostrarToast("Genera primero un cobro", "warn");
-  generarImagenDeElemento(dualBox, `QR-Emma-${ultimoQRGenerado?.referencia || Date.now()}.png`, true);
+/* ═══ GENERAR QR DE ALTA CALIDAD (sin recomprimir) ═══ */
+async function generarQRAltaCalidad(qrDataUrl, cliente, monto) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      // Usar el tamaño ORIGINAL de la imagen, sin reducir
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      // Fondo blanco
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Dibujar la imagen ORIGINAL sin escalar (máxima calidad)
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      // Exportar como PNG (sin pérdida)
+      resolve(canvas.toDataURL("image/png"));
+    };
+    img.onerror = () => {
+      // Si falla, devolver el original
+      resolve(qrDataUrl);
+    };
+    img.src = qrDataUrl;
+  });
+}
+async function descargarQRImagen() {
+  if (!ultimoQRGenerado) return mostrarToast("Genera primero un cobro", "warn");
+  const { entidad, referencia, cliente, monto } = ultimoQRGenerado;
+  const qrReal = datos.qrsBancos[entidad];
+  if (!qrReal) return mostrarToast("No se encontró el QR", "error");
+  
+  try {
+    mostrarEstadoSync("cargando", "Preparando QR...");
+    // Descargar QR puro de alta calidad
+    const qrAltaCalidad = await generarQRAltaCalidad(qrReal, cliente, monto);
+    const link = document.createElement("a");
+    link.href = qrAltaCalidad;
+    link.download = `QR-${ENTIDADES[entidad].nombre}-${referencia}.png`;
+    link.click();
+    mostrarEstadoSync("ok", "QR descargado");
+    mostrarToast("QR descargado en alta calidad", "exito");
+  } catch (e) {
+    mostrarEstadoSync("error", "Error al descargar");
+    mostrarToast("No se pudo descargar el QR", "error");
+  }
 }
 
 function renderPagosPendientes() {
