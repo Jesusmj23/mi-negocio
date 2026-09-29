@@ -1465,12 +1465,20 @@ body.dark .chat-msg.info {
 
   <div class="chat-mensajes" id="chat-mensajes"></div>
 
-  <div class="chat-acciones-rapidas">
-    <button onclick="chatConsulta('resumen')">📊 Resumen</button>
-    <button onclick="chatConsulta('quincena')">📅 Quincenas</button>
-    <button onclick="chatConsulta('deudas')">💰 Deudas</button>
-    <button onclick="chatConsulta('stock')">📦 Stock</button>
-  </div>
+<div class="chat-acciones-rapidas">
+  <button onclick="chatConsulta('resumen')">📊 Resumen</button>
+  <button onclick="chatConsulta('ventas')">🛒 Ventas</button>
+  <button onclick="chatConsulta('deudas')">💰 Deudas</button>
+  <button onclick="chatConsulta('quincena')">📅 Quincena</button>
+  <button onclick="chatConsulta('clientes')">👥 Clientes</button>
+  <button onclick="chatConsulta('stock')">📦 Stock</button>
+  <button onclick="chatConsulta('caja')">💵 Caja</button>
+  <button onclick="chatConsulta('gastos')">💸 Gastos</button>
+  <button onclick="chatConsulta('abonos')">💵 Abonos</button>
+  <button onclick="chatConsulta('metas')">🎯 Metas</button>
+  <button onclick="chatConsulta('ranking')">🏆 Ranking</button>
+  <button onclick="chatConsulta('ayuda')">❓ Ayuda</button>
+</div>
 
   <div class="chat-input-container">
     <input type="text" id="chat-input" placeholder="Escribe un mensaje..." onkeypress="if(event.key==='Enter') enviarMensajeChat()">
@@ -1648,13 +1656,23 @@ function procesarMensajeUsuario(texto) {
 function chatConsulta(tipo) {
   switch(tipo) {
     case "resumen": mostrarResumenDiarioChat(); break;
-    case "quincena": mostrarProximaQuincenaChat(); break;
+    case "ventas": mostrarResumenVentasChat(); break;
     case "deudas": mostrarDeudasChat(); break;
+    case "quincena": mostrarProximaQuincenaChat(); break;
+    case "clientes": mostrarClientesChat(); break;
     case "stock": mostrarStockChat(); break;
+    case "caja": mostrarCajaChat(); break;
+    case "gastos": mostrarGastosChat(); break;
+    case "abonos": mostrarAbonosChat(); break;
+    case "metas": mostrarMetasChat(); break;
+    case "ranking": mostrarRankingChat(); break;
+    case "ayuda": mostrarAyudaChat(); break;
   }
 }
 
 // ═══ CONSULTAS ESPECÍFICAS ═══
+
+// ═══ CONSULTAS ESPECÍFICAS (SIN LÍMITES) ═══
 
 function mostrarResumenDiarioChat() {
   const hoy = new Date();
@@ -1669,13 +1687,44 @@ function mostrarResumenDiarioChat() {
   const ganancia = ventasHoy.reduce((s,v) => s + (v.precio - v.costo), 0);
   const balance = ganancia - totalGastos;
   
-  const texto = `📊 *RESUMEN DE HOY*\n${hoy.toLocaleDateString("es-CO", {weekday: "long", day: "numeric", month: "long"})}\n\n` +
-    `💰 Ventas: *${formato(totalVentas)}* (${ventasHoy.length})\n` +
-    `💵 Abonos: *${formato(totalAbonos)}* (${abonosHoy.length})\n` +
-    `💸 Gastos: *${formato(totalGastos)}* (${gastosHoy.length})\n` +
-    `📈 Ganancia: *${formato(ganancia)}*\n` +
-    `━━━━━━━━━━━━━━\n` +
-    `${balance >= 0 ? "🎉" : "⚠️"} Balance del día: *${formato(balance)}*`;
+  let texto = `📊 *RESUMEN COMPLETO DE HOY*\n`;
+  texto += `📅 ${hoy.toLocaleDateString("es-CO", {weekday: "long", day: "numeric", month: "long", year: "numeric"})}\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  
+  texto += `🛒 *VENTAS DEL DÍA* (${ventasHoy.length})\n`;
+  if (ventasHoy.length === 0) {
+    texto += `• Sin ventas aún\n`;
+  } else {
+    ventasHoy.forEach(v => {
+      const tipo = v.tipo === "contado" ? "💵" : "⏳";
+      texto += `• ${tipo} ${v.producto} - ${formato(v.precio)} (${v.cliente})\n`;
+    });
+  }
+  texto += `💰 Total ventas: *${formato(totalVentas)}*\n\n`;
+  
+  texto += `💵 *ABONOS DEL DÍA* (${abonosHoy.length})\n`;
+  if (abonosHoy.length === 0) {
+    texto += `• Sin abonos aún\n`;
+  } else {
+    abonosHoy.forEach(a => {
+      texto += `• ${a.nombre} - ${formato(a.monto)}\n`;
+    });
+  }
+  texto += `💰 Total abonos: *${formato(totalAbonos)}*\n\n`;
+  
+  texto += `💸 *GASTOS DEL DÍA* (${gastosHoy.length})\n`;
+  if (gastosHoy.length === 0) {
+    texto += `• Sin gastos aún\n`;
+  } else {
+    gastosHoy.forEach(g => {
+      texto += `• ${g.descripcion} - ${formato(g.monto)}\n`;
+    });
+  }
+  texto += `💰 Total gastos: *${formato(totalGastos)}*\n\n`;
+  
+  texto += `━━━━━━━━━━━━━━━━━━━━\n`;
+  texto += `📈 Ganancia bruta: *${formato(ganancia)}*\n`;
+  texto += `${balance >= 0 ? "🎉" : "⚠️"} *BALANCE: ${formato(balance)}*`;
   
   enviarMensajeBot(texto, balance >= 0 ? "exito" : "alerta");
 }
@@ -1685,22 +1734,26 @@ function mostrarProximaQuincenaChat() {
   const clientes = agruparClientes().filter(c => c.fiadoPendiente > 0);
   
   let texto = `📅 *PRÓXIMA QUINCENA*\n\n`;
-  texto += `🎯 Día *${diaObjetivo}* de ${fecha.toLocaleDateString("es-CO", {month: "long"})}\n`;
-  texto += `${dias === 0 ? "🎉 *¡HOY ES LA QUINCENA!*" : dias === 1 ? "⏰ *¡MAÑANA ES LA QUINCENA!*" : `⏳ Faltan *${dias} días*`}\n\n`;
+  texto += `🎯 Día *${diaObjetivo}* de ${fecha.toLocaleDateString("es-CO", {month: "long", year: "numeric"})}\n`;
+  texto += `${dias === 0 ? "🎉 *¡HOY ES LA QUINCENA!*" : dias === 1 ? "⏰ *¡MAÑANA ES LA QUINCENA!*" : `⏳ Faltan *${dias} días*`}\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
   texto += `💵 Total por cobrar: *${formato(fiadoQ)}*\n`;
-  texto += `👥 Clientes: *${clientes.length}*\n\n`;
+  texto += `👥 Clientes con saldo: *${clientes.length}*\n\n`;
   
-  if (clientes.length > 0 && clientes.length <= 5) {
-    texto += `*Clientes con saldo:*\n`;
-    clientes.forEach(c => {
-      texto += `• ${c.nombre}: ${formato(c.fiadoPendiente)}\n`;
+  if (clientes.length === 0) {
+    texto += `🎉 ¡Nadie debe para esta quincena!`;
+  } else {
+    texto += `📋 *TODOS LOS CLIENTES:*\n\n`;
+    let total = 0;
+    clientes.forEach((c, i) => {
+      texto += `${i + 1}. *${c.nombre}*\n`;
+      texto += `   📦 Fiado: ${formato(c.fiadoPendiente)}\n`;
+      if (c.deudaAparte) texto += `   💵 Aparte: ${formato(c.deudaAparte)}\n`;
+      texto += `   🔢 Total: *${formato(c.fiadoPendiente + (c.deudaAparte || 0))}*\n\n`;
+      total += c.fiadoPendiente + (c.deudaAparte || 0);
     });
-  } else if (clientes.length > 5) {
-    texto += `*Top 5 deudores:*\n`;
-    clientes.slice(0, 5).forEach(c => {
-      texto += `• ${c.nombre}: ${formato(c.fiadoPendiente)}\n`;
-    });
-    texto += `\n... y ${clientes.length - 5} más`;
+    texto += `━━━━━━━━━━━━━━━━━━━━\n`;
+    texto += `💰 *TOTAL A COBRAR: ${formato(total)}*`;
   }
   
   enviarMensajeBot(texto, dias <= 3 ? "alerta" : "info");
@@ -1709,20 +1762,28 @@ function mostrarProximaQuincenaChat() {
 function mostrarDeudasChat() {
   const deudas = agruparClientes().filter(c => (c.fiadoPendiente || 0) + (c.deudaAparte || 0) > 0);
   const totalDeuda = deudas.reduce((s,c) => s + (c.fiadoPendiente || 0) + (c.deudaAparte || 0), 0);
+  const totalFiado = deudas.reduce((s,c) => s + (c.fiadoPendiente || 0), 0);
+  const totalAparte = deudas.reduce((s,c) => s + (c.deudaAparte || 0), 0);
   
-  let texto = `💰 *DEUDAS PENDIENTES*\n\n`;
-  texto += `👥 Total clientes: *${deudas.length}*\n`;
-  texto += `💵 Total a cobrar: *${formato(totalDeuda)}*\n\n`;
+  let texto = `💰 *ESTADO DE CARTERA COMPLETO*\n\n`;
+  texto += `👥 Total clientes con deuda: *${deudas.length}*\n`;
+  texto += `📦 Total fiado: *${formato(totalFiado)}*\n`;
+  texto += `💵 Total deuda aparte: *${formato(totalAparte)}*\n`;
+  texto += `💯 *TOTAL A COBRAR: ${formato(totalDeuda)}*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
   
   if (deudas.length === 0) {
     texto += `🎉 ¡Nadie te debe! Excelente gestión.`;
   } else {
-    texto += `*Top 10 deudores:*\n`;
-    deudas.slice(0, 10).forEach((c, i) => {
-      const monto = (c.fiadoPendiente || 0) + (c.deudaAparte || 0);
-      texto += `${i + 1}. ${c.nombre}: *${formato(monto)}*\n`;
+    texto += `📋 *LISTA COMPLETA (ordenada de mayor a menor):*\n\n`;
+    deudas.sort((a,b) => ((b.fiadoPendiente||0)+(b.deudaAparte||0)) - ((a.fiadoPendiente||0)+(a.deudaAparte||0)));
+    deudas.forEach((c, i) => {
+      const totalCliente = (c.fiadoPendiente || 0) + (c.deudaAparte || 0);
+      texto += `${i + 1}. *${c.nombre}*\n`;
+      if (c.fiadoPendiente) texto += `   📦 Fiado: ${formato(c.fiadoPendiente)}\n`;
+      if (c.deudaAparte) texto += `   💵 Aparte: ${formato(c.deudaAparte)}\n`;
+      texto += `   💰 *Total: ${formato(totalCliente)}*\n\n`;
     });
-    if (deudas.length > 10) texto += `\n... y ${deudas.length - 10} más`;
   }
   
   enviarMensajeBot(texto, deudas.length > 5 ? "alerta" : "info");
@@ -1732,30 +1793,42 @@ function mostrarStockChat() {
   const inventario = datos.inventario || [];
   const bajo = inventario.filter(i => i.cantidad <= 2 && i.cantidad > 0);
   const agotado = inventario.filter(i => i.cantidad === 0);
+  const normal = inventario.filter(i => i.cantidad > 2);
   const valorTotal = inventario.reduce((s, i) => s + (i.costo * i.cantidad), 0);
+  const valorVenta = inventario.reduce((s, i) => s + (i.precio * i.cantidad), 0);
   
-  let texto = `📦 *ESTADO DEL INVENTARIO*\n\n`;
-  texto += `📊 Productos: *${inventario.length}*\n`;
-  texto += `💰 Valor total: *${formato(valorTotal)}*\n\n`;
+  let texto = `📦 *INVENTARIO COMPLETO*\n\n`;
+  texto += `📊 Total productos: *${inventario.length}*\n`;
+  texto += `💰 Valor costo: *${formato(valorTotal)}*\n`;
+  texto += `💵 Valor venta: *${formato(valorVenta)}*\n`;
+  texto += `📈 Ganancia potencial: *${formato(valorVenta - valorTotal)}*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
   
-  if (bajo.length > 0) {
-    texto += `⚠️ *Stock bajo (${bajo.length}):*\n`;
-    bajo.slice(0, 8).forEach(i => {
-      texto += `• ${i.producto}: *${i.cantidad}* unid.\n`;
+  if (agotado.length > 0) {
+    texto += `🚫 *AGOTADOS (${agotado.length}):*\n`;
+    agotado.forEach(i => {
+      texto += `• ${i.producto} (${i.categoria || "General"})\n`;
     });
-    if (bajo.length > 8) texto += `\n... y ${bajo.length - 8} más\n`;
     texto += `\n`;
   }
   
-  if (agotado.length > 0) {
-    texto += `🚫 *Agotados (${agotado.length}):*\n`;
-    agotado.slice(0, 5).forEach(i => {
-      texto += `• ${i.producto}\n`;
+  if (bajo.length > 0) {
+    texto += `⚠️ *STOCK BAJO (${bajo.length}):*\n`;
+    bajo.forEach(i => {
+      texto += `• ${i.producto}: *${i.cantidad}* unid.\n`;
+    });
+    texto += `\n`;
+  }
+  
+  if (normal.length > 0) {
+    texto += `✅ *STOCK NORMAL (${normal.length}):*\n`;
+    normal.forEach(i => {
+      texto += `• ${i.producto}: ${i.cantidad} unid.\n`;
     });
   }
   
-  if (bajo.length === 0 && agotado.length === 0) {
-    texto += `✅ ¡Todo el stock está bien!`;
+  if (inventario.length === 0) {
+    texto += `📭 No hay productos en el inventario aún.`;
   }
   
   enviarMensajeBot(texto, bajo.length > 0 || agotado.length > 0 ? "alerta" : "exito");
@@ -1764,24 +1837,63 @@ function mostrarStockChat() {
 function mostrarResumenVentasChat() {
   const hoy = new Date();
   const ventasHoy = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).toDateString() === hoy.toDateString());
+  const ventasSemana = datos.ventas.filter(v => {
+    if (!v.fechaISO) return false;
+    const diff = (hoy - new Date(v.fechaISO)) / (1000*60*60*24);
+    return diff >= 0 && diff <= 7;
+  });
   const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && new Date(v.fechaISO).getFullYear() === hoy.getFullYear());
   
   const totalHoy = ventasHoy.reduce((s,v) => s + v.precio, 0);
+  const totalSemana = ventasSemana.reduce((s,v) => s + v.precio, 0);
   const totalMes = ventasMes.reduce((s,v) => s + v.precio, 0);
   const gananciaMes = ventasMes.reduce((s,v) => s + (v.precio - v.costo), 0);
   const contadoMes = ventasMes.filter(v => v.tipo === "contado").reduce((s,v) => s + v.precio, 0);
   const fiadoMes = ventasMes.filter(v => v.tipo === "quincena").reduce((s,v) => s + v.precio, 0);
+  const ticketProm = ventasMes.length > 0 ? totalMes / ventasMes.length : 0;
   
-  const texto = `🛒 *RESUMEN DE VENTAS*\n\n` +
-    `*HOY:*\n` +
-    `💰 Total: *${formato(totalHoy)}*\n` +
-    `🛍️ Ventas: *${ventasHoy.length}*\n\n` +
-    `*ESTE MES:*\n` +
-    `💰 Total: *${formato(totalMes)}*\n` +
-    `📈 Ganancia: *${formato(gananciaMes)}*\n` +
-    `💵 Contado: *${formato(contadoMes)}*\n` +
-    `⏳ Fiado: *${formato(fiadoMes)}*\n` +
-    `🛍️ Ventas: *${ventasMes.length}*`;
+  let texto = `🛒 *RESUMEN COMPLETO DE VENTAS*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  
+  texto += `*HOY:*\n`;
+  texto += `💰 Total: *${formato(totalHoy)}*\n`;
+  texto += `🛍️ Cantidad: ${ventasHoy.length} ventas\n`;
+  if (ventasHoy.length > 0) {
+    texto += `\n*Detalle de hoy:*\n`;
+    ventasHoy.forEach(v => {
+      const tipo = v.tipo === "contado" ? "💵" : "⏳";
+      texto += `• ${tipo} ${v.producto} - ${formato(v.precio)}\n`;
+    });
+  }
+  texto += `\n`;
+  
+  texto += `*ÚLTIMOS 7 DÍAS:*\n`;
+  texto += `💰 Total: *${formato(totalSemana)}*\n`;
+  texto += `🛍️ Cantidad: ${ventasSemana.length} ventas\n\n`;
+  
+  texto += `*ESTE MES:*\n`;
+  texto += `💰 Total: *${formato(totalMes)}*\n`;
+  texto += `📈 Ganancia: *${formato(gananciaMes)}*\n`;
+  texto += `💵 Contado: *${formato(contadoMes)}*\n`;
+  texto += `⏳ Fiado: *${formato(fiadoMes)}*\n`;
+  texto += `🛍️ Cantidad: ${ventasMes.length} ventas\n`;
+  texto += `🎯 Ticket promedio: *${formato(ticketProm)}*\n\n`;
+  
+  // Top productos
+  const productosContador = {};
+  ventasMes.forEach(v => {
+    if (!productosContador[v.producto]) productosContador[v.producto] = { cantidad: 0, total: 0 };
+    productosContador[v.producto].cantidad++;
+    productosContador[v.producto].total += v.precio;
+  });
+  const topProductos = Object.entries(productosContador).sort((a,b) => b[1].cantidad - a[1].cantidad);
+  
+  if (topProductos.length > 0) {
+    texto += `🏆 *PRODUCTOS MÁS VENDIDOS DEL MES:*\n`;
+    topProductos.forEach(([nombre, data], i) => {
+      texto += `${i + 1}. ${nombre} - ${data.cantidad} ventas (${formato(data.total)})\n`;
+    });
+  }
   
   enviarMensajeBot(texto, "info");
 }
@@ -1791,89 +1903,325 @@ function mostrarAbonosChat() {
   const abonos = todosLosAbonos();
   const abonosHoy = abonos.filter(a => a.fechaISO && new Date(a.fechaISO).toDateString() === hoy.toDateString());
   const abonosMes = abonos.filter(a => a.fechaISO && new Date(a.fechaISO).getMonth() === hoy.getMonth() && new Date(a.fechaISO).getFullYear() === hoy.getFullYear());
+  const abonosAnio = abonos.filter(a => a.fechaISO && new Date(a.fechaISO).getFullYear() === hoy.getFullYear());
   
   const totalHoy = abonosHoy.reduce((s,a) => s + a.monto, 0);
   const totalMes = abonosMes.reduce((s,a) => s + a.monto, 0);
+  const totalAnio = abonosAnio.reduce((s,a) => s + a.monto, 0);
+  const totalHistorico = abonos.reduce((s,a) => s + a.monto, 0);
   
-  const texto = `💵 *RESUMEN DE ABONOS*\n\n` +
-    `*HOY:*\n` +
-    `💰 Total: *${formato(totalHoy)}*\n` +
-    `📝 Cantidad: *${abonosHoy.length}*\n\n` +
-    `*ESTE MES:*\n` +
-    `💰 Total: *${formato(totalMes)}*\n` +
-    `📝 Cantidad: *${abonosMes.length}*\n\n` +
-    `*TOTAL HISTÓRICO:*\n` +
-    `💰 *${formato(abonos.reduce((s,a) => s + a.monto, 0))}*\n` +
-    `📝 *${abonos.length} abonos*`;
+  let texto = `💵 *RESUMEN COMPLETO DE ABONOS*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  
+  texto += `*HOY:*\n`;
+  texto += `💰 Total: *${formato(totalHoy)}*\n`;
+  texto += `📝 Cantidad: ${abonosHoy.length} abonos\n`;
+  if (abonosHoy.length > 0) {
+    texto += `\n*Detalle:*\n`;
+    abonosHoy.forEach(a => {
+      texto += `• ${a.nombre} - ${formato(a.monto)} (${a.concepto})\n`;
+    });
+  }
+  texto += `\n`;
+  
+  texto += `*ESTE MES:*\n`;
+  texto += `💰 Total: *${formato(totalMes)}*\n`;
+  texto += `📝 Cantidad: ${abonosMes.length} abonos\n\n`;
+  
+  texto += `*ESTE AÑO:*\n`;
+  texto += `💰 Total: *${formato(totalAnio)}*\n`;
+  texto += `📝 Cantidad: ${abonosAnio.length} abonos\n\n`;
+  
+  texto += `*TOTAL HISTÓRICO:*\n`;
+  texto += `💰 *${formato(totalHistorico)}*\n`;
+  texto += `📝 *${abonos.length} abonos*\n\n`;
+  
+  // Top clientes que más abonan
+  const porCliente = {};
+  abonos.forEach(a => {
+    if (!porCliente[a.nombre]) porCliente[a.nombre] = 0;
+    porCliente[a.nombre] += a.monto;
+  });
+  const topClientes = Object.entries(porCliente).sort((a,b) => b[1] - a[1]);
+  
+  if (topClientes.length > 0) {
+    texto += `🏆 *TOP CLIENTES QUE MÁS ABONAN:*\n`;
+    topClientes.forEach(([nombre, monto], i) => {
+      texto += `${i + 1}. ${nombre} - *${formato(monto)}*\n`;
+    });
+  }
   
   enviarMensajeBot(texto, "exito");
 }
 
-// ═══ NOTIFICACIONES AUTOMÁTICAS ═══
-
-// Notificación de venta
-function chatNotificarVenta(venta) {
-  const tipo = venta.tipo === "contado" ? "💵 CONTADO" : `⏳ FIADO Q${venta.quincena}`;
-  const emoji = venta.tipo === "contado" ? "✅" : "📝";
-  const tipoMsg = venta.tipo === "contado" ? "exito" : "alerta";
+function mostrarClientesChat() {
+  const clientes = agruparClientes();
   
-  const texto = `${emoji} *NUEVA VENTA*\n\n` +
-    `📦 Producto: *${venta.producto}*\n` +
-    `💰 Precio: *${formato(venta.precio)}*\n` +
-    `🏷️ Categoría: ${venta.categoria || "General"}\n` +
-    `👤 Cliente: *${venta.cliente}*\n` +
-    `💳 Tipo: *${tipo}*\n` +
-    `━━━━━━━━━━━━━━\n` +
-    `${venta.tipo === "contado" ? "🎉 ¡Venta cobrada!" : `⏰ Te recuerdo el día ${venta.quincena}`}`;
+  let texto = `👥 *LISTA COMPLETA DE CLIENTES*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n`;
+  texto += `📊 Total: *${clientes.length} clientes*\n\n`;
   
-  enviarMensajeBot(texto, tipoMsg);
-  reproducirSonidoChat();
-}
-
-// Notificación de abono
-function chatNotificarAbono(nombre, monto, saldoRestante) {
-  const texto = `💵 *NUEVO ABONO*\n\n` +
-    `👤 Cliente: *${nombre}*\n` +
-    `💰 Abonado: *${formato(monto)}*\n` +
-    `━━━━━━━━━━━━━━\n` +
-    `${saldoRestante <= 0.01 ? "🎉 *¡PAGO COMPLETADO!*\nSaldo: $0" : `📊 Saldo restante: *${formato(saldoRestante)}*`}`;
-  
-  enviarMensajeBot(texto, saldoRestante <= 0.01 ? "exito" : "info");
-  reproducirSonidoChat();
-}
-
-// Notificación de gasto
-function chatNotificarGasto(gasto) {
-  const texto = `💸 *NUEVO GASTO*\n\n` +
-    `📝 Descripción: *${gasto.descripcion}*\n` +
-    `🏷️ Categoría: ${gasto.categoria}\n` +
-    `💰 Monto: *${formato(gasto.monto)}*`;
-  
-  enviarMensajeBot(texto, "alerta");
-}
-
-// Notificación de deuda nueva
-function chatNotificarDeuda(deuda) {
-  const texto = `📋 *NUEVA DEUDA REGISTRADA*\n\n` +
-    `👤 Cliente: *${deuda.nombre}*\n` +
-    `💰 Monto: *${formato(deuda.monto)}*\n` +
-    `${deuda.nota ? `📝 Nota: ${deuda.nota}` : ""}`;
+  if (clientes.length === 0) {
+    texto += `📭 Aún no tienes clientes registrados.`;
+  } else {
+    // Separar en categorías
+    const conDeuda = clientes.filter(c => (c.fiadoPendiente || 0) + (c.deudaAparte || 0) > 0);
+    const sinDeuda = clientes.filter(c => (c.fiadoPendiente || 0) + (c.deudaAparte || 0) === 0);
+    
+    if (conDeuda.length > 0) {
+      texto += `💰 *CON DEUDA (${conDeuda.length}):*\n\n`;
+      conDeuda.sort((a,b) => ((b.fiadoPendiente||0)+(b.deudaAparte||0)) - ((a.fiadoPendiente||0)+(a.deudaAparte||0)));
+      conDeuda.forEach((c, i) => {
+        const total = (c.fiadoPendiente || 0) + (c.deudaAparte || 0);
+        const etiqueta = datos.etiquetasClientes[c.nombre];
+        const emoji = etiqueta === "vip" ? "⭐" : etiqueta === "moroso" ? "🚨" : etiqueta === "confiable" ? "✅" : etiqueta === "nuevo" ? "🆕" : "👤";
+        texto += `${i + 1}. ${emoji} *${c.nombre}*\n`;
+        texto += `   📦 Fiado: ${formato(c.fiadoPendiente || 0)}\n`;
+        if (c.deudaAparte) texto += `   💵 Aparte: ${formato(c.deudaAparte)}\n`;
+        texto += `   💰 Total debe: *${formato(total)}*\n`;
+        if (c.compras) texto += `   🛒 Compras: ${c.compras}\n`;
+        texto += `\n`;
+      });
+    }
+    
+    if (sinDeuda.length > 0) {
+      texto += `✅ *AL DÍA (${sinDeuda.length}):*\n\n`;
+      sinDeuda.forEach((c, i) => {
+        const etiqueta = datos.etiquetasClientes[c.nombre];
+        const emoji = etiqueta === "vip" ? "⭐" : etiqueta === "confiable" ? "✅" : "👤";
+        texto += `${i + 1}. ${emoji} *${c.nombre}*`;
+        if (c.compras) texto += ` (${c.compras} compras)`;
+        texto += `\n`;
+      });
+    }
+  }
   
   enviarMensajeBot(texto, "info");
 }
 
-// Sonido de notificación
-function reproducirSonidoChat() {
-  if (!sonidoActivo) return;
-  try {
-    const audio = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
-    audio.volume = 0.3;
-    audio.play().catch(() => {});
-  } catch(e) {}
+function mostrarGastosChat() {
+  const hoy = new Date();
+  const gastos = datos.gastos || [];
+  const gastosHoy = gastos.filter(g => g.fechaISO && new Date(g.fechaISO).toDateString() === hoy.toDateString());
+  const gastosMes = gastos.filter(g => g.fechaISO && new Date(g.fechaISO).getMonth() === hoy.getMonth() && new Date(g.fechaISO).getFullYear() === hoy.getFullYear());
+  
+  const totalHoy = gastosHoy.reduce((s,g) => s + g.monto, 0);
+  const totalMes = gastosMes.reduce((s,g) => s + g.monto, 0);
+  const totalHistorico = gastos.reduce((s,g) => s + g.monto, 0);
+  
+  let texto = `💸 *RESUMEN COMPLETO DE GASTOS*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  
+  texto += `*HOY:*\n`;
+  texto += `💰 Total: *${formato(totalHoy)}*\n`;
+  texto += `📝 Cantidad: ${gastosHoy.length} gastos\n`;
+  if (gastosHoy.length > 0) {
+    texto += `\n*Detalle:*\n`;
+    gastosHoy.forEach(g => {
+      texto += `• ${g.descripcion} - ${formato(g.monto)} (${g.categoria})\n`;
+    });
+  }
+  texto += `\n`;
+  
+  texto += `*ESTE MES:*\n`;
+  texto += `💰 Total: *${formato(totalMes)}*\n`;
+  texto += `📝 Cantidad: ${gastosMes.length} gastos\n\n`;
+  
+  texto += `*TOTAL HISTÓRICO:*\n`;
+  texto += `💰 *${formato(totalHistorico)}*\n`;
+  texto += `📝 *${gastos.length} gastos*\n\n`;
+  
+  // Por categoría
+  const porCategoria = {};
+  gastosMes.forEach(g => {
+    if (!porCategoria[g.categoria]) porCategoria[g.categoria] = 0;
+    porCategoria[g.categoria] += g.monto;
+  });
+  const categorias = Object.entries(porCategoria).sort((a,b) => b[1] - a[1]);
+  
+  if (categorias.length > 0) {
+    texto += `📊 *GASTOS POR CATEGORÍA (este mes):*\n`;
+    categorias.forEach(([cat, monto]) => {
+      const pct = (monto / totalMes) * 100;
+      texto += `• ${cat}: *${formato(monto)}* (${pct.toFixed(0)}%)\n`;
+    });
+  }
+  
+  enviarMensajeBot(texto, "info");
 }
 
-// ═══ RESUMEN DIARIO AUTOMÁTICO (a las 8pm) ═══
-function chequearResumenDiario() {
+function mostrarInventarioChat() {
+  mostrarStockChat(); // Reutilizar
+}
+
+function mostrarMetasChat() {
+  const hoy = new Date();
+  const ventasMes = datos.ventas.filter(v => v.fechaISO && new Date(v.fechaISO).getMonth() === hoy.getMonth() && new Date(v.fechaISO).getFullYear() === hoy.getFullYear());
+  const totalMes = ventasMes.reduce((s,v) => s + v.precio, 0);
+  const meta = datos.metas.mensual || 0;
+  const pct = meta > 0 ? (totalMes / meta) * 100 : 0;
+  
+  let texto = `🎯 *METAS DEL NEGOCIO*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  
+  if (meta > 0) {
+    texto += `*META MENSUAL:*\n`;
+    texto += `🎯 Objetivo: *${formato(meta)}*\n`;
+    texto += `💰 Actual: *${formato(totalMes)}*\n`;
+    texto += `📊 Progreso: *${pct.toFixed(1)}%*\n`;
+    texto += `💵 Falta: *${formato(Math.max(0, meta - totalMes))}*\n`;
+    texto += `\n${"[", "█".repeat(Math.round(pct/5)), "░".repeat(20-Math.round(pct/5)), "]"} ${pct.toFixed(0)}%\n\n`;
+    
+    if (pct >= 100) {
+      texto += `🎉 ¡META CUMPLIDA! ¡Felicidades!`;
+    } else if (pct >= 75) {
+      texto += `💪 ¡Ya casi! Estás muy cerca.`;
+    } else if (pct >= 50) {
+      texto += `👍 ¡Vas por buen camino!`;
+    } else {
+      texto += `⚠️ Necesitas acelerar las ventas.`;
+    }
+  } else {
+    texto += `📭 No has configurado una meta mensual.\n\n`;
+    texto += `Ve a *🎯 Metas* en el menú para configurarla.`;
+  }
+  
+  enviarMensajeBot(texto, pct >= 100 ? "exito" : pct >= 75 ? "info" : "alerta");
+}
+
+function mostrarRankingChat() {
+  const clientes = agruparClientes().filter(c => c.nombre && c.nombre !== "Contado" && c.nombre !== "Cliente");
+  const clientesConDatos = clientes.map(c => {
+    const ventasC = datos.ventas.filter(v => v.cliente === c.nombre && v.tipo === "quincena");
+    const deudasC = datos.deudas.filter(d => d.nombre === c.nombre);
+    const totalVendido = ventasC.reduce((s,v) => s + v.precio, 0) + deudasC.reduce((s,d) => s + d.monto, 0);
+    const totalAbonado = ventasC.reduce((s,v) => s + calcularAbonado(v), 0) + deudasC.reduce((s,d) => s + calcularAbonado(d), 0);
+    const saldoActual = c.fiadoPendiente + (c.deudaAparte || 0);
+    const cumplimiento = totalVendido > 0 ? (totalAbonado / totalVendido) * 100 : 0;
+    return {...c, totalVendido, totalAbonado, saldoActual, cumplimiento};
+  });
+  
+  const buenos = clientesConDatos.filter(c => c.totalVendido > 0).sort((a,b) => b.cumplimiento - a.cumplimiento);
+  const malos = clientesConDatos.filter(c => c.saldoActual > 0).sort((a,b) => b.saldoActual - a.saldoActual);
+  
+  let texto = `🏆 *RANKING COMPLETO DE CLIENTES*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  
+  texto += `⭐ *MEJORES CLIENTES (cumplimiento):*\n\n`;
+  if (buenos.length === 0) {
+    texto += `Sin datos aún\n`;
+  } else {
+    buenos.forEach((c, i) => {
+      const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i+1}.`;
+      texto += `${medal} *${c.nombre}*\n`;
+      texto += `   📊 Cumplimiento: *${c.cumplimiento.toFixed(0)}%*\n`;
+      texto += `   ✅ Abonado: ${formato(c.totalAbonado)}\n`;
+      texto += `   🛒 Total: ${formato(c.totalVendido)}\n\n`;
+    });
+  }
+  
+  texto += `\n🚨 *MOROSOS (mayor deuda):*\n\n`;
+  if (malos.length === 0) {
+    texto += `🎉 ¡Nadie debe! Excelente.\n`;
+  } else {
+    malos.forEach((c, i) => {
+      texto += `${i+1}. *${c.nombre}*\n`;
+      texto += `   💰 Debe: *${formato(c.saldoActual)}*\n`;
+      texto += `   📊 Cumplimiento: ${c.cumplimiento.toFixed(0)}%\n\n`;
+    });
+  }
+  
+  enviarMensajeBot(texto, "info");
+}
+
+function mostrarCajaChat() {
+  const movs = datos.caja.movimientos || [];
+  const ingresos = movs.filter(m => m.tipo === "ingreso").reduce((s,m) => s + m.monto, 0);
+  const egresos = movs.filter(m => m.tipo === "egreso").reduce((s,m) => s + m.monto, 0);
+  const saldo = (datos.caja.apertura || 0) + ingresos - egresos;
+  
+  const movsHoy = movs.filter(m => new Date(m.fechaISO).toDateString() === new Date().toDateString());
+  const ingresosHoy = movsHoy.filter(m => m.tipo === "ingreso").reduce((s,m) => s + m.monto, 0);
+  const egresosHoy = movsHoy.filter(m => m.tipo === "egreso").reduce((s,m) => s + m.monto, 0);
+  
+  let texto = `💵 *ESTADO DE CAJA*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  texto += `💰 *SALDO ACTUAL: ${formato(saldo)}*\n\n`;
+  texto += `*HOY:*\n`;
+  texto += `📈 Ingresos: ${formato(ingresosHoy)}\n`;
+  texto += `📉 Egresos: ${formato(egresosHoy)}\n`;
+  texto += `💵 Balance: *${formato(ingresosHoy - egresosHoy)}*\n\n`;
+  texto += `*HISTÓRICO:*\n`;
+  texto += `📈 Total ingresos: ${formato(ingresos)}\n`;
+  texto += `📉 Total egresos: ${formato(egresos)}\n`;
+  texto += `🔢 Movimientos: ${movs.length}\n`;
+  
+  enviarMensajeBot(texto, saldo >= 0 ? "exito" : "alerta");
+}
+
+function mostrarAyudaChat() {
+  let texto = `📚 *GUÍA COMPLETA DE EMMA STUDIO*\n`;
+  texto += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+  texto += `*Puedes preguntarme cosas como:*\n\n`;
+  texto += `📊 *RESÚMENES:*\n`;
+  texto += `• "Resumen del día"\n`;
+  texto += `• "Cuánto vendí hoy"\n`;
+  texto += `• "Mis ventas del mes"\n`;
+  texto += `• "Resumen de abonos"\n`;
+  texto += `• "Resumen de gastos"\n\n`;
+  
+  texto += `💰 *DEUDAS Y CARTERA:*\n`;
+  texto += `• "Quién me debe"\n`;
+  texto += `• "Cuánto me deben"\n`;
+  texto += `• "Deudas pendientes"\n`;
+  texto += `• "Próxima quincena"\n`;
+  texto += `• "Ranking de clientes"\n\n`;
+  
+  texto += `📦 *INVENTARIO:*\n`;
+  texto += `• "Stock"\n`;
+  texto += `• "Qué productos tengo"\n`;
+  texto += `• "Productos agotados"\n`;
+  texto += `• "Inventario completo"\n\n`;
+  
+  texto += `👥 *CLIENTES:*\n`;
+  texto += `• "Mis clientes"\n`;
+  texto += `• "Lista de clientes"\n`;
+  texto += `• "Cuántos clientes tengo"\n\n`;
+  
+  texto += `💵 *CAJA:*\n`;
+  texto += `• "Cuánto hay en caja"\n`;
+  texto += `• "Saldo de caja"\n`;
+  texto += `• "Movimientos de caja"\n\n`;
+  
+  texto += `🎯 *METAS:*\n`;
+  texto += `• "Cómo van las metas"\n`;
+  texto += `• "Mi meta del mes"\n\n`;
+  
+  texto += `━━━━━━━━━━━━━━━━━━━━\n`;
+  texto += `💡 También puedes usar los *botones rápidos* abajo del chat.`;
+  
+  enviarMensajeBot(texto, "titulo");
+}
+
+// ═══ PROCESADOR DE MENSAJES MEJORADO ═══
+
+function procesarMensajeUsuario(texto) {
+  const t = texto.toLowerCase().trim()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Quitar tildes para mejor matching
+  
+  // Saludos
+  if (/^(hola|buenas|hey|hi|saludos|buenos dias|buenas tardes|buenas noches)/.test(t)) {
+    enviarMensajeBot("¡Hola! 👋 ¿En qué te puedo ayudar hoy?\n\nEscribe *\"ayuda\"* para ver todo lo que puedo hacer por ti. 🚀", "info");
+    return;
+  }
+  
+  // Agradecimientos
+  if (/(gracias|gracia|thanks|thank you)/.test(t)) {
+    enviarMensajeBot("¡De nada! 😊 Estoy aquí para lo que necesites. 💪");
+    return;
+  }
+  
+  // Ayuda
   const ahora = new Date();
   const claveHoy = "resumen_chat_" + ahora.toISOString().slice(0, 10);
   
